@@ -1,0 +1,6 @@
+Propósito:
+Contiene el punto de entrada (main) de la aplicación gráfica. Es el módulo que inicializa el entorno de JavaFX.
+
+Archivo Clave	Descripción
+AppMain.java	Clase que extiende javafx.application.Application. Contiene el método start() y es la clase principal configurada en el pom.xml.
+                Se puede cambiar el nombre de la clase principal según la necesidad.

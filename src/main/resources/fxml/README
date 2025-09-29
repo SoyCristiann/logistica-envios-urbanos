@@ -1,0 +1,7 @@
+Propósito:
+Contiene los archivos de lenguaje FXML que definen la estructura visual de las interfaces de usuario.
+
+Archivo Clave	        Descripción
+LoginView.fxml	        Pantalla de registro/inicio de sesión (RF-001).
+UsuarioPanel.fxml	    Panel principal para el perfil del usuario (cotizar, crear envío, rastrear).
+AdminPanel.fxml	        Panel de gestión y métricas para el Administrador.

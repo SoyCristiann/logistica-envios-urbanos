@@ -1,0 +1,7 @@
+Propósito:
+Maneja los eventos generados por la interfaz de usuario (FXML). Estas clases actúan como el pegamento entre la Vista (resources/fxml) y el Modelo (modelo/servicios).
+
+Archivo Clave	                Descripción
+LoginController.java	        Maneja la autenticación (RF-001).
+PanelAdminController.java	    Controla la vista del Administrador, incluyendo métricas y gestión de repartidores (RF-013).
+UsuarioController.java	        Controla la vista principal del usuario para cotizar, rastrear y ver historial.

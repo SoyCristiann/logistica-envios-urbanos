@@ -1,0 +1,7 @@
+Propósito:
+Contiene todo el código de las pruebas unitarias (usando JUnit 5). La estructura interna debe reflejar la estructura de los paquetes de código fuente (src/main/java).
+
+Archivo Clave	                Función Principal
+TarifaFactoryTest.java	        Prueba la implementación del patrón Factory (creacionales).
+GestorEnviosTest.java	        Prueba la lógica de negocio del gestor de envíos (crear, cancelar, asignar) (RF-004, RF-012).
+CalculadoraTarifasTest.java	    Prueba la correcta ejecución del cálculo de costos (RF-031).

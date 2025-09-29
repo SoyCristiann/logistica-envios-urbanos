@@ -1,0 +1,7 @@
+Propósito:
+Organiza las interfaces y clases dedicadas a implementar los patrones de diseño.
+
+Sub-Carpeta	        Patrones Ejemplo
+creacionales	    Singleton, Factory Method, Builder.
+estructurales	    Adapter (para integrar librerías de reportes), Decorator (para añadir servicios adicionales al envío).
+comportamiento	    Strategy (para distintos cálculos de tarifa o notificación), Observer (para notificaciones de cambio de estado).

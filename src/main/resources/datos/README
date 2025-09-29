@@ -1,0 +1,6 @@
+Propósito:
+Almacena archivos de configuración o de datos iniciales necesarios al arrancar la aplicación, tal como lo pide el requisito de inicializar datos de prueba.
+
+Archivo Clave	                Uso Principal
+datos_iniciales.json	        Puede contener la lista de Usuario, Repartidor, Direccion y Envio para inicializar el sistema.
+tarifas_base.properties     	Configuración de las tarifas base y recargos iniciales.

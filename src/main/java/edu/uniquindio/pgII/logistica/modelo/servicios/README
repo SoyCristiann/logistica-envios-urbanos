@@ -1,0 +1,8 @@
+Propósito:
+Contiene la lógica de negocio pura y específica (los "casos de uso"). Estas clases deben ser pequeñas y enfocadas (SRP).
+
+Clases Clave	                Función Principal
+GestorUsuarios.java	            Lógica para RF-010 (gestionar usuarios) y RF-002 (gestionar perfil).
+CalculadoraTarifas.java	        Contiene la lógica para RF-031 (calcular costo estimado) y usa el patrón Factory.
+GestorEnvios.java	            Lógica para RF-004 (crear, modificar, cancelar envíos) y RF-012 (asignar/reasignar).
+GeneradorReportes.java	        Implementa la lógica para exportar datos a CSV/PDF (RF-039).

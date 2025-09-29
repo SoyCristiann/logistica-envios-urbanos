@@ -1,0 +1,16 @@
+Propósito:
+Almacena las clases que representan la lógica de dominio y los datos del negocio. Implementan la lógica básica de los objetos de la vida real de la plataforma.
+
+Clases Clave	    Requisito Asociado
+
+Usuario.java	    Entidad que representa al usuario final y sus datos.
+
+Repartidor.java	    Entidad con datos de la persona de transporte y su disponibilidad.
+
+Envio.java	        Entidad central que contiene origen, destino, paquete, estado y costo.
+
+Direccion.java	    Representa ubicaciones con alias, calle, ciudad y coordenadas simuladas.
+
+Tarifa.java	        Define las reglas para el cálculo del costo (probablemente como interfaz).
+
+Pago.java	        Representa una transacción financiera simulada.
