@@ -1,6 +1,6 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
-import edu.uniquindio.pgII.logistica.modelo.util.EstadoRepartidor;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoRepartidor;
 
 import java.util.ArrayList;
 import java.util.List;

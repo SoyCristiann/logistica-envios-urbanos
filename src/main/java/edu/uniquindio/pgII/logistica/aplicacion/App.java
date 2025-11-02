@@ -1,5 +1,6 @@
 package edu.uniquindio.pgII.logistica.aplicacion;
 
+import edu.uniquindio.pgII.logistica.modelo.util.Constantes.Rutas;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,8 +10,7 @@ import javafx.stage.Stage;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        //FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/InicioSesionPage.fxml"));
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/fxml/RegistroUsuarioPage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Rutas.inicioSesionPath));
         Scene scene = new Scene(fxmlLoader.load());
 
         //Tamaño mínimo de la vantana

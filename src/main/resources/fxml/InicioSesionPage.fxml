@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
-   <center>
-      <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0" BorderPane.alignment="CENTER">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.InicioSesionController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="800.0" prefWidth="1200.0" spacing="20.0">
          <children>
-            <Label text="Iniciar Sesión">
+            <Label layoutX="487.0" layoutY="206.0" text="Iniciar Sesión">
                <font>
-                  <Font name="Comic Sans MS" size="34.0" />
+                  <Font size="39.0" />
                </font>
-               <VBox.margin>
-                  <Insets bottom="50.0" />
-               </VBox.margin>
             </Label>
-            <TextField id="inputUsuario" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Usuario" />
-            <TextField id="inputPass" maxWidth="-Infinity" prefHeight="25.0" prefWidth="280.0" promptText="Contraseña" />
-            <Button id="btnIniciarSesion" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="153.0" text="Iniciar Sesión">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
+            <VBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <TextField fx:id="userInput" alignment="CENTER" maxWidth="500.0" promptText="Correo" />
+                  <TextField fx:id="passInput" alignment="CENTER" maxWidth="500.0" promptText="Contraseña" />
+               </children>
+            </VBox>
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#iniciarSesion" text="Iniciar Sesión" />
+            <Label fx:id="lblMensaje" alignment="CENTER" textAlignment="CENTER" textFill="RED" visible="false">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
          </children>
       </VBox>
-   </center>
-</BorderPane>
+   </children>
+</AnchorPane>

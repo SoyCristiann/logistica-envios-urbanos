@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.modelo.util;
+package edu.uniquindio.pgII.logistica.modelo.util.Enum;
 
 public enum EstadoIncidencia {
     ABIERTA,
