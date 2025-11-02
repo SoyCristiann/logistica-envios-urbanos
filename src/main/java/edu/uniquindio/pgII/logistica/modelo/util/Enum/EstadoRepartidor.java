@@ -1,4 +1,5 @@
-package edu.uniquindio.pgII.logistica.util;
+package edu.uniquindio.pgII.logistica.modelo.util.Enum;
+
 
 public enum EstadoRepartidor {
     DISPONIBLE,

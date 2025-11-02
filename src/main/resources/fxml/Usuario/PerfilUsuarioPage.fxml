@@ -8,7 +8,7 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
             xmlns="http://javafx.com/javafx/25"
-            fx:controller="edu.uniquindio.pgII.logistica.controlador.PerfilUsuarioController"
+            fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.PerfilUsuarioController"
             prefWidth="1200" prefHeight="800">
 
     <children>

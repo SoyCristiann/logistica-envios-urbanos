@@ -1,10 +1,10 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
-import edu.uniquindio.pgII.logistica.util.PagoI;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IPago;
 
 import java.time.LocalDateTime;
 
-public abstract class Pago implements PagoI {
+public abstract class Pago implements IPago {
 
     private String idPago;
     private double montoPago;
