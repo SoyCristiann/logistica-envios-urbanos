@@ -1,88 +1,82 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario {
-    private String idUsuario;
-    private String nombreCompleto;
-    private String correoElectronico;
-    private String numerotelefono;
+
+    // Atributos de la entidad, todos son obligatorios.
+
+    private String idUsuario; //Será el documento, restringido en la interfaz a solo números
+    private String nombreCompleto; // Solo un campo para nombre incluyendo apellido.
+    private String correo;
+    private String telefono;
+    private String password; //Contraseña para inicio de sesión.
+    private RolUsuario rolUsuario;
 
     //Listas de relaciones con otros clases
-
     private List<Direccion> direccionesFrecuentes;
     private List<Envio> historialEnvios;
-    private List<String> metodosPago;
+    private List<Pago> metodosPago;
 
     //Constructor completo
-    public Usuario(String idUsuario, String nombreCompleto, String correoElectronico, String numerotelefono) {
-        this.idUsuario = idUsuario;
-        this.nombreCompleto = nombreCompleto;
-        this.correoElectronico = correoElectronico;
-        this.numerotelefono = numerotelefono;
+    public Usuario() {
         this.direccionesFrecuentes = new ArrayList<>();
         this.historialEnvios = new ArrayList<>();
         this.metodosPago = new ArrayList<>();
     }
 
     //Métodos Get y Set para gestionar el perfil
-
-    public String getIdUsuario(){
+    //Id
+    public String getIdUsuario() {
         return idUsuario;
     }
-
-    public String getNombreCompleto(){
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+    //Nombre
+    public String getNombreCompleto() {
         return nombreCompleto;
     }
-
-    public String getCorreoelectronico(){
-        return correoElectronico;
-    }
-
-    public String getNumerotelefono(){
-        return numerotelefono;
-    }
-
-    public void setIdUsuario(String idUsuario){
-        this.idUsuario= idUsuario;
-    }
-
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
-
-    public void setCorreoelectronico(String correoElectronico){
-        this.correoElectronico= correoElectronico;
+    //Correo
+    public String getCorreo() {
+        return correo;
     }
-
-    public void setNumerotelefono(String numeroTelefono){
-        this.numerotelefono= numeroTelefono;
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
-
-    /**
-     * Agrega una nueva dirección a la lista de direcciones frecuentes del usuario.
-     * @param direccion La nueva dirección a añadir.
-     */
-
-    public void agregarDireccionFrecuente(Direccion direccion){
-        this.direccionesFrecuentes.add(direccion);
+    //Teléfono
+    public String getTelefono() {
+        return telefono;
     }
-
-    /**
-     * Agrega un nuevo envío a la lista de envíos del usuario.
-     * @param envio El envío a añadir.
-     */
-    public void agregarEnvio(Envio envio){
-        this.historialEnvios.add(envio);
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
-
-    /**
-     * Agrega un nuevo método de pago (simulado) al usuario.
-     * @param metodoPago El método de pago (ej: "Visa **** 1234").
-     */
-    public void agregarMetodoPago(String metodoPago){
-        this.metodosPago.add(metodoPago);
+    //contraseña: Se omite el getPassword por temas de seguridad de la aplicación
+    public void setPassword(String password) {
+        this.password = password;
     }
-
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
+    }
+    public void setRolUsuario(RolUsuario rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+    //Direcciones
+    public List<Direccion> getDireccionesFrecuentes() {
+        return direccionesFrecuentes;
+    }
+    //Métodos de pago
+    public List<Pago> getMetodosPago() {
+        return metodosPago;
+    }
+    //Historial de envíos
+    public List<Envio> getHistorialEnvios() {
+        return historialEnvios;
+    }
 }

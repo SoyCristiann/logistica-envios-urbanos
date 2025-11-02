@@ -4,7 +4,7 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Repartidor;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.util.EstadoEnvio;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
