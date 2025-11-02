@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.modelo.util;
+package edu.uniquindio.pgII.logistica.util;
 
 public enum TipoIncidencia {
     RETRASO,

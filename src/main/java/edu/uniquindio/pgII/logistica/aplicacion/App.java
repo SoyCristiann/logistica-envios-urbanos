@@ -28,4 +28,18 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+    public static void mostrarVentana(String rutaFXML, String titulo) throws Exception {
+        FXMLLoader loader = new FXMLLoader(App.class.getResource(rutaFXML));
+        Scene scene = new Scene(loader.load());
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle(titulo);
+        stage.setMinWidth(1200);
+        stage.setMinHeight(800);
+        stage.setResizable(false);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
 }

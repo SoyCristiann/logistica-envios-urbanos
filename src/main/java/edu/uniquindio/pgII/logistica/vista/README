@@ -1,8 +1,0 @@
-Propósito:
-Contiene clases Java auxiliares para la capa de presentación (la vista de JavaFX).
-Estas clases no son los controllers FXML, sino clases que ayudan a manejar elementos complejos de la interfaz.
-Nota: Si solo se utiliza FXML con sus controllers, esta carpeta podría quedar vacía o usarse para clases de celdas personalizadas.
-
-Archivo Clave	                    Función Principal
-TablaEnvioCellFactory.java	        Lógica para renderizar tablas y celdas complejas en JavaFX.
-AlertasUI.java	                    Métodos estáticos para mostrar mensajes de error, éxito o confirmación estandarizados en la interfaz.

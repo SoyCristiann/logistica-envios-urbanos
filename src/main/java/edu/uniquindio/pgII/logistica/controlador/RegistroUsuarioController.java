@@ -3,7 +3,7 @@ package edu.uniquindio.pgII.logistica.controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import edu.uniquindio.pgII.logistica.modelo.util.MetodoPago;
+import edu.uniquindio.pgII.logistica.util.MetodoPago;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;

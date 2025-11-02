@@ -1,10 +1,10 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
-import edu.uniquindio.pgII.logistica.modelo.util.EstadoEnvio;
+import edu.uniquindio.pgII.logistica.util.EstadoEnvio;
 
 import java.time.LocalDate;
 
-import static edu.uniquindio.pgII.logistica.modelo.util.EstadoEnvio.PREDETERMINADO;
+import static edu.uniquindio.pgII.logistica.util.EstadoEnvio.PREDETERMINADO;
 
 public class Envio {
 

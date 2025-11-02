@@ -1,6 +1,6 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
-import edu.uniquindio.pgII.logistica.modelo.util.PagoI;
+import edu.uniquindio.pgII.logistica.util.PagoI;
 
 import java.time.LocalDateTime;
 

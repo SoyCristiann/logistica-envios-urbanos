@@ -1,7 +1,7 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
-import edu.uniquindio.pgII.logistica.modelo.util.EstadoIncidencia;
-import edu.uniquindio.pgII.logistica.modelo.util.TipoIncidencia;
+import edu.uniquindio.pgII.logistica.util.EstadoIncidencia;
+import edu.uniquindio.pgII.logistica.util.TipoIncidencia;
 
 import java.time.LocalDateTime;
 
