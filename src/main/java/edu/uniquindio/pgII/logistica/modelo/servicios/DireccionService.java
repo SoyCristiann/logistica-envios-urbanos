@@ -43,7 +43,6 @@ public class DireccionService {
             direccionVieja.setCiudad(direccionActualizada.getCiudad());
             direccionVieja.setCodigoPostal(direccionActualizada.getCodigoPostal());
             direccionVieja.setDescripcion(direccionActualizada.getDescripcion());
-            direccionVieja.setZona(direccionActualizada.getZona());
             return true;
         }
 

@@ -9,9 +9,12 @@ public class Direccion {
     private String ciudad;
     private String codigoPostal;
     private String descripcion;
-    private int zona;
 
-    public Direccion(String idDireccion, String calle, String numero, String barrio,String ciudad,String codigoPostal,String descripcion,int zona) {
+
+    public Direccion() {
+    }
+
+    public Direccion(String idDireccion, String calle, String numero, String barrio,String ciudad,String codigoPostal,String descripcion) {
         this.idDireccion = idDireccion;
         this.calle = calle;
         this.numero = numero;
@@ -19,7 +22,7 @@ public class Direccion {
         this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
         this.descripcion = descripcion;
-        this.zona = zona;
+
 
     }
 
@@ -81,13 +84,7 @@ public class Direccion {
         this.descripcion = descripcion;
     }
 
-    public int getZona() {
-        return zona;
-    }
 
-    public void setZona(int zona) {
-        this.zona = zona;
-    }
 
 
 }
