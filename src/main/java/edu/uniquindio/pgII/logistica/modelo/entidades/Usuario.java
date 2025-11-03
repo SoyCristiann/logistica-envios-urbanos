@@ -88,6 +88,18 @@ public class Usuario {
     public List<Direccion> getDireccionesFrecuentes() {
         return direccionesFrecuentes;
     }
+    public void setDireccionesFrecuentes(List<Direccion> direccionesFrecuentes) {
+        this.direccionesFrecuentes = direccionesFrecuentes;
+    }
+
+    public void agregarDireccion(Direccion direccion) {
+        direccionesFrecuentes.add(direccion);
+    }
+
+    public void eliminarDireccion(Direccion direccion) {
+        direccionesFrecuentes.remove(direccion);
+    }
+
     //Métodos de pago
     public List<Pago> getMetodosPago() {
         return metodosPago;
@@ -96,4 +108,6 @@ public class Usuario {
     public List<Envio> getHistorialEnvios() {
         return historialEnvios;
     }
+
+
 }

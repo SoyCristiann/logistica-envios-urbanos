@@ -17,72 +17,145 @@ public class EnvioService implements IEnvioService {
     private TarifaService tarifaService;
     private int contador;
 
-
-    // CONSTRUCTOR
-
     public EnvioService() {
-        envios = new ArrayList<Envio>();
-        tarifaService = new TarifaService();
-        contador = 0;
+        this.envios = new ArrayList<>();
+        this.tarifaService = new TarifaService();
+        this.contador = 1;
     }
 
-
-    // METODOS
-
-    public int generarId(){
-
-
-        return 0;
+    // Genera un id
+    public String generarId() {
+        String id = "ENV-" + contador;
+        contador++;
+        return id;
     }
 
-    public Envio crearEnvio(Usuario usuario, String origen, String destino, double peso, String dimensiones, String prioridad){
+    // Crear un envío
+    public boolean crearEnvio(Envio envio) {
+        if (envio != null) {
+            envio.setIdEnvio(generarId());
+            envio.setFechaCreacion(LocalDate.now());
+            envio.setEstado(EstadoEnvio.SOLICITADO);
+            envios.add(envio);
+            return true;
+        }
+        return false;
+    }
 
+    // Modificar un envío
+    public boolean modificarEnvio(Envio envio) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null) {
+            envioExistente.setDestino(envio.getDestino());
+            envioExistente.setPeso(envio.getPeso());
+            envioExistente.setDimensiones(envio.getDimensiones());
+            envioExistente.setFechaEstimada(envio.getFechaEstimada());
+            return true;
+        }
+        return false;
+    }
 
+    // Cancelar un envío
+    public boolean cancelarEnvio(Envio envio) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null && envioExistente.getEstado() != EstadoEnvio.ENTREGADO) {
+            envioExistente.setEstado(EstadoEnvio.INCIDENCIA);
+            return true;
+        }
+        return false;
+    }
+
+    // Asignar un repartidor
+    public boolean asignarRepartidor(Envio envio, Repartidor repartidor) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null && repartidor != null) {
+            envioExistente.setRepartidor(repartidor);
+            envioExistente.setEstado(EstadoEnvio.ASIGNADO);
+            return true;
+        }
+        return false;
+    }
+
+    // Actualizar el estado
+    public boolean actualizarEstado(Envio envio, EstadoEnvio nuevoEstado) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null) {
+            envioExistente.setEstado(nuevoEstado);
+            return true;
+        }
+        return false;
+    }
+
+    // Consultar un envío
+    public Envio consultarDetalle(Envio envio) {
+        return buscarEnvioPorId(envio.getIdEnvio());
+    }
+
+    // Consultar historial por usuario y filtro
+    public ArrayList<Envio> consultarHistorial(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin, EstadoEnvio estado) {
+        ArrayList<Envio> resultado = new ArrayList<>();
+
+        for (Envio e : envios) {
+            boolean mismoUsuario = e.getUsuario().equals(usuario);
+            boolean dentroFechas = (e.getFechaCreacion().isAfter(fechaInicio.minusDays(1)) &&
+                    e.getFechaCreacion().isBefore(fechaFin.plusDays(1)));
+            boolean mismoEstado = (estado == null || e.getEstado() == estado);
+
+            if (mismoUsuario && dentroFechas && mismoEstado) {
+                resultado.add(e);
+            }
+        }
+        return resultado;
+    }
+
+    // Agregar servicio adicional
+    public boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null && servicio != null) {
+            double nuevoCosto = envioExistente.getCosto() + servicio.getCosto();
+            envioExistente.setCosto(nuevoCosto);
+            return true;
+        }
+        return false;
+    }
+
+    // Eliminar servicio adicional (solo resta el costo)
+    public boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null && servicio != null) {
+            double nuevoCosto = envioExistente.getCosto() - servicio.getCosto();
+            envioExistente.setCosto(Math.max(nuevoCosto, 0)); // no dejar costo negativo
+            return true;
+        }
+        return false;
+    }
+
+    // Calcular costo total (usa TarifaService)
+    public double calcularCostoTotal(Envio envio) {
+        if (envio == null) return 0;
+
+        double peso = envio.getPeso();
+        double volumen = 1; // por ahora se puede dejar fijo
+        double distancia = 10; // ejemplo simple
+        double prioridad = 1;  // ejemplo simple
+
+        var tarifa = tarifaService.calcularTarifa(peso, volumen, distancia, prioridad);
+        envio.setCosto(tarifa.getTotal());
+        return tarifa.getTotal();
+    }
+
+    // Buscar envío por id
+    private Envio buscarEnvioPorId(String id) {
+        for (Envio e : envios) {
+            if (e.getIdEnvio().equals(id)) {
+                return e;
+            }
+        }
         return null;
     }
 
-    public void modificarEnvio(String idEnvio, String nuevoDestino, double nuevoPeso, String nuevasDimensiones) {
-
+    // Listar todos los envíos
+    public ArrayList<Envio> listarEnvios() {
+        return new ArrayList<>(envios);
     }
-
-    public void cancelarEnvio(String idEnvio){
-
-    }
-
-    public void asignarRepartidor(String idEnvio, Repartidor repartidor){
-
-    }
-
-    public void actualizarEstado(String idEnvio, String nuevoEstado){
-
-    }
-
-    public Envio consultarDetalle( String idEnvio){
-
-        return null;
-    }
-
-    public ArrayList<Envio> consultarHistorial(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin, EstadoEnvio estado){
-
-        return null;
-    }
-
-    public void agregarServicioAdicional(String idEnvio, ServicioAdicional servicio){
-
-    }
-
-    public void eliminarServicioAdicional(String idEnvio, String idServicio){
-
-    }
-
-    public double calcularCostoTotal(String idEnvio){
-
-
-        return 0;
-    }
-
-
-
-
-
 }
