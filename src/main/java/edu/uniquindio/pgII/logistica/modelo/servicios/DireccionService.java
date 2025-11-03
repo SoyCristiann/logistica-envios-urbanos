@@ -1,10 +1,12 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IDireccionService;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class DireccionService {
+public class DireccionService implements IDireccionService {
     private List<Direccion> direcciones;
 
     public DireccionService(){

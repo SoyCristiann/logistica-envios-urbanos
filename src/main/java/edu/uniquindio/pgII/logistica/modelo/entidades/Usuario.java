@@ -22,6 +22,19 @@ public class Usuario {
     private List<Pago> metodosPago;
 
     //Constructor completo
+    public Usuario(String idUsuario, String nombreCompleto, String correo, String telefono, String password, RolUsuario rolUsuario) {
+        this.idUsuario = idUsuario;
+        this.nombreCompleto = nombreCompleto;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.password = password;
+        this.rolUsuario = rolUsuario;
+        this.direccionesFrecuentes = new ArrayList<>();
+        this.historialEnvios = new ArrayList<>();
+        this.metodosPago = new ArrayList<>();
+    }
+
+
     public Usuario() {
         this.direccionesFrecuentes = new ArrayList<>();
         this.historialEnvios = new ArrayList<>();
@@ -57,7 +70,11 @@ public class Usuario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
-    //contraseña: Se omite el getPassword por temas de seguridad de la aplicación
+    //contraseña
+    public  String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }

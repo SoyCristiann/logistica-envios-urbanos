@@ -1,0 +1,47 @@
+[33mcommit fe5e9e4c7db6b87e838a31c0b1c3f4d5faf3330e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mcristian[m[33m)[m
+Author: Cristian Navarro <95457181+SoyCristiann@users.noreply.github.com>
+Date:   Sun Nov 2 07:24:01 2025 -0500
+
+    Se avanza sobre inicio de sesión. Se crean clases singleton administrador y sesion manager
+
+[33mcommit 7310b49531ba8f68bccc60c4d7a2a880a52de174[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 211b529 7956d1a
+Author: Cristian Navarro <95457181+SoyCristiann@users.noreply.github.com>
+Date:   Fri Oct 24 16:42:41 2025 -0500
+
+    Merge pull request #2 from SoyCristiann/cristian
+    
+    Se crea la primera interfaz gráfica para la sección registrar usuario…
+
+[33mcommit 7956d1a1440e55d0fee55c681a728d085023434b[m[33m ([m[1;31morigin/cristian[m[33m)[m
+Author: Cristian Navarro <95457181+SoyCristiann@users.noreply.github.com>
+Date:   Fri Oct 24 16:39:18 2025 -0500
+
+    Se crea la primera interfaz gráfica para la sección registrar usuario y se enlaza con el controller de registro de usuario
+
+[33mcommit 211b529bc05a3e6748cd5e0dc8c23c907858ad35[m
+Merge: e8c8121 3912383
+Author: fabesrc <rodriguezfabes@gmail.com>
+Date:   Sun Oct 19 21:08:56 2025 -0500
+
+    Merge pull request #1 from SoyCristiann/fabesrc
+    
+    Se añaden las clases principales
+
+[33mcommit 3912383694e51b2ca5d24b960c9f36add1870de6[m[33m ([m[1;31morigin/fabesrc[m[33m)[m
+Author: fabesrc <rodriguezfabes@gmail.com>
+Date:   Sun Oct 19 21:05:10 2025 -0500
+
+    Se añaden las clases principales
+
+[33mcommit e8c81212aed919dcdc80af8586808e4b31e97781[m
+Author: Cristian Navarro <95457181+SoyCristiann@users.noreply.github.com>
+Date:   Sun Oct 19 13:57:50 2025 -0500
+
+    Se iniciar orgnaización de las clases principales
+
+[33mcommit cb758089d87e336c2bf2dad17d99a0d8d5c363da[m
+Author: Cristian Navarro <95457181+SoyCristiann@users.noreply.github.com>
+Date:   Sun Sep 28 19:51:54 2025 -0500
+
+    Se crea una estructura básica de carpetas para el proyecto con un archivo README dentro de cada una que describe su funcionalidad. Esta estructura puede ser modificada según la necesidad del proyecto.
