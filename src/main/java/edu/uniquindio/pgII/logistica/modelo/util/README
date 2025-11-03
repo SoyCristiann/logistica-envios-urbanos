@@ -1,9 +1,0 @@
-Propósito:
-Contiene clases de utilidad (utilidades) que ofrecen funcionalidad auxiliar y genérica al resto del modelo y a la aplicación, pero que no contienen lógica de negocio central.
-
-Archivo Clave	            Función Principal
-ValidadorDatos.java	        Métodos estáticos para validar formatos (correo, teléfono, campos obligatorios, etc.).
-Constantes.java	            Define valores fijos y globales, como el factor de costo por peso o la tasa de recargo por seguro.
-UtilidadesFecha.java	    Manejo y formateo de fechas y horas.
-EstadoEnvio.java	        Enum que define los estados posibles del envío (Solicitado, Asignado, En Ruta, Entregado, Incidencia).
-
