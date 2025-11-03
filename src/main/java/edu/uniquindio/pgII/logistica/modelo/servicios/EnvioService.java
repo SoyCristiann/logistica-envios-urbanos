@@ -5,12 +5,13 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Repartidor;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnvioService {
+public class EnvioService implements IEnvioService {
 
     private List<Envio> envios;
     private TarifaService tarifaService;
