@@ -10,20 +10,19 @@ public class EnvioMapper {
     public static EnvioDTO toDTO(Envio envio) {
         if (envio == null) return null;
 
-        EnvioDTO dto = new EnvioDTO();
-        dto.setIdEnvio(envio.getIdEnvio());
-        dto.setOrigen(envio.getOrigen());
-        dto.setDestino(envio.getDestino());
-        dto.setPeso(envio.getPeso());
-        dto.setDimensiones(envio.getDimensiones());
-        dto.setCosto(envio.getCosto());
-        dto.setEstado(envio.getEstado());
-        dto.setFechaCreacion(envio.getFechaCreacion());
-        dto.setFechaEstimada(envio.getFechaEstimada());
-
-        if (envio.getUsuario() != null) dto.setIdUsuario(envio.getUsuario().getIdUsuario());
-        if (envio.getRepartidor() != null) dto.setIdRepartidor(envio.getRepartidor().getIdRepartidor());
-
+        EnvioDTO dto = new EnvioDTO(
+                envio.getIdEnvio(),
+                envio.getOrigen(),
+                envio.getDestino(),
+                envio.getPeso(),
+                envio.getDimensiones(),
+                envio.getCosto(),
+                envio.getEstado(),
+                envio.getFechaCreacion(),
+                envio.getFechaEstimada(),
+                envio.getUsuario() != null ? envio.getUsuario().getIdUsuario() : null,
+                envio.getRepartidor() != null ? envio.getRepartidor().getIdRepartidor() : null
+        );
         return dto;
     }
 
@@ -36,13 +35,14 @@ public class EnvioMapper {
                 dto.getDestino(),
                 dto.getPeso(),
                 dto.getCosto(),
-                dto.getEstado() != null ? dto.getEstado().name() : null,
+                dto.getDimensiones(),
+                dto.getEstado(),
                 dto.getFechaCreacion(),
                 dto.getFechaEstimada(),
                 usuario,
                 repartidor
         );
-        envio.setDimensiones(dto.getDimensiones());
+
         return envio;
     }
 
@@ -52,9 +52,10 @@ public class EnvioMapper {
 
         if (dto.getOrigen() != null) envio.setOrigen(dto.getOrigen());
         if (dto.getDestino() != null) envio.setDestino(dto.getDestino());
-        if (dto.getPeso() != 0) envio.setPeso(dto.getPeso());
+
+        if (dto.getPeso() > 0) envio.setPeso(dto.getPeso());
+        if (dto.getCosto() > 0) envio.setCosto(dto.getCosto());
         if (dto.getDimensiones() != null) envio.setDimensiones(dto.getDimensiones());
-        if (dto.getCosto() != 0) envio.setCosto(dto.getCosto());
         if (dto.getEstado() != null) envio.setEstado(dto.getEstado());
         if (dto.getFechaCreacion() != null) envio.setFechaCreacion(dto.getFechaCreacion());
         if (dto.getFechaEstimada() != null) envio.setFechaEstimada(dto.getFechaEstimada());

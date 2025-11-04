@@ -1,28 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.RegistroUsuarioController">
 
     <children>
-        <Label layoutX="363.0" layoutY="64.0" text="MENÚ PRINCIPAL USUARIO">
-            <font>
-                <Font name="System Bold" size="36" />
-            </font>
-        </Label>
+      <HBox layoutX="20.0" layoutY="14.0">
+         <children>
+            <Button fx:id="btnIrInicioSesion" mnemonicParsing="false" onAction="#irInicioSesion" text="Ir a Inicio de sesión" />
+         </children>
+      </HBox>
+      <VBox alignment="CENTER" layoutX="100.0" layoutY="68.0" spacing="5.0">
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                    <Label layoutX="480.0" layoutY="68.0" text="REGISTRARSE">
+                        <font>
+                            <Font name="System Bold" size="43.0" />
+                        </font>
+                    </Label>
+               </children>
+            </HBox>
+              <GridPane alignment="CENTER" layoutX="212.0" layoutY="163.0" maxHeight="-Infinity" prefHeight="382.0" prefWidth="888.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="437.0" minWidth="0.0" prefWidth="267.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="873.0" minWidth="0.0" prefWidth="833.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <Label prefHeight="21.0" prefWidth="218.0" text="Identificación" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                          <GridPane.margin>
+                              <Insets />
+                          </GridPane.margin>
+                      </Label>
+                      <TextField fx:id="inputId" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
 
-        <!-- Contenedor con las opciones -->
-        <VBox layoutX="460" layoutY="180" spacing="20">
-            <Button fx:id="btnNuevoEnvio" onAction="#abrirCrearEnvio" prefHeight="48" prefWidth="280" text="Crear nuevo envío" />
-            <Button fx:id="btnMisEnvios" onAction="#abrirMisEnvios" prefHeight="48" prefWidth="280" text="Consultar mis envíos" />
-            <Button fx:id="btnHistorial" onAction="#abrirHistorial" prefHeight="48" prefWidth="280" text="Historial de envíos" />
-            <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefHeight="48" prefWidth="280" text="Mi perfil" />
-            <Button fx:id="btnReportes" onAction="#abrirReportes" prefHeight="48" prefWidth="280" text="Reportes" />
-            <Button fx:id="btnCerrarSesion" onAction="#cerrarSesion" prefHeight="48" prefWidth="280" text="Cerrar sesión" />
-        </VBox>
+                      <Label prefHeight="21.0" prefWidth="219.0" text="Contraseña" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                      <TextField fx:id="inputPass" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+
+                      <Label prefHeight="21.0" prefWidth="210.0" text="Nombre Completo" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                          <GridPane.margin>
+                              <Insets />
+                          </GridPane.margin>
+                      </Label>
+                      <TextField fx:id="inputNombre" prefWidth="203.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+
+                      <Label prefHeight="21.0" prefWidth="217.0" text="Email" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                          <GridPane.margin>
+                              <Insets />
+                          </GridPane.margin>
+                      </Label>
+                      <TextField fx:id="inputEmail" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+
+                      <Label prefHeight="21.0" prefWidth="217.0" text="Teléfono" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                          <GridPane.margin>
+                              <Insets />
+                          </GridPane.margin>
+                      </Label>
+                      <TextField fx:id="inputTelefono" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+
+                  </children>
+              </GridPane>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Dirección">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+
+            <GridPane hgap="10.0" vgap="10.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="idDireccion" />
+                   <TextField fx:id="inputCalleDir" promptText="Calle" GridPane.columnIndex="1" />
+                   <TextField fx:id="inputNumeroDir" promptText="Número" GridPane.columnIndex="2" />
+                   <TextField fx:id="inputBarrioDir" promptText="Barrio" GridPane.columnIndex="3" />
+                  <TextField fx:id="inputCiudadDir" promptText="Ciudad" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputCodPostalDir" promptText="Código Postal" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputDescripcionDir" promptText="Descripción" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="inputAliasDir" promptText="Alias (Casa - Oficina)" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <HBox>
+               <children>
+                    <CheckBox fx:id="checkBoxMetodoPagoUsuario" layoutX="196.0" layoutY="559.0" mnemonicParsing="false" onAction="#habilitarMetodoPago" text="¿Desea agregar un método de pago?" />
+               </children>
+            </HBox>
+              <GridPane alignment="CENTER" layoutX="100.0" layoutY="604.0" prefHeight="30.0" prefWidth="1017.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="437.0" minWidth="0.0" prefWidth="267.0" />
+                      <ColumnConstraints hgrow="ALWAYS" maxWidth="873.0" minWidth="0.0" prefWidth="833.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <Label text="Método de pago" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                          <GridPane.margin>
+                              <Insets />
+                          </GridPane.margin>
+                          <padding>
+                              <Insets left="100.0" />
+                          </padding>
+                      </Label>
+                      <ComboBox fx:id="comboMetodoPagoUsuario" disable="true" promptText="Seleccione..." GridPane.columnIndex="1" />
+                  </children>
+              </GridPane>
+              <Button fx:id="btnRegistrarseUsuario" disable="true" layoutX="563.0" layoutY="667.0" mnemonicParsing="false" onAction="#registrarUsuario" text="Registrarse" />
+            <Label fx:id="lblMensaje" text="Label" textFill="RED" visible="false" />
+         </children>
+      </VBox>
     </children>
+
 </AnchorPane>

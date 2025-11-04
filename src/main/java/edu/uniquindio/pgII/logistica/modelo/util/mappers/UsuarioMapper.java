@@ -1,77 +1,146 @@
 package edu.uniquindio.pgII.logistica.modelo.util.mappers;
 
+import com.sun.marlin.stats.Histogram;
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class UsuarioMapper {
 
-    public static UsuarioDTO toDTO(Usuario usuario) {
-        if (usuario == null) return null;
-
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setIdUsuario(usuario.getIdUsuario());
-        dto.setNombreCompleto(usuario.getNombreCompleto());
-        dto.setCorreo(usuario.getCorreo());
-        dto.setTelefono(usuario.getTelefono());
-        dto.setRol(usuario.getRolUsuario());
-
-        if (usuario.getDireccionesFrecuentes() != null) {
-            dto.setDireccionesFrecuentes(
-                    usuario.getDireccionesFrecuentes()
-                            .stream()
-                            .map(DireccionMapper::toDTO)
-                            .collect(Collectors.toList())
-            );
-        } else {
-            dto.setDireccionesFrecuentes(Collections.emptyList());
+    public static UsuarioDTO toUsuarioDTO(Usuario usuario){
+        if(usuario==null){
+            return null;
         }
+        UsuarioDTO dto=new UsuarioDTO(
+                usuario.getIdUsuario(),
+                usuario.getNombreCompleto(),
+                usuario.getCorreo(),
+                usuario.getTelefono(),
+                usuario.getPassword(),
+                usuario.getRolUsuario()
+        );
+
+        List<DireccionDTO> direccionesDTO = new ArrayList<>();
+        List<MetodoPago> metodosPago= new ArrayList<>();
+        List<EnvioDTO> historialEnviosDTO= new ArrayList<>();
+
+        if(usuario.getDireccionesFrecuentes()!=null){
+            for (Direccion direccion : usuario.getDireccionesFrecuentes()){
+                direccionesDTO.add(DireccionMapper.toDTO(direccion));
+            }
+        }
+
+
+        if(usuario.getMetodosPago()!=null){
+            for (MetodoPago metodoPago : usuario.getMetodosPago()){
+                metodosPago.add(metodoPago);
+            }
+        }
+
+        if(usuario.getHistorialEnvios()!=null){
+            for (Envio envio: usuario.getHistorialEnvios()){
+                historialEnviosDTO.add(EnvioMapper.toDTO(envio));
+            }
+        }
+
+        dto.setDireccionesFrecuentesDTO(direccionesDTO);
+        dto.setMetodosPago(metodosPago);
+        dto.setHistorialEnviosDTO(historialEnviosDTO);
+
         return dto;
     }
 
-    public static Usuario toEntity(UsuarioDTO dto) {
-        if (dto == null) return null;
-
-        Usuario usuario = new Usuario();
-        usuario.setIdUsuario(dto.getIdUsuario());
-        usuario.setNombreCompleto(dto.getNombreCompleto());
-        usuario.setCorreo(dto.getCorreo());
-        usuario.setTelefono(dto.getTelefono());
-        usuario.setPassword(dto.getPassword());
-        usuario.setRolUsuario(dto.getRol());
-
-        if (dto.getDireccionesFrecuentes() != null) {
-            List<Direccion> direcciones = dto.getDireccionesFrecuentes()
-                    .stream()
-                    .map(DireccionMapper::toEntity)
-                    .collect(Collectors.toList());
-            usuario.setDireccionesFrecuentes(direcciones);
+    public static Usuario toEntity(UsuarioDTO usuarioDTO){
+        if(usuarioDTO==null){
+            return null;
         }
+
+        Usuario usuario=new Usuario(
+                usuarioDTO.getIdUsuario(),
+                usuarioDTO.getNombreCompleto(),
+                usuarioDTO.getCorreo(),
+                usuarioDTO.getTelefono(),
+                usuarioDTO.getPassword(),
+                usuarioDTO.getRolUsuario()
+        );
+
+        List<Direccion> direcciones= new ArrayList<>();
+        List<MetodoPago> metodosPago= new ArrayList<>();
+        List<Envio> historialEnvios= new ArrayList<>();
+
+        if(usuarioDTO.getDireccionesFrecuentesDTO()!=null){
+            for (DireccionDTO direccionDTO : usuarioDTO.getDireccionesFrecuentesDTO()){
+                direcciones.add(DireccionMapper.toEntity(direccionDTO));
+            }
+        }
+
+
+        if(usuarioDTO.getMetodosPago()!=null){
+            for (MetodoPago metodoPago : usuarioDTO.getMetodosPago()){
+                metodosPago.add(metodoPago);
+            }
+        }
+
+        if(usuarioDTO.getHistorialEnviosDTO()!=null){
+            for (EnvioDTO envioDTO: usuarioDTO.getHistorialEnviosDTO()){
+                historialEnvios.add(EnvioMapper.toEntity(envioDTO, usuario, null));
+            }
+        }
+
+        usuario.setDireccionesFrecuentes(direcciones);
+        usuario.setMetodosPago(metodosPago);
+        usuario.setHistorialEnvios(historialEnvios);
+
         return usuario;
+
     }
 
-
-    public static void updateEntityFromDTO(Usuario usuario, UsuarioDTO dto) {
-        if (usuario == null || dto == null) return;
-
-        if (dto.getNombreCompleto() != null) usuario.setNombreCompleto(dto.getNombreCompleto());
-        if (dto.getCorreo() != null) usuario.setCorreo(dto.getCorreo());
-        if (dto.getTelefono() != null) usuario.setTelefono(dto.getTelefono());
-        if (dto.getPassword() != null) usuario.setPassword(dto.getPassword());
-        if (dto.getRol() != null) usuario.setRolUsuario(dto.getRol());
-
-
-        if (dto.getDireccionesFrecuentes() != null) {
-            List<Direccion> direcciones = dto.getDireccionesFrecuentes()
-                    .stream()
-                    .map(DireccionMapper::toEntity)
-                    .collect(Collectors.toList());
-            usuario.setDireccionesFrecuentes(direcciones);
+    public static void updateEntityFromDTO(UsuarioDTO usuarioDTO, Usuario usuario){
+        if(usuarioDTO==null || usuario==null){
+            return;
         }
+        usuario.setIdUsuario(usuarioDTO.getIdUsuario());
+        usuario.setNombreCompleto(usuarioDTO.getNombreCompleto());
+        usuario.setCorreo(usuarioDTO.getCorreo());
+        usuario.setTelefono(usuarioDTO.getTelefono());
+        usuario.setPassword(usuarioDTO.getPassword());
+        usuario.setRolUsuario(usuarioDTO.getRolUsuario());
+
+        //Direcciones, metodo de pago e historial de envios
+        List<Direccion> direcciones= new ArrayList<>();
+        List<MetodoPago> metodosPago= new ArrayList<>();
+        List<Envio> historialEnvios= new ArrayList<>();
+
+        if(usuarioDTO.getDireccionesFrecuentesDTO() != null){
+            for (DireccionDTO direccionDTO : usuarioDTO.getDireccionesFrecuentesDTO()){
+                // Mapea cada DTO a Entidad antes de añadirlo a la nueva lista
+                direcciones.add(DireccionMapper.toEntity(direccionDTO));
+            }
+        }
+
+        if(usuarioDTO.getHistorialEnviosDTO()!=null){
+            for (EnvioDTO envioDTO: usuarioDTO.getHistorialEnviosDTO()){
+                historialEnvios.add(EnvioMapper.toEntity(envioDTO, usuario, null));
+            }
+        }
+
+        if(usuarioDTO.getMetodosPago()!=null){
+            for (MetodoPago metodoPago : usuarioDTO.getMetodosPago()){
+                metodosPago.add(metodoPago);
+            }
+        }
+
+        usuario.setDireccionesFrecuentes(direcciones);
+        usuario.setMetodosPago(metodosPago);
+        usuario.setHistorialEnvios(historialEnvios);
     }
 }

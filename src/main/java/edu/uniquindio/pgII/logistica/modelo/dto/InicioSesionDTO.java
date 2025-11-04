@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.dto.dtoInicioSesion;
+package edu.uniquindio.pgII.logistica.modelo.dto;
 
 public class InicioSesionDTO {
     private String user;
@@ -25,6 +25,5 @@ public class InicioSesionDTO {
     }
 
     public void setPass(String pass) {
-        this.pass=pass;
-    }
+        this.pass=pass;    }
 }

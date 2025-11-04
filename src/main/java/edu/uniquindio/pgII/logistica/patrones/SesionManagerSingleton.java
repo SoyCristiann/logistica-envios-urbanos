@@ -23,6 +23,10 @@ public class SesionManagerSingleton {
         this.usuarioActivo = usuario;
     }
 
+    public Usuario getUsuarioActivo() {
+        return usuarioActivo;
+    }
+
     //Metodo para identificar el rol del usuario
     public boolean esAdministrador(){
         if(!(usuarioActivo.getRolUsuario() == null) && !usuarioActivo.getRolUsuario().equals(RolUsuario.ADMINISTRADOR)){

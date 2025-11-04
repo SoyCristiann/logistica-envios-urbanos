@@ -15,7 +15,7 @@ public class App extends Application {
         DatosDummy datosDummy = new DatosDummy();
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Rutas.inicioSesionPath));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Rutas.inicioSesionPage));
         Scene scene = new Scene(fxmlLoader.load());
 
         //Tamaño mínimo de la vantana
@@ -29,22 +29,8 @@ public class App extends Application {
         stage.setResizable(false); //Evita que se maximize la ventana
         stage.centerOnScreen();
 
-        stage.setTitle("Inicio de Sesión");
+        stage.setTitle("Logística Envíos Urbanos");
         stage.setScene(scene);
         stage.show();
     }
-
-    public static void mostrarVentana(String rutaFXML, String titulo) throws Exception {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource(rutaFXML));
-        Scene scene = new Scene(loader.load());
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle(titulo);
-        stage.setMinWidth(1200);
-        stage.setMinHeight(800);
-        stage.setResizable(false);
-        stage.centerOnScreen();
-        stage.show();
-    }
-
 }

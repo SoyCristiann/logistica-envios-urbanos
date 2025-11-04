@@ -1,5 +1,6 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class Usuario {
     //Listas de relaciones con otros clases
     private List<Direccion> direccionesFrecuentes;
     private List<Envio> historialEnvios;
-    private List<Pago> metodosPago;
+    private List<MetodoPago> metodosPago;
 
     //Constructor completo
     public Usuario(String idUsuario, String nombreCompleto, String correo, String telefono, String password, RolUsuario rolUsuario) {
@@ -42,6 +43,7 @@ public class Usuario {
     }
 
     //Métodos Get y Set para gestionar el perfil
+
     //Id
     public String getIdUsuario() {
         return idUsuario;
@@ -49,6 +51,7 @@ public class Usuario {
     public void setIdUsuario(String idUsuario) {
         this.idUsuario = idUsuario;
     }
+
     //Nombre
     public String getNombreCompleto() {
         return nombreCompleto;
@@ -56,6 +59,7 @@ public class Usuario {
     public void setNombreCompleto(String nombreCompleto) {
         this.nombreCompleto = nombreCompleto;
     }
+
     //Correo
     public String getCorreo() {
         return correo;
@@ -63,6 +67,7 @@ public class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
     //Teléfono
     public String getTelefono() {
         return telefono;
@@ -70,20 +75,23 @@ public class Usuario {
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
     //contraseña
     public  String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
+
+    //Rol
     public RolUsuario getRolUsuario() {
         return rolUsuario;
     }
     public void setRolUsuario(RolUsuario rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
+
     //Direcciones
     public List<Direccion> getDireccionesFrecuentes() {
         return direccionesFrecuentes;
@@ -91,23 +99,32 @@ public class Usuario {
     public void setDireccionesFrecuentes(List<Direccion> direccionesFrecuentes) {
         this.direccionesFrecuentes = direccionesFrecuentes;
     }
-
     public void agregarDireccion(Direccion direccion) {
         direccionesFrecuentes.add(direccion);
     }
-
     public void eliminarDireccion(Direccion direccion) {
         direccionesFrecuentes.remove(direccion);
     }
 
     //Métodos de pago
-    public List<Pago> getMetodosPago() {
+    public List<MetodoPago> getMetodosPago() {
         return metodosPago;
     }
+    public  void setMetodosPago(List<MetodoPago> metodosPago) {
+        this.metodosPago = metodosPago;
+    }
+    public void agregarMetodoPago(MetodoPago metodoPago) {
+        metodosPago.add(metodoPago);
+    }
+    public void eliminarMetodoPago(MetodoPago metodoPago) {
+        metodosPago.remove(metodoPago);
+    }
+
     //Historial de envíos
     public List<Envio> getHistorialEnvios() {
         return historialEnvios;
     }
-
-
+    public void setHistorialEnvios(List<Envio> historialEnvios) {
+        this.historialEnvios = historialEnvios;
+    }
 }
