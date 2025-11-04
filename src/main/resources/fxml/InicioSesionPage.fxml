@@ -27,6 +27,15 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+            <HBox alignment="CENTER_RIGHT" spacing="20.0">
+               <children>
+                  <Label text="¿No eres usuario?" />
+                  <Button fx:id="btnRegistro" mnemonicParsing="false" onAction="#registrarse" text="Registrate" />
+               </children>
+               <padding>
+                  <Insets left="20.0" right="100.0" />
+               </padding>
+            </HBox>
          </children>
       </VBox>
    </children>

@@ -23,13 +23,14 @@ public class Envio {
 
     // CONSTRUCTOR
 
-    public Envio(String idEnvio, String origen, String destino, double peso, double costo, String estado, LocalDate fechaCreacion, LocalDate fechaEstimada, Usuario usuario, Repartidor repartidor) {
+    public Envio(String idEnvio, String origen, String destino, double peso, double costo, String dimensiones, EstadoEnvio estado, LocalDate fechaCreacion, LocalDate fechaEstimada, Usuario usuario, Repartidor repartidor) {
         this.idEnvio = idEnvio;
         this.origen = origen;
         this.destino = destino;
         this.peso = peso;
         this.costo = costo;
-        this.estado = PREDETERMINADO;
+        this.dimensiones = dimensiones;
+        this.estado = estado;
         this.fechaCreacion = fechaCreacion;
         this.fechaEstimada = fechaEstimada;
         this.usuario = usuario;

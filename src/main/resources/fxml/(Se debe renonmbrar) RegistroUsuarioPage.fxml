@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController">
+
+    <children>
+        <Label layoutX="363.0" layoutY="64.0" text="MENÚ PRINCIPAL USUARIO">
+            <font>
+                <Font name="System Bold" size="36" />
+            </font>
+        </Label>
+
+        <!-- Contenedor con las opciones -->
+        <VBox layoutX="460" layoutY="180" spacing="20">
+            <Button fx:id="btnNuevoEnvio" onAction="#abrirCrearEnvio" prefHeight="48" prefWidth="280" text="Crear nuevo envío" />
+            <Button fx:id="btnMisEnvios" onAction="#abrirMisEnvios" prefHeight="48" prefWidth="280" text="Consultar mis envíos" />
+            <Button fx:id="btnHistorial" onAction="#abrirHistorial" prefHeight="48" prefWidth="280" text="Historial de envíos" />
+            <Button fx:id="btnPerfil" onAction="#abrirPerfil" prefHeight="48" prefWidth="280" text="Mi perfil" />
+            <Button fx:id="btnReportes" onAction="#abrirReportes" prefHeight="48" prefWidth="280" text="Reportes" />
+            <Button fx:id="btnCerrarSesion" onAction="#cerrarSesion" prefHeight="48" prefWidth="280" text="Cerrar sesión" />
+        </VBox>
+    </children>
+</AnchorPane>

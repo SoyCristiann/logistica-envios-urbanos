@@ -76,4 +76,9 @@ public class UsuarioService implements IUsuarioService {
         }
         return null;
     }
+
+    @Override
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
 }
