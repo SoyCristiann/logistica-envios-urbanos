@@ -1,6 +1,10 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
+import edu.uniquindio.pgII.logistica.patrones.Decorator.EnvioBase;
+import edu.uniquindio.pgII.logistica.patrones.Decorator.IEnvio;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,4 +77,19 @@ public class ServicioAdicionalService {
     public ArrayList<ServicioAdicional> listarServicios() {
         return new ArrayList<>(servicios);
     }
+
+
+
+    //
+//    public double calcularCostoConExtras(EnvioDTO envioDTO) {
+//        IEnvio envio = new EnvioBase(envioDTO.getCostoBase(), "Envío base");
+//
+//        if (envioDTO.isSeguro()) envio = new EnvioConSeguro(envio);
+//        if (envioDTO.isFragil()) envio = new EnvioFragil(envio);
+//        if (envioDTO.isFirmaRequerida()) envio = new EnvioConFirma(envio);
+//        if (envioDTO.isPrioritario()) envio = new EnvioPrioritario(envio);
+//
+//        return envio.getCosto();
+//    }
+
 }

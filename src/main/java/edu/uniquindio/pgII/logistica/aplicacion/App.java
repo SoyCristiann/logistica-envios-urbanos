@@ -1,7 +1,7 @@
 package edu.uniquindio.pgII.logistica.aplicacion;
 
 import edu.uniquindio.pgII.logistica.datos.DatosDummy;
-import edu.uniquindio.pgII.logistica.modelo.util.Constantes.Rutas;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +15,7 @@ public class App extends Application {
         DatosDummy datosDummy = new DatosDummy();
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Rutas.inicioSesionPath));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Constantes.inicioSesionPath));
         Scene scene = new Scene(fxmlLoader.load());
 
         //Tamaño mínimo de la vantana

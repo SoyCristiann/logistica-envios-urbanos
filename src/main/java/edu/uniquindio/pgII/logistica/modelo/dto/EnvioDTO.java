@@ -19,9 +19,7 @@ public class EnvioDTO {
 
     public EnvioDTO() {}
 
-    public EnvioDTO(String idEnvio, String origen, String destino, double peso, String dimensiones,
-                    double costo, EstadoEnvio estado, LocalDate fechaCreacion,
-                    LocalDate fechaEstimada, String idUsuario, String idRepartidor) {
+    public EnvioDTO(String idEnvio, String origen, String destino, double peso, String dimensiones, double costo, EstadoEnvio estado, LocalDate fechaCreacion, LocalDate fechaEstimada, String idUsuario, String idRepartidor) {
         this.idEnvio = idEnvio;
         this.origen = origen;
         this.destino = destino;

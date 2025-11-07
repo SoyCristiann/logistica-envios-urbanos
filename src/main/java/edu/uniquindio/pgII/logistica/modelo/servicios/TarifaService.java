@@ -1,9 +1,11 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.entidades.Tarifa;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class TarifaService {
 
@@ -24,11 +26,11 @@ public class TarifaService {
 
     // Crea una tarifa con valores básicos
     public Tarifa calcularTarifa(double peso, double volumen, double distancia, double prioridad) {
-        double costoBase = 5000;
-        double costoPorPeso = peso * 200;
-        double costoPorVolumen = volumen * 100;
-        double recargoPrioridad = prioridad * 500;
-        double recargoDistancia = distancia * 50;
+        double costoBase = Constantes.precioBase;
+        double costoPorPeso = Constantes.precioPorPeso * peso;
+        double costoPorVolumen = Constantes.precioPorVolumen * 100;
+        double recargoPrioridad = Constantes.precioPorPrioridad * 500;
+        double recargoDistancia = Constantes.precioPorDistancia * 50;
 
         double total = costoBase + costoPorPeso + costoPorVolumen + recargoPrioridad + recargoDistancia;
 
