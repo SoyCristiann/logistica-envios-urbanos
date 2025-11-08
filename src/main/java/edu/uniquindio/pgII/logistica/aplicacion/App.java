@@ -15,7 +15,7 @@ public class App extends Application {
         DatosDummy datosDummy = new DatosDummy();
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Constantes.inicioSesionPath));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(Constantes.inicioSesionPage));
         Scene scene = new Scene(fxmlLoader.load());
 
         //Tamaño mínimo de la vantana

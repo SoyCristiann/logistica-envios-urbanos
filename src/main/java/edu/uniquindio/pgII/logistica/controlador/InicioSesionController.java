@@ -8,6 +8,7 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -81,7 +82,7 @@ public class InicioSesionController {
         if(usuarioLogueado!=null){ //-> Login exitoso.
             //Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
-            cambiarEscena(getClass(), Rutas.menuUsuarioPage, event);
+            cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
         }else{
             setTextLabel(lblMensaje, "El login ha fallado.");
         }
@@ -89,7 +90,7 @@ public class InicioSesionController {
 
     @FXML
     void irARegistro(ActionEvent event) {
-        cambiarEscena(getClass(), Rutas.registroUsuarioPage, event);
+        cambiarEscena(getClass(), Constantes.registroUsuarioPage, event);
     }
 
 
