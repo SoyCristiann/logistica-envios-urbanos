@@ -19,8 +19,6 @@ public class DireccionService implements IDireccionService {
         if (usuarioExistente == null || direccionNueva == null) {
             return false;
         }
-
-
         if (direccionNueva.getIdDireccion() == null || direccionNueva.getIdDireccion().isBlank()) {
             direccionNueva.setIdDireccion(UUID.randomUUID().toString()); // Si no tiene ID, se genera uno automáticamente
         }

@@ -3,7 +3,6 @@ package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import edu.uniquindio.pgII.logistica.modelo.util.Constantes.Rutas;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
 import javafx.event.ActionEvent;

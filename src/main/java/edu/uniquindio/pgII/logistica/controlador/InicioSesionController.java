@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.InicioSesionDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.util.Constantes.Rutas;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;

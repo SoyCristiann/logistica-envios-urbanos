@@ -11,7 +11,7 @@ public interface IUsuarioService {
 
     public abstract Usuario iniciarSesion(String user, String pass);
     public abstract Usuario registrarUsuario(Usuario nuevoUsuario);
-    public abstract Usuario actualizarPerfil(Usuario usuarioActualizado, String password);
+    public abstract boolean actualizarPerfil(Usuario usuarioActualizado, String password);
     public abstract void agregarDireccionFrecuente(Usuario usuario, Direccion direccion);
     public abstract List<Usuario> getUsuarios();
 }

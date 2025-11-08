@@ -44,7 +44,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario actualizarPerfil(Usuario usuarioActualizado, String password) {
+    public boolean actualizarPerfil(Usuario usuarioActualizado, String password) {
         if (usuarioActualizado != null) {
             Usuario usuarioEncontrado = buscarUsuario(usuarioActualizado);
             if (usuarioEncontrado != null) {
@@ -54,10 +54,10 @@ public class UsuarioService implements IUsuarioService {
 
                 usuarioEncontrado.setPassword(password); // Cambio de contrasena
                 // el rol del usuario no se puede modificar desde aquí
-                return usuarioEncontrado;
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override
