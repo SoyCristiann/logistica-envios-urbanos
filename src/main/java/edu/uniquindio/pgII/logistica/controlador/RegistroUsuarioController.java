@@ -6,6 +6,7 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
 import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
 import javafx.beans.binding.Bindings;
@@ -203,7 +204,7 @@ public class RegistroUsuarioController {
 
             Optional<ButtonType> resultado = confirmAlert.showAndWait();
             if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
-                cambiarEscena(getClass(), Rutas.inicioSesionPage, event);
+                cambiarEscena(getClass(), Constantes.inicioSesionPage, event);
             } else {
                 // cuando se presiona el botón cancelar o se cierra el popup, no se hace nada y la ventana de RegistroUsuario permanece abierta.
             }
@@ -225,7 +226,7 @@ public class RegistroUsuarioController {
 
     @FXML
     void irInicioSesionPage(ActionEvent event){
-        cambiarEscena(getClass(), Rutas.inicioSesionPage, event);
+        cambiarEscena(getClass(), Constantes.inicioSesionPage, event);
     }
 
     private boolean validarCampos(){
