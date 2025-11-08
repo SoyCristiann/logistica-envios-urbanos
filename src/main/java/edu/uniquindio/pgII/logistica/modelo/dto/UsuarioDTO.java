@@ -1,54 +1,131 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Pago;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioDTO {
 
-    private String idUsuario;
-    private String nombreCompleto;
+    // Atributos de la entidad, todos son obligatorios.
+
+    private String idUsuario; //Será el documento, restringido en la interfaz a solo números
+    private String nombreCompleto; // Solo un campo para nombre incluyendo apellido.
     private String correo;
     private String telefono;
-    private String password;
-    private RolUsuario rol;
+    private String password; //Contraseña para inicio de sesión.
+    private RolUsuario rolUsuario;
+
+    //Listas de relaciones con otros clases
     private List<DireccionDTO> direccionesFrecuentes;
+    private List<EnvioDTO> historialEnvios;
+    private List<MetodoPago> metodosPago;
 
     public UsuarioDTO() {
+        this.direccionesFrecuentes = new ArrayList<>();
+        this.historialEnvios = new ArrayList<>();
+        this.metodosPago = new ArrayList<>();
     }
 
-    public UsuarioDTO(String idUsuario, String nombreCompleto, String correo,
-                      String telefono, String password, RolUsuario rol, List<DireccionDTO> direccionesFrecuentes) {
+    public UsuarioDTO(String idUsuario, String nombreCompleto, String correo, String telefono, String password, RolUsuario rolUsuario) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
         this.password = password;
-        this.rol = RolUsuario.USUARIO;
-        this.direccionesFrecuentes = direccionesFrecuentes;
+        this.rolUsuario = RolUsuario.USUARIO;
+        this.direccionesFrecuentes = new ArrayList<>();
+        this.historialEnvios = new ArrayList<>();
+        this.metodosPago = new ArrayList<>();
     }
 
-    // Getters y Setters
-    public String getIdUsuario() { return idUsuario; }
-    public void setIdUsuario(String idUsuario) { this.idUsuario = idUsuario; }
+    //Métodos Get y Set para gestionar el perfil
 
-    public String getNombreCompleto() { return nombreCompleto; }
-    public void setNombreCompleto(String nombreCompleto) { this.nombreCompleto = nombreCompleto; }
+    //Id
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    //Nombre
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+    public void setNombreCompleto(String nombreCompleto) {
+        this.nombreCompleto = nombreCompleto;
+    }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
+    //Correo
+    public String getCorreo() {
+        return correo;
+    }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    //Teléfono
+    public String getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-    public RolUsuario getRol() { return rol; }
-    public void setRol(RolUsuario rol) { this.rol = rol; }
+    //contraseña
+    public  String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public List<DireccionDTO> getDireccionesFrecuentes() { return direccionesFrecuentes; }
-    public void setDireccionesFrecuentes(List<DireccionDTO> direccionesFrecuentes) {
+    //Rol
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
+    }
+    public void setRolUsuario(RolUsuario rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+
+    //Direcciones
+    public List<DireccionDTO> getDireccionesFrecuentesDTO() {
+        return direccionesFrecuentes;
+    }
+    public void setDireccionesFrecuentesDTO(List<DireccionDTO> direccionesFrecuentes) {
         this.direccionesFrecuentes = direccionesFrecuentes;
+    }
+    public void agregarDireccionDTO(DireccionDTO direccion) {
+        direccionesFrecuentes.add(direccion);
+    }
+    public void eliminarDireccionDTO(DireccionDTO direccion) {
+        direccionesFrecuentes.remove(direccion);
+    }
+
+    //Métodos de pago
+    public List<MetodoPago> getMetodosPago() {
+        return metodosPago;
+    }
+    public  void setMetodosPago(List<MetodoPago> metodosPago) {
+        this.metodosPago = metodosPago;
+    }
+    public void agregarMetodoPago(MetodoPago metodoPago) {
+        metodosPago.add(metodoPago);
+    }
+    public void eliminarMetodoPago(MetodoPago metodoPago) {
+        metodosPago.remove(metodoPago);
+    }
+
+    //Historial de envíos
+    public List<EnvioDTO> getHistorialEnviosDTO() {
+        return historialEnvios;
+    }
+    public void setHistorialEnviosDTO(List<EnvioDTO> historialEnvios) {
+        this.historialEnvios = historialEnvios;
     }
 }

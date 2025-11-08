@@ -3,17 +3,18 @@ package edu.uniquindio.pgII.logistica.controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import edu.uniquindio.pgII.logistica.dto.dtoInicioSesion.InicioSesionDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.InicioSesionDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import static edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil.*;
 
 public class InicioSesionController {
 
@@ -27,6 +28,9 @@ public class InicioSesionController {
     private Button btnLogin;
 
     @FXML
+    private Button btnRegistro;
+
+    @FXML
     private TextField userInput;
 
     @FXML
@@ -38,6 +42,11 @@ public class InicioSesionController {
     }
 
     @FXML private Label lblMensaje;
+
+    @FXML
+    void registrarse(ActionEvent event) {
+        irARegistro(event);
+    }
 
     @FXML
     void initialize() {
@@ -72,11 +81,17 @@ public class InicioSesionController {
         if(usuarioLogueado!=null){ //-> Login exitoso.
             //Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
-            mostrarMensaje("El login ha sido exitoso: Usuario -> " + usuarioLogueado.getNombreCompleto(), false); // Mensaje temporal para validación.
+            cambiarEscena(getClass(), Rutas.menuUsuarioPage, event);
         }else{
-            mostrarMensaje("El login ha fallado.", false);
+            setTextLabel(lblMensaje, "El login ha fallado.");
         }
     }
+
+    @FXML
+    void irARegistro(ActionEvent event) {
+        cambiarEscena(getClass(), Rutas.registroUsuarioPage, event);
+    }
+
 
 
     //valida los campos y la estructura del campo del correo.
@@ -84,17 +99,16 @@ public class InicioSesionController {
         String correo= userInput.getText().trim();
         String pass= passInput.getText().trim();
 
-        System.out.println("Correo es vacio: " + correo.isEmpty());
         if(correo.isEmpty()){
-            mostrarMensaje("El campo de correo es obligatorio.", true);
+            setTextLabel(lblMensaje, "El campo de correo es obligatorio.");
             return false;
         }
         if (!correo.contains("@") || !correo.contains(".")){
-            mostrarMensaje("El campo correo no tiene la estructura correcta.", true);
+            setTextLabel(lblMensaje, "El campo correo no tiene la estructura correcta.");
             return false;
         }
         if(pass.isEmpty()){
-            mostrarMensaje("El campo de contraseña es obligatorio.", true);
+            setTextLabel(lblMensaje,"El campo de contraseña es obligatorio.");
             return false;
         }
 
@@ -102,12 +116,4 @@ public class InicioSesionController {
         return true;
     }
 
-    //Mensaje que se muestra en caso de error.
-    private void mostrarMensaje(String mensaje, boolean esError) {
-        if (lblMensaje != null) {
-            lblMensaje.setText(mensaje);
-            lblMensaje.setVisible(true);
-        }
-        System.out.println("InicioSesionController: " + mensaje);
-    }
 }

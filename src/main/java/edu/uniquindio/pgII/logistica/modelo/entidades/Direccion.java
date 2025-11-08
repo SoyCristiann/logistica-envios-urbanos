@@ -9,12 +9,13 @@ public class Direccion {
     private String ciudad;
     private String codigoPostal;
     private String descripcion;
+    private String alias;
 
 
     public Direccion() {
     }
 
-    public Direccion(String idDireccion, String calle, String numero, String barrio,String ciudad,String codigoPostal,String descripcion) {
+    public Direccion(String idDireccion, String calle, String numero, String barrio,String ciudad,String codigoPostal,String descripcion, String alias) {
         this.idDireccion = idDireccion;
         this.calle = calle;
         this.numero = numero;
@@ -22,6 +23,7 @@ public class Direccion {
         this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
         this.descripcion = descripcion;
+        this.alias = alias;
 
 
     }
@@ -84,7 +86,11 @@ public class Direccion {
         this.descripcion = descripcion;
     }
 
+    public String getAlias() {
+        return alias;
+    }
 
-
-
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 }
