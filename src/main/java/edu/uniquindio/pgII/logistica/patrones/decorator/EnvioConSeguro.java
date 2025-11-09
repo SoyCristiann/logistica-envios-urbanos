@@ -1,7 +1,7 @@
-package edu.uniquindio.pgII.logistica.patrones.Decorator;
+package edu.uniquindio.pgII.logistica.patrones.decorator;
 
 public class EnvioConSeguro extends EnvioDecorator {
-    public EnvioConSeguro(IEnvio envio) {
+    public EnvioConSeguro(EnvioComponente envio) {
         super(envio);
     }
 

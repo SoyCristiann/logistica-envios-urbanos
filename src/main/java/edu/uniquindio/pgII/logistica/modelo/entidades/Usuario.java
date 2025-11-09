@@ -31,9 +31,10 @@ public class Usuario {
         this.password = password;
         this.rolUsuario = rolUsuario;
         this.direccionesFrecuentes = new ArrayList<>();
-        this.historialEnvios = new ArrayList<>();
         this.metodosPago = new ArrayList<>();
+        this.historialEnvios = new ArrayList<>();
     }
+
 
 
     public Usuario() {

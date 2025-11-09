@@ -3,6 +3,8 @@ package edu.uniquindio.pgII.logistica.modelo.entidades;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio.PREDETERMINADO;
 
@@ -20,22 +22,25 @@ public class Envio {
     private Usuario usuario;
     private Repartidor repartidor;
 
+    private List<ServicioAdicional> serviciosAdicionales;
+
+
 
     // CONSTRUCTOR
 
-    public Envio(String idEnvio, String origen, String destino, double peso, double costo, String dimensiones, EstadoEnvio estado, LocalDate fechaCreacion, LocalDate fechaEstimada, Usuario usuario, Repartidor repartidor) {
-        this.idEnvio = idEnvio;
+    public Envio() {}
+
+    public Envio(String origen, String destino, double peso, String dimensiones, double costo, EstadoEnvio estado) {
         this.origen = origen;
         this.destino = destino;
         this.peso = peso;
-        this.costo = costo;
         this.dimensiones = dimensiones;
+        this.costo = costo;
         this.estado = estado;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaEstimada = fechaEstimada;
-        this.usuario = usuario;
-        this.repartidor = repartidor;
+        this.serviciosAdicionales = new ArrayList<>(); // importante inicializar la lista
     }
+
+
 
     // GETTERS AND SETTERS
 
@@ -125,6 +130,18 @@ public class Envio {
 
     public void setRepartidor(Repartidor repartidor) {
         this.repartidor = repartidor;
+    }
+
+
+
+
+
+    public List<ServicioAdicional> getServiciosAdicionales() {
+        return serviciosAdicionales;
+    }
+
+    public void setServiciosAdicionales(List<ServicioAdicional> serviciosAdicionales) {
+        this.serviciosAdicionales = serviciosAdicionales;
     }
 
 }
