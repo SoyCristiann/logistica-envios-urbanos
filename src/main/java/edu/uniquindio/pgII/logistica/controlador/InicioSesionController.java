@@ -83,9 +83,10 @@ public class InicioSesionController {
         if(usuarioLogueado != null){ // -> Login exitoso.
             // Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
+
             if (usuarioLogueado.getRolUsuario() == RolUsuario.ADMINISTRADOR ) {
                 // menu admin
-                System.out.println("Menú de ADMINISTRADOR");
+                cambiarEscena(getClass(), Constantes.administradorMainPage, event);
             } else {
                 // (Opcional) Muestra un mensaje temporal
                 setTextLabel(lblMensaje, "Inicio de sesión exitoso. Bienvenido " + usuarioLogueado.getNombreCompleto());

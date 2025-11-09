@@ -1,14 +1,17 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioService implements IUsuarioService {
-    List<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
     public UsuarioService() {
         this.usuarios = new ArrayList<>();
@@ -85,4 +88,39 @@ public class UsuarioService implements IUsuarioService {
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
+
+    @Override
+    public boolean eliminarUsuario(UsuarioDTO usuario) {
+        if (usuario != null) {
+            for (Usuario u : usuarios) {
+                if (u.getIdUsuario().equals(usuario.getIdUsuario())) {
+                    usuarios.remove(u);
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    //este metodo actualiza un usuario desde la vista del administrador. No puede actualizar la contraseña pero sí modificar el rol.
+    @Override
+    public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, String idUsuarioAnterior) {
+        if (usuarioDTO != null) {
+            for (Usuario u : usuarios) {
+                if (u.getIdUsuario().equals(idUsuarioAnterior)) {
+                    u.setIdUsuario(usuarioDTO.getIdUsuario());
+                    u.setNombreCompleto(usuarioDTO.getNombreCompleto());
+                    u.setCorreo(usuarioDTO.getCorreo());
+                    u.setTelefono(usuarioDTO.getTelefono());
+                    u.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+                    return UsuarioMapper.toDTO(u);
+                }
+            }
+            return null;
+        }
+        return null;
+    }
+
+
 }

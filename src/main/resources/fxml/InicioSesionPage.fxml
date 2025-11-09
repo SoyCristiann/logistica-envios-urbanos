@@ -18,7 +18,7 @@
             <VBox alignment="CENTER" spacing="20.0">
                <children>
                   <TextField fx:id="userInput" alignment="CENTER" maxWidth="500.0" promptText="Correo" />
-                  <TextField fx:id="passInput" alignment="CENTER" maxWidth="500.0" promptText="Contraseña" />
+                  <PasswordField fx:id="passInput" alignment="CENTER" maxWidth="500.0" promptText="Contraseña" />
                </children>
             </VBox>
             <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#iniciarSesion" text="Iniciar Sesión" />

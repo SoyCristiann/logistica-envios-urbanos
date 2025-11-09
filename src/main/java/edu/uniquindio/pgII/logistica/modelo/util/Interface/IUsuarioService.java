@@ -1,5 +1,6 @@
 package edu.uniquindio.pgII.logistica.modelo.util.Interface;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 
@@ -14,4 +15,6 @@ public interface IUsuarioService {
     public abstract boolean actualizarPerfil(Usuario usuarioActualizado);
     public abstract void agregarDireccionFrecuente(Usuario usuario, Direccion direccion);
     public abstract List<Usuario> getUsuarios();
+    public abstract boolean eliminarUsuario(UsuarioDTO usuario);
+    public abstract UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, String  idUsuarioAnterior);
 }

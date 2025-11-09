@@ -16,6 +16,7 @@ public class Constantes {
     public static final String serviciosAdicionalesPage= "/fxml/UsuarioViews/ServiciosAdicionalesPage.fxml";
     public static final String historialEnviosPage= "/fxml/HistorialEnviosPage.fxml";
     public static final String reportesPage= "/fxml/ReportesPage.fxml";
+    public static final String administradorMainPage= "/fxml/adminViews/mainPageAdmin.fxml";
 
 
     public static final double precioBase = 5000;
