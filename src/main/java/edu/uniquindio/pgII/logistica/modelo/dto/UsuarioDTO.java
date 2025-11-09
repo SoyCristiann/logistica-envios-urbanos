@@ -31,7 +31,7 @@ public class UsuarioDTO {
         this.metodosPago = new ArrayList<>();
     }
 
-    public UsuarioDTO(String idUsuario, String nombreCompleto, String correo, String telefono, String password, RolUsuario rolUsuario) {
+    public UsuarioDTO(String idUsuario, String nombreCompleto, String correo, String telefono, String password) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
@@ -86,8 +86,8 @@ public class UsuarioDTO {
     }
 
     //Rol
-    public RolUsuario getRolUsuario() {
-        return rolUsuario;
+    public String getRolUsuario() {
+        return rolUsuario.toString();
     }
     public void setRolUsuario(RolUsuario rolUsuario) {
         this.rolUsuario = rolUsuario;

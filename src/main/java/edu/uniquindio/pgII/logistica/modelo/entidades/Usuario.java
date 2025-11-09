@@ -23,13 +23,13 @@ public class Usuario {
     private List<MetodoPago> metodosPago;
 
     //Constructor completo
-    public Usuario(String idUsuario, String nombreCompleto, String correo, String telefono, String password, RolUsuario rolUsuario) {
+    public Usuario(String idUsuario, String nombreCompleto, String correo, String telefono, String password) {
         this.idUsuario = idUsuario;
         this.nombreCompleto = nombreCompleto;
         this.correo = correo;
         this.telefono = telefono;
         this.password = password;
-        this.rolUsuario = rolUsuario;
+        this.rolUsuario = RolUsuario.USUARIO;
         this.direccionesFrecuentes = new ArrayList<>();
         this.historialEnvios = new ArrayList<>();
         this.metodosPago = new ArrayList<>();

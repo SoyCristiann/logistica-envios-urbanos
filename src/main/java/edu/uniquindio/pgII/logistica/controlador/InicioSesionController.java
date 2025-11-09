@@ -82,7 +82,7 @@ public class InicioSesionController {
         if(usuarioLogueado!=null){ //-> Login exitoso.
             //Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
-            cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
+            cambiarEscena(getClass(), Constantes.administradorMainPage, event);
         }else{
             setTextLabel(lblMensaje, "El login ha fallado.");
         }

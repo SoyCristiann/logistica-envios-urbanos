@@ -167,7 +167,7 @@ public class RegistroUsuarioController {
         String descripcionDir= inputDescripcionDir.getText();
         String aliasDir= inputAliasDir.getText();
 
-        UsuarioDTO usuarioNuevo= new UsuarioDTO(id, nombre, email, telefono, pass, RolUsuario.USUARIO);
+        UsuarioDTO usuarioNuevo= new UsuarioDTO(id, nombre, email, telefono, pass);
         DireccionDTO direccionNuevo= new DireccionDTO(idDir, calleDir, numeroDir, barrioDir, ciudadDir, codigoPostalDir, descripcionDir, aliasDir);
         usuarioNuevo.getDireccionesFrecuentesDTO().add(direccionNuevo);
 
@@ -176,8 +176,7 @@ public class RegistroUsuarioController {
             usuarioNuevo.getMetodosPago().add(metodoPago);
         }
 
-        AdministradorSingleton administrador= AdministradorSingleton.getInstance();
-        IUsuarioService usuarioService= administrador.getUsuarioService();
+        IUsuarioService usuarioService= AdministradorSingleton.getInstance().getUsuarioService();
 
         if(usuarioService.registrarUsuario(UsuarioMapper.toEntity(usuarioNuevo)) != null){
             Alert alert= new Alert(Alert.AlertType.INFORMATION);

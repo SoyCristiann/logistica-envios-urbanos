@@ -8,6 +8,7 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,9 +26,9 @@ public class UsuarioMapper {
                 usuario.getNombreCompleto(),
                 usuario.getCorreo(),
                 usuario.getTelefono(),
-                usuario.getPassword(),
-                usuario.getRolUsuario()
+                usuario.getPassword()
         );
+        dto.setRolUsuario(usuario.getRolUsuario());
 
         List<DireccionDTO> direccionesDTO = new ArrayList<>();
         List<MetodoPago> metodosPago= new ArrayList<>();
@@ -69,9 +70,9 @@ public class UsuarioMapper {
                 usuarioDTO.getNombreCompleto(),
                 usuarioDTO.getCorreo(),
                 usuarioDTO.getTelefono(),
-                usuarioDTO.getPassword(),
-                usuarioDTO.getRolUsuario()
+                usuarioDTO.getPassword()
         );
+        usuario.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
 
         List<Direccion> direcciones= new ArrayList<>();
         List<MetodoPago> metodosPago= new ArrayList<>();
@@ -113,7 +114,7 @@ public class UsuarioMapper {
         usuario.setCorreo(usuarioDTO.getCorreo());
         usuario.setTelefono(usuarioDTO.getTelefono());
         usuario.setPassword(usuarioDTO.getPassword());
-        usuario.setRolUsuario(usuarioDTO.getRolUsuario());
+        usuario.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
 
         //Direcciones, metodo de pago e historial de envios
         List<Direccion> direcciones= new ArrayList<>();
