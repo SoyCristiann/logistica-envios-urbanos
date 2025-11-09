@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/25"
+            xmlns="http://javafx.com/javafx/21"
             fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController"
             prefWidth="1200" prefHeight="800">
 
@@ -18,9 +18,16 @@
         </font>
     </Label>
 
+    <!-- Etiqueta que muestra el usuario logueado -->
+    <Label fx:id="lblUsuario" layoutX="420" layoutY="120" text="Bienvenido usuario">
+        <font>
+            <Font size="18" />
+        </font>
+    </Label>
+
     <!-- Contenedor de botones -->
     <VBox spacing="18"
-          AnchorPane.topAnchor="140"
+          AnchorPane.topAnchor="180"
           AnchorPane.leftAnchor="460"
           AnchorPane.rightAnchor="460"
           AnchorPane.bottomAnchor="80">

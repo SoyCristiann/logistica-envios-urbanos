@@ -1,6 +1,5 @@
 package edu.uniquindio.pgII.logistica.modelo.util.mappers;
 
-import com.sun.marlin.stats.Histogram;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
@@ -8,15 +7,13 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class UsuarioMapper {
 
-    public static UsuarioDTO toUsuarioDTO(Usuario usuario){
+    public static UsuarioDTO toDTO(Usuario usuario){
         if(usuario==null){
             return null;
         }
@@ -92,7 +89,7 @@ public class UsuarioMapper {
 
         if(usuarioDTO.getHistorialEnviosDTO()!=null){
             for (EnvioDTO envioDTO: usuarioDTO.getHistorialEnviosDTO()){
-                historialEnvios.add(EnvioMapper.toEntity(envioDTO, usuario, null));
+                historialEnvios.add(EnvioMapper.toEntity(envioDTO));
             }
         }
 
@@ -129,7 +126,7 @@ public class UsuarioMapper {
 
         if(usuarioDTO.getHistorialEnviosDTO()!=null){
             for (EnvioDTO envioDTO: usuarioDTO.getHistorialEnviosDTO()){
-                historialEnvios.add(EnvioMapper.toEntity(envioDTO, usuario, null));
+                historialEnvios.add(EnvioMapper.toEntity(envioDTO));
             }
         }
 

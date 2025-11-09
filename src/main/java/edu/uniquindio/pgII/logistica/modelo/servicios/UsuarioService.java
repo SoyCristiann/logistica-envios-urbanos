@@ -43,17 +43,21 @@ public class UsuarioService implements IUsuarioService {
         return nuevoUsuario;
     }
 
+
+
+
     @Override
-    public boolean actualizarPerfil(Usuario usuarioActualizado, String password) {
+    public boolean actualizarPerfil(Usuario usuarioActualizado) {
         if (usuarioActualizado != null) {
             Usuario usuarioEncontrado = buscarUsuario(usuarioActualizado);
             if (usuarioEncontrado != null) {
                 usuarioEncontrado.setNombreCompleto(usuarioActualizado.getNombreCompleto());
                 usuarioEncontrado.setCorreo(usuarioActualizado.getCorreo());
                 usuarioEncontrado.setTelefono(usuarioActualizado.getTelefono());
-
-                usuarioEncontrado.setPassword(password); // Cambio de contrasena
+                // no se puede modificar la contrasena
                 // el rol del usuario no se puede modificar desde aquí
+
+
                 return true;
             }
         }

@@ -41,7 +41,7 @@ public class MenuUsuarioController {
     private Button btnMisEnvios;
 
     @FXML
-    private Label userName;
+    private Label lblUsuario;
 
     @FXML
     private Button btnPago;
@@ -52,6 +52,9 @@ public class MenuUsuarioController {
     @FXML
     private Button btnReportes;
 
+    private final SesionManagerSingleton sesionManager = SesionManagerSingleton.getInstance();
+
+    // EVENTOS
     @FXML
     void abrirPerfil(ActionEvent event) {
         VentanaUtil.cambiarEscena(getClass(), Constantes.perfilUsuarioPage, event);
@@ -99,15 +102,12 @@ public class MenuUsuarioController {
 
     @FXML
     void cerrarSesion(ActionEvent event) {
-        //Pendiente definir la logica de cierre de sesión
+        // Pendiente: lógica de cierre de sesión
     }
 
-    SesionManagerSingleton sesionManager= SesionManagerSingleton.getInstance();
+    // ------------------ INICIALIZACIÓN ------------------
     @FXML
     void initialize() {
-        VentanaUtil.setUsuarioLogueado(userName);
+        VentanaUtil.setUsuarioLogueado(lblUsuario);
     }
-
-
-
 }

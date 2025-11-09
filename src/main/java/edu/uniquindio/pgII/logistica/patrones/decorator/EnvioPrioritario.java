@@ -1,7 +1,7 @@
-package edu.uniquindio.pgII.logistica.patrones.Decorator;
+package edu.uniquindio.pgII.logistica.patrones.decorator;
 
 public class EnvioPrioritario extends EnvioDecorator {
-    public EnvioPrioritario(IEnvio envio) {
+    public EnvioPrioritario(EnvioComponente envio) {
         super(envio);
     }
 

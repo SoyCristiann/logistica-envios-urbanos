@@ -5,14 +5,15 @@ public class Constantes {
     //Rutas de la interfaces gráficas.
     public static final String inicioSesionPage= "/fxml/InicioSesionPage.fxml";
     public static final String registroUsuarioPage= "/fxml/RegistroUsuarioPage.fxml";
-    public static final String perfilUsuarioPage= "/fxml/usuario/PerfilUsuarioPage.fxml";
-    public static final String menuUsuarioPage= "/fxml/usuario/MenuUsuarioPage.fxml";
-    public static final String cotizadorEnvioPage= "/fxml/CotizarEnvioPage.fxml";
-    public static final String crearEnvioPage= "/fxml/CrearEnvioPage.fxml";
-    public static final String misEnviosPage= "/fxml/MisEnviosPage.fxml";
-    public static final String pagoEnvioPage= "/fxml/PagoEnvioPage.fxml";
-    public static final String rastreoEnvioPage= "/fxml/RastreoEnvioPage.fxml";
-    public static final String serviciosAdicionalesPage= "/fxml/ServiciosAdicionalesPage.fxml";
+
+    public static final String perfilUsuarioPage = "/fxml/UsuarioViews/PerfilUsuarioPage.fxml";
+    public static final String menuUsuarioPage = "/fxml/UsuarioViews/MenuUsuarioPage.fxml";
+    public static final String cotizadorEnvioPage= "/fxml/UsuarioViews/CotizarEnvioPage.fxml";
+    public static final String crearEnvioPage= "/fxml/UsuarioViews/CrearEnvioPage.fxml";
+    public static final String misEnviosPage= "/fxml/UsuarioViews/MisEnviosPage.fxml";
+    public static final String pagoEnvioPage= "/fxml/UsuarioViews/PagoEnvioPage.fxml";
+    public static final String rastreoEnvioPage= "/fxml/UsuarioViews/RastreoEnvioPage.fxml";
+    public static final String serviciosAdicionalesPage= "/fxml/UsuarioViews/ServiciosAdicionalesPage.fxml";
     public static final String historialEnviosPage= "/fxml/HistorialEnviosPage.fxml";
     public static final String reportesPage= "/fxml/ReportesPage.fxml";
 

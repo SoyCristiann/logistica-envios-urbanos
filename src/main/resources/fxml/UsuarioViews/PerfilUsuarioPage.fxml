@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/25"
-            fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.PerfilUsuarioController"
-            prefWidth="1200" prefHeight="800">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.PerfilUsuarioController">
 
     <children>
 
         <!-- Título -->
         <Label layoutX="460" layoutY="50" text="GESTIÓN DE PERFIL">
             <font>
-                <Font name="System Bold" size="36"/>
+                <Font name="System Bold" size="36" />
             </font>
         </Label>
 
@@ -24,32 +24,32 @@
         <VBox layoutX="400" layoutY="150" spacing="20">
 
             <HBox spacing="10">
-                <Label text="Nombre completo:" prefWidth="150"/>
-                <TextField fx:id="txtNombre" prefWidth="300"/>
+                <Label prefWidth="150" text="Nombre completo:" />
+                <TextField fx:id="txtNombre" prefWidth="300" />
             </HBox>
 
             <HBox spacing="10">
-                <Label text="Correo electrónico:" prefWidth="150"/>
-                <TextField fx:id="txtCorreo" prefWidth="300"/>
+                <Label prefWidth="150" text="Correo electrónico:" />
+                <TextField fx:id="txtCorreo" prefWidth="300" />
             </HBox>
 
             <HBox spacing="10">
-                <Label text="Teléfono:" prefWidth="150"/>
-                <TextField fx:id="txtTelefono" prefWidth="300"/>
+                <Label prefWidth="150" text="Teléfono:" />
+                <TextField fx:id="txtTelefono" prefWidth="300" />
             </HBox>
 
             <!-- Lista de direcciones frecuentes -->
             <HBox spacing="10">
-                <Label text="Direcciones frecuentes:" prefWidth="150"/>
-                <ComboBox fx:id="comboDirecciones" prefWidth="300"/>
-                <Button text="Agregar" onAction="#agregarDireccion"/>
-                <Button text="Eliminar" onAction="#eliminarDireccion"/>
+                <Label prefWidth="150" text="Direcciones frecuentes:" />
+                <ComboBox fx:id="comboDirecciones" prefWidth="300" />
+                <Button onAction="#agregarDireccion" text="Agregar" />
+                <Button onAction="#eliminarDireccion" text="Eliminar" />
             </HBox>
 
             <!-- Botones de acción -->
-            <HBox spacing="15" layoutX="400" layoutY="500">
-                <Button fx:id="btnGuardar" text="Guardar Cambios" onAction="#guardarPerfil" prefWidth="200" prefHeight="40"/>
-                <Button fx:id="btnVolver" text="Volver al Menú" onAction="#volverMenu" prefWidth="200" prefHeight="40"/>
+            <HBox layoutX="400" layoutY="500" spacing="15">
+                <Button fx:id="btnGuardar" onAction="#guardarPerfil" prefHeight="40" prefWidth="200" text="Guardar Cambios" />
+                <Button fx:id="btnVolver" onAction="#volverMenu" prefHeight="40" prefWidth="200" text="Volver al Menú" />
             </HBox>
 
         </VBox>

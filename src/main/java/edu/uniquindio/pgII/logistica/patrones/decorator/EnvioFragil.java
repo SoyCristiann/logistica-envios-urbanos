@@ -1,7 +1,7 @@
-package edu.uniquindio.pgII.logistica.patrones.Decorator;
+package edu.uniquindio.pgII.logistica.patrones.decorator;
 
 public class EnvioFragil extends EnvioDecorator {
-    public EnvioFragil(IEnvio envio) {
+    public EnvioFragil(EnvioComponente envio) {
         super(envio);
     }
 
