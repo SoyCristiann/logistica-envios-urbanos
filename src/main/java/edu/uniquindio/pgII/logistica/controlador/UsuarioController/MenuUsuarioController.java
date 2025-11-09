@@ -3,8 +3,8 @@ package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import edu.uniquindio.pgII.logistica.modelo.util.Constantes.Rutas;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,47 +54,47 @@ public class MenuUsuarioController {
 
     @FXML
     void abrirPerfil(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.perfilUsuarioPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.perfilUsuarioPage, event);
     }
 
     @FXML
     void abrirCotizarEnvio(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.cotizadorEnvioPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.cotizadorEnvioPage, event);
     }
 
     @FXML
     void abrirCrearEnvio(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.crearEnvioPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.crearEnvioPage, event);
     }
 
     @FXML
     void abrirMisEnvios(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.misEnviosPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.misEnviosPage, event);
     }
 
     @FXML
     void abrirPagos(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.pagoEnvioPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.pagoEnvioPage, event);
     }
 
     @FXML
     void abrirRastreo(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.rastreoEnvioPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.rastreoEnvioPage, event);
     }
 
     @FXML
     void abrirServicios(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.serviciosAdicionalesPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.serviciosAdicionalesPage, event);
     }
 
     @FXML
     void abrirHistorial(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.historialEnviosPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.historialEnviosPage, event);
     }
 
     @FXML
     void abrirReportes(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Rutas.reportesPage, event);
+        VentanaUtil.cambiarEscena(getClass(), Constantes.reportesPage, event);
     }
 
     @FXML

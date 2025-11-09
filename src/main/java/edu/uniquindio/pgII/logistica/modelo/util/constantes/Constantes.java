@@ -1,6 +1,6 @@
-package edu.uniquindio.pgII.logistica.modelo.util.Constantes;
+package edu.uniquindio.pgII.logistica.modelo.util.constantes;
 
-public class Rutas {
+public class Constantes {
 
     //Rutas de la interfaces gráficas.
     public static final String inicioSesionPage= "/fxml/InicioSesionPage.fxml";
@@ -17,4 +17,9 @@ public class Rutas {
     public static final String reportesPage= "/fxml/ReportesPage.fxml";
 
 
+    public static final double precioBase = 5000;
+    public static final double precioPorPeso = 200;
+    public static final double precioPorVolumen = 100;
+    public static final double precioPorPrioridad = 500;
+    public static final double precioPorDistancia = 50;
 }

@@ -46,19 +46,22 @@ public class EnvioService implements IEnvioService {
     public boolean modificarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null) {
-            envioExistente.setDestino(envio.getDestino());
-            envioExistente.setPeso(envio.getPeso());
-            envioExistente.setDimensiones(envio.getDimensiones());
-            envioExistente.setFechaEstimada(envio.getFechaEstimada());
-            return true;
+            if(envio.getEstado() == EstadoEnvio.SOLICITADO) {
+                envioExistente.setDestino(envio.getDestino());
+                envioExistente.setPeso(envio.getPeso());
+                envioExistente.setDimensiones(envio.getDimensiones());
+                envioExistente.setFechaEstimada(envio.getFechaEstimada());
+                return true;
+            }
         }
         return false;
     }
 
+
     // Cancelar un envío
     public boolean cancelarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
-        if (envioExistente != null && envioExistente.getEstado() != EstadoEnvio.ENTREGADO) {
+        if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
             envioExistente.setEstado(EstadoEnvio.INCIDENCIA);
             return true;
         }
@@ -93,20 +96,28 @@ public class EnvioService implements IEnvioService {
 
     // Consultar historial por usuario y filtro
     public ArrayList<Envio> consultarHistorial(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin, EstadoEnvio estado) {
-        ArrayList<Envio> resultado = new ArrayList<>();
+        ArrayList<Envio> listaFiltrada = new ArrayList<>();
 
-        for (Envio e : envios) {
-            boolean mismoUsuario = e.getUsuario().equals(usuario);
-            boolean dentroFechas = (e.getFechaCreacion().isAfter(fechaInicio.minusDays(1)) &&
-                    e.getFechaCreacion().isBefore(fechaFin.plusDays(1)));
-            boolean mismoEstado = (estado == null || e.getEstado() == estado);
+        for (Envio envio : envios) {
+            // Verificar si el envio pertenece al usuario
+            if (envio.getUsuario().equals(usuario)) {
 
-            if (mismoUsuario && dentroFechas && mismoEstado) {
-                resultado.add(e);
+                // Verificar si la fecha del envio esta entre las fechas dadas
+                LocalDate fecha = envio.getFechaCreacion();
+                if ((fecha.isAfter(fechaInicio) || fecha.isEqual(fechaInicio)) &&
+                        (fecha.isBefore(fechaFin) || fecha.isEqual(fechaFin))) {
+
+                    // Verificar si el estado coincide o si no se filtró por estado
+                    if (estado == null || envio.getEstado() == estado) {
+                        listaFiltrada.add(envio);
+                    }
+                }
             }
         }
-        return resultado;
+
+        return listaFiltrada;
     }
+
 
     // Agregar servicio adicional
     public boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio) {
@@ -130,7 +141,7 @@ public class EnvioService implements IEnvioService {
         return false;
     }
 
-    // Calcular costo total (usa TarifaService)
+    // Calcular costo total
     public double calcularCostoTotal(Envio envio) {
         if (envio == null) return 0;
 
