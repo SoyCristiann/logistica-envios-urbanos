@@ -221,7 +221,7 @@ public class MainPageAdminController {
     private void actualizarTblUsuarios() {
         List<UsuarioDTO> usuariosDTO= new ArrayList<>();
         for (Usuario usuario: usuarioService.getUsuarios()){
-            usuariosDTO.add(UsuarioMapper.toUsuarioDTO(usuario));
+            usuariosDTO.add(UsuarioMapper.toDTO(usuario));
         }
         tblUsuarios.getItems().clear();
         tblUsuarios.getItems().addAll(usuariosDTO);
@@ -250,6 +250,7 @@ public class MainPageAdminController {
             alertInfo.setHeaderText(null);
             alertInfo.setContentText("No es posible elimianr el usuario con el que se ha iniciado sesión.");
             alertInfo.showAndWait();
+            alertInfo.setContentText("");
             return;
         }
         confirmAlert.setTitle("Confirmación de borrado de usuario");
@@ -257,18 +258,21 @@ public class MainPageAdminController {
         confirmAlert.setContentText("¿Está seguro que desea borrar el usuario: " + usuarioDTO.getIdUsuario() + " - " +  usuarioDTO.getNombreCompleto() + "?");
 
         Optional<ButtonType> resultado = confirmAlert.showAndWait();
+        confirmAlert.setContentText("");
         if (resultado.isPresent() && resultado.get() == ButtonType.OK) {
             if(usuarioService.eliminarUsuario(usuarioDTO)){
                 alertInfo.setTitle("Exito.");
                 alertInfo.setHeaderText(null);
                 alertInfo.setContentText("El usuario se ha eliminado de forma correcta.");
                 alertInfo.showAndWait();
+                alertInfo.setContentText("");
                 actualizarTblUsuarios();
             }else {
                 alertInfo.setTitle("Error.");
                 alertInfo.setHeaderText(null);
                 alertInfo.setContentText("Se ha presentado un error al eliminar el usuario.");
                 alertInfo.showAndWait();
+                alertInfo.setContentText("");
                 actualizarTblUsuarios();
             }
         } else {

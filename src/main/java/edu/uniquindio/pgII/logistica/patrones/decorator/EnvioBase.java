@@ -1,6 +1,6 @@
-package edu.uniquindio.pgII.logistica.patrones.Decorator;
+package edu.uniquindio.pgII.logistica.patrones.decorator;
 
-public class EnvioBase implements IEnvio {
+public class EnvioBase implements EnvioComponente {
     private double costoBase;
     private String descripcion;
 

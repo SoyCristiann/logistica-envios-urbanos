@@ -1,23 +1,25 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
-import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-import edu.uniquindio.pgII.logistica.patrones.Decorator.EnvioBase;
-import edu.uniquindio.pgII.logistica.patrones.Decorator.IEnvio;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicioAdicionalService {
 
-    private List<ServicioAdicional> servicios;
+    private List<ServicioAdicional> serviciosAdicionales;
 
     public ServicioAdicionalService() {
-        this.servicios = new ArrayList<>();
+        this.serviciosAdicionales = new ArrayList<>();
     }
 
+//    // Para cargar datos
+//    public void registrarServicio (String idService, String nombre, String descripcion, double costo){
+//        ServicioAdicional servicioAdicional = new ServicioAdicional(idService, nombre, descripcion,  costo);
+//
+//    }
 
-    public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
+    public boolean registrarServicioAdicional(ServicioAdicional servicioAdicionalNuevo) {
         if (servicioAdicionalNuevo == null || servicioAdicionalNuevo.getIdService() == null) {
             return false;
         }
@@ -27,7 +29,7 @@ public class ServicioAdicionalService {
             return false;
         }
 
-        servicios.add(servicioAdicionalNuevo);
+        serviciosAdicionales.add(servicioAdicionalNuevo);
         return true;
     }
 
@@ -56,7 +58,7 @@ public class ServicioAdicionalService {
 
         ServicioAdicional existente = buscarPorId(servicioAdicional.getIdService());
         if (existente != null) {
-            servicios.remove(existente);
+            serviciosAdicionales.remove(existente);
             return true;
         }
 
@@ -65,7 +67,7 @@ public class ServicioAdicionalService {
 
 
     public ServicioAdicional buscarPorId(String idService) {
-        for (ServicioAdicional s : servicios) {
+        for (ServicioAdicional s : serviciosAdicionales) {
             if (s.getIdService().equals(idService)) {
                 return s;
             }
@@ -75,10 +77,18 @@ public class ServicioAdicionalService {
 
 
     public ArrayList<ServicioAdicional> listarServicios() {
-        return new ArrayList<>(servicios);
+        return new ArrayList<>(serviciosAdicionales);
     }
 
 
+    public ServicioAdicional buscarPorNombre(String nombre) {
+        for (ServicioAdicional s : serviciosAdicionales) {
+            if (s.getNombre().equalsIgnoreCase(nombre)) {
+                return s;
+            }
+        }
+        return null;
+    }
 
     //
 //    public double calcularCostoConExtras(EnvioDTO envioDTO) {

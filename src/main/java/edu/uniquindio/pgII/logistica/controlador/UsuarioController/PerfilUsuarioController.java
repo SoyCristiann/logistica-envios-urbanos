@@ -1,6 +1,10 @@
 package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.aplicacion.App;
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,15 +22,31 @@ public class PerfilUsuarioController {
     @FXML private ComboBox<String> comboDirecciones;
 
     @FXML
+    void initialize() {
+        System.out.println("Vista cargada correctamente");
+    }
+
+
+    @FXML
     private void guardarPerfil() {
         String nombre = txtNombre.getText();
         String correo = txtCorreo.getText();
         String telefono = txtTelefono.getText();
 
-        System.out.println("Perfil guardado:");
-        System.out.println("Nombre: " + nombre);
-        System.out.println("Correo: " + correo);
-        System.out.println("Teléfono: " + telefono);
+        SesionManagerSingleton sesion = SesionManagerSingleton.getInstance();
+        Usuario usuarioActual = sesion.getUsuarioActivo();
+
+        UsuarioDTO usuarioDTO = new UsuarioDTO();
+        usuarioDTO.setIdUsuario(usuarioActual.getIdUsuario());
+        usuarioDTO.setNombreCompleto(nombre);
+        usuarioDTO.setCorreo(correo);
+        usuarioDTO.setTelefono(telefono);
+
+        UsuarioFacade fachada = new UsuarioFacade();
+        fachada.actualizarPerfil(usuarioDTO);
+
+        System.out.println("Perfil actualizado correctamente"); // confirmacion
+        // aun falta confirmar
     }
 
     @FXML

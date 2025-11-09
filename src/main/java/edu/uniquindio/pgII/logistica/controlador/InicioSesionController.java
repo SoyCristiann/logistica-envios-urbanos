@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.InicioSesionDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
 import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
@@ -79,11 +80,22 @@ public class InicioSesionController {
 
         //Validación del loguin exitoso. Si retorna un usuario null, el inicio de sesión es fallido, si retorna un Usuario, el inicio de sesión es exitoso.
 
-        if(usuarioLogueado!=null){ //-> Login exitoso.
-            //Almacena el usuario en el sesión manager.
+        if(usuarioLogueado != null){ // -> Login exitoso.
+            // Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
-            cambiarEscena(getClass(), Constantes.administradorMainPage, event);
-        }else{
+
+            if (usuarioLogueado.getRolUsuario() == RolUsuario.ADMINISTRADOR ) {
+                // menu admin
+                cambiarEscena(getClass(), Constantes.administradorMainPage, event);
+            } else {
+                // (Opcional) Muestra un mensaje temporal
+                setTextLabel(lblMensaje, "Inicio de sesión exitoso. Bienvenido " + usuarioLogueado.getNombreCompleto());
+
+                // Cambiar a la escena del menú de usuario
+                cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
+            }
+
+        } else {
             setTextLabel(lblMensaje, "El login ha fallado.");
         }
     }
