@@ -2,7 +2,7 @@ package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
@@ -18,7 +18,7 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario iniciarSesion(String correo, String pass) {
+    public UsuarioDTO iniciarSesion(String correo, String pass) {
 
         Usuario usuarioSesion = null;
         //Busca dentro del listado de usuarios, si el correo ingresado corresponde a alguno de los usuarios registrados.
@@ -34,20 +34,22 @@ public class UsuarioService implements IUsuarioService {
         }
 
         if (usuarioSesion.getPassword().equals(pass)) {
-            return usuarioSesion; //Si encuentra la contraseña, retorna el usuario. Esto sería un inicio de sesión exitoso.
+            return UsuarioMapper.toDTO(usuarioSesion); //Si encuentra la contraseña, retorna el usuario. Esto sería un inicio de sesión exitoso.
         } else {
             return null; //Si al final no encuentra la contraseña, retorna null por contraseña no encoentrada.
         }
     }
 
     @Override
-    public Usuario registrarUsuario(Usuario nuevoUsuario) {
-        usuarios.add(nuevoUsuario);
-        return nuevoUsuario;
+    public UsuarioDTO registrarUsuario(UsuarioDTO nuevoUsuario) {
+        usuarios.add(UsuarioMapper.toEntity(nuevoUsuario));
+        for(Usuario usuario : usuarios){
+            if(usuario.getIdUsuario().equals(nuevoUsuario.getIdUsuario())){
+                return UsuarioMapper.toDTO(usuario);
+            }
+        }
+        return null;
     }
-
-
-
 
     @Override
     // metodo pafra actualizar datos, para el mismo usuario
@@ -60,8 +62,6 @@ public class UsuarioService implements IUsuarioService {
                 usuarioEncontrado.setTelefono(usuarioActualizado.getTelefono());
                 // no se puede modificar la contrasena
                 // el rol del usuario no se puede modificar desde aquí
-
-
                 return true;
             }
         }
@@ -74,8 +74,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
 
+    private Usuario buscarUsuario(Usuario usuario) {
 
-    public Usuario buscarUsuario(Usuario usuario) {
         if (usuario != null) {
             for (Usuario u : usuarios) {
                 if (u.getIdUsuario().equals(usuario.getIdUsuario())) {
@@ -88,8 +88,22 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<UsuarioDTO> getUsuarios() {
+        List<UsuarioDTO> usuariosDTO = new ArrayList<>();
+        for (Usuario u : usuarios) {
+            usuariosDTO.add(UsuarioMapper.toDTO(u));
+        }
+        return usuariosDTO;
+    }
+
+    @Override
+    public UsuarioDTO buscarUsuarioPorId(String id) {
+        for (Usuario u : usuarios) {
+            if (u.getIdUsuario().equals(id)) {
+                return UsuarioMapper.toDTO(u);
+            }
+        }
+        return null;
     }
 
 
@@ -107,7 +121,7 @@ public class UsuarioService implements IUsuarioService {
         return false;
     }
 
-    //este metodo actualiza un usuario desde la vista del administrador. No puede actualizar la contraseña pero sí modificar el rol.
+    //Este metodo actualiza un usuario desde la vista del administrador. No puede actualizar la contraseña pero sí modificar el rol.
     @Override
     public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, String idUsuarioAnterior) {
         if (usuarioDTO != null) {

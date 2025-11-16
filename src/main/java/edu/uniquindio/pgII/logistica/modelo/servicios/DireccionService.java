@@ -1,8 +1,12 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IDireccionService;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +19,10 @@ public class DireccionService implements IDireccionService {
         this.direcciones = new ArrayList<>();
     }
 
-    public boolean registrarDireccion(Usuario usuarioExistente, Direccion direccionNueva) {
+    @Override
+    public boolean registrarDireccion(UsuarioDTO usuarioDTO, DireccionDTO direccionDTO) {
+        Usuario usuarioExistente= UsuarioMapper.toEntity(usuarioDTO);
+        Direccion direccionNueva= DireccionMapper.toEntity(direccionDTO);
         if (usuarioExistente == null || direccionNueva == null) {
             return false;
         }
@@ -29,11 +36,15 @@ public class DireccionService implements IDireccionService {
     }
 
 
+    @Override
+    public boolean registrarDireccion(Usuario usuarioExistente, Direccion direccionNueva) {
+        return false;
+    }
 
     public boolean actualizarDireccion(Direccion direccionActualizada) {
         if (direccionActualizada == null) return false;
 
-        Direccion direccionVieja = buscarDireccionPorId(direccionActualizada.getIdDireccion());
+        Direccion direccionVieja = DireccionMapper.toEntity(buscarDireccionPorId(direccionActualizada.getIdDireccion()));
         if (direccionVieja != null) {
             direccionVieja.setCalle(direccionActualizada.getCalle());
             direccionVieja.setNumero(direccionActualizada.getNumero());
@@ -51,7 +62,7 @@ public class DireccionService implements IDireccionService {
     public boolean eliminarDireccion(Usuario usuario, Direccion direccionAEliminar) {
         if (usuario == null || direccionAEliminar == null) return false;
 
-        Direccion direccionEncontrada = buscarDireccionPorId(direccionAEliminar.getIdDireccion());
+        Direccion direccionEncontrada = DireccionMapper.toEntity(buscarDireccionPorId(direccionAEliminar.getIdDireccion()));
         if (direccionEncontrada != null) {
             direcciones.remove(direccionEncontrada); // se elimina del listado general
             usuario.getDireccionesFrecuentes().remove(direccionEncontrada); // y del usuario
@@ -61,11 +72,11 @@ public class DireccionService implements IDireccionService {
         return false;
     }
 
-
-    public Direccion buscarDireccionPorId(String idDireccion) {
+    @Override
+    public DireccionDTO buscarDireccionPorId(String idDireccion) {
         for (Direccion direccion : direcciones) {
             if (direccion.getIdDireccion().equals(idDireccion)) {
-                return direccion;
+                return DireccionMapper.toDTO(direccion);
             }
         }
         return null;

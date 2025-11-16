@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
-import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

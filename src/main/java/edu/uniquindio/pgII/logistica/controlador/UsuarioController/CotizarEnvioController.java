@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
+/* package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
@@ -52,3 +52,5 @@ public class CotizarEnvioController {
         cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
     }
 }
+
+ */

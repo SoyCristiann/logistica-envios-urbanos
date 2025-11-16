@@ -2,13 +2,10 @@ package edu.uniquindio.pgII.logistica.controlador;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
-import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
-import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
-import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
@@ -178,7 +175,7 @@ public class RegistroUsuarioController {
 
         IUsuarioService usuarioService= AdministradorSingleton.getInstance().getUsuarioService();
 
-        if(usuarioService.registrarUsuario(UsuarioMapper.toEntity(usuarioNuevo)) != null){
+        if(usuarioService.registrarUsuario(usuarioNuevo) != null){
             Alert alert= new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Registro Usuario Exitoso.");
             alert.setHeaderText(null);
@@ -187,13 +184,14 @@ public class RegistroUsuarioController {
             alert.showAndWait(); //Muestra la alerta y espera.
             limpiarCampos(); //Una vez se acepta el mensaje, se limpian los campos.
 
-            for (Usuario u: usuarioService.getUsuarios()){
+            //Para validación por consolsa
+            for (UsuarioDTO u: usuarioService.getUsuarios()){
                 System.out.println(u.getIdUsuario());
                 System.out.println(u.getPassword());
                 System.out.println(u.getNombreCompleto());
                 System.out.println(u.getCorreo());
                 System.out.println(u.getTelefono());
-                System.out.println(u.getDireccionesFrecuentes());
+                System.out.println(u.getDireccionesFrecuentesDTO());
             }
 
             Alert confirmAlert= new Alert(Alert.AlertType.CONFIRMATION);
@@ -229,10 +227,7 @@ public class RegistroUsuarioController {
     }
 
     private boolean validarCampos(){
-
-        String id= inputId.getText();
         String pass= inputPass.getText();
-        String nombre= inputNombre.getText();
         String email= inputEmail.getText();
         String telefono= inputTelefono.getText();
 

@@ -2,11 +2,13 @@ package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
-import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
+
 import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -35,7 +37,7 @@ public class PerfilUsuarioController {
     @FXML private VBox seccionAgregarDireccion;
     @FXML private VBox seccionTabla;
 
-    private Usuario usuarioActual;
+    private UsuarioDTO usuarioActual;
     private UsuarioFacade facade = new UsuarioFacade();
     private List<DireccionDTO> direccionesUsuario = new ArrayList<>();
 
@@ -91,14 +93,19 @@ public class PerfilUsuarioController {
 
     // DIRECCIONES
 
+    // Cargar direcciones
     private void cargarDirecciones() {
+
         direccionesUsuario.clear();
 
-        usuarioActual.getDireccionesFrecuentes()
-                .forEach(d -> direccionesUsuario.add(DireccionMapper.toDTO(d)));
+        for (DireccionDTO direccion : usuarioActual.getDireccionesFrecuentesDTO()) {
+            direccionesUsuario.add(direccion);
+        }
 
         tablaDirecciones.getItems().setAll(direccionesUsuario);
     }
+
+
 
     @FXML
     private void agregarDireccion() {

@@ -2,6 +2,7 @@ package edu.uniquindio.pgII.logistica.modelo.entidades;
 
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoIncidencia;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.TipoIncidencia;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 
 import java.time.LocalDateTime;
 

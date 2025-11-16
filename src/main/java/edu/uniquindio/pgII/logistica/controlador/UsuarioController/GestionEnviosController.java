@@ -99,7 +99,7 @@ public class GestionEnviosController {
         cargarHistorial();
     }
 
-    /* =================== COTIZAR =================== */
+    // COTIZAR
 
     @FXML
     private void cotizarEnvio() {
@@ -137,7 +137,7 @@ public class GestionEnviosController {
         lblResultado.setText("");
     }
 
-    /* =================== CREAR =================== */
+    // CREAR
 
     @FXML
     private void crearEnvio() {
@@ -181,7 +181,7 @@ public class GestionEnviosController {
         chkPrioritarioCrear.setSelected(false);
     }
 
-    /* =================== MODIFICAR =================== */
+    // MODIFICAR
 
     @FXML
     private void modificarEnvio() {
@@ -209,7 +209,7 @@ public class GestionEnviosController {
         }
     }
 
-    /* =================== CANCELAR =================== */
+    // CANCELAR
 
     @FXML
     private void cancelarEnvio() {
@@ -222,7 +222,7 @@ public class GestionEnviosController {
         cargarHistorial();
     }
 
-    /* =================== RASTREAR =================== */
+    // RASTREAR
 
     @FXML
     private void rastrearEnvio() {
@@ -236,7 +236,7 @@ public class GestionEnviosController {
         }
     }
 
-    /* =================== HISTORIAL =================== */
+    // HISTORIAL
 
     @FXML
     private void filtrarHistorial() {
@@ -260,7 +260,7 @@ public class GestionEnviosController {
         a.showAndWait();
     }
 
-    /* =================== TABLA: selección y acciones dinámicas =================== */
+    // TABLA: selección y acciones dinámicas
 
     private void seleccionarEnvioTabla(EnvioDTO seleccionado) {
         if (seleccionado == null) {
@@ -276,15 +276,15 @@ public class GestionEnviosController {
         txtDestinoCrear.setText(seleccionado.getDestino() != null ? seleccionado.getDestino() : "");
         txtPesoCrear.setText(String.valueOf(seleccionado.getPeso()));
         txtDimensionesCrear.setText(seleccionado.getDimensiones() != null ? seleccionado.getDimensiones() : "");
-        txtDescripcion.setText(""); // si tienes descripción en DTO, mapearla
+        txtDescripcion.setText("");
 
-        // Servicios: setear checkboxes de la sección crear/modificar
+
         chkSeguroCrear.setSelected(seleccionado.isSeguro());
         chkFragilCrear.setSelected(seleccionado.isFragil());
         chkFirmaCrear.setSelected(seleccionado.isFirmaRequerida());
         chkPrioritarioCrear.setSelected(seleccionado.isPrioritario());
 
-        // Habilitar o deshabilitar botones según estado
+
         EstadoEnvio estado = seleccionado.getEstado();
         boolean habilitarAcciones = estado != null && estado == EstadoEnvio.SOLICITADO;
 
@@ -292,21 +292,21 @@ public class GestionEnviosController {
         if (btnCancelar != null) btnCancelar.setDisable(!habilitarAcciones);
     }
 
-    /* =================== AUX: descargar CSV / PDF (stubs seguros) =================== */
+    // descargar CSV / PDF
 
     @FXML
     private void descargarCSV(ActionEvent event) {
-        // Stub: implementar export real si lo deseas
+        // falta implementar
         mostrar("Funcionalidad Descargar CSV (pendiente implementar export real).");
     }
 
     @FXML
     private void descargarPDF(ActionEvent event) {
-        // Stub: implementar export real si lo deseas
+        // falta implementar
         mostrar("Funcionalidad Descargar PDF (pendiente implementar export real).");
     }
 
-    /* =================== VOLVER =================== */
+    // VOLVER
 
     @FXML
     private void volverAlMenu(ActionEvent event) {

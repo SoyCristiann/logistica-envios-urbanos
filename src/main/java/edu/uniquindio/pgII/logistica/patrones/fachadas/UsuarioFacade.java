@@ -4,15 +4,20 @@ import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.ServicioAdicionalDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.servicios.EnvioService;
+import edu.uniquindio.pgII.logistica.modelo.servicios.ServicioAdicionalService;
+import edu.uniquindio.pgII.logistica.modelo.servicios.UsuarioService;
+
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.ServicioAdicionalMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
-import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
+import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -26,7 +31,7 @@ public class UsuarioFacade {
             admin.getEnvioService();
 
     private final edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService servicioService =
-            admin.getServicioAdicionalService();
+            admin.getServiciosAdicionalesService();
 
 
     // GESTIÓN USUARIOS
@@ -39,18 +44,17 @@ public class UsuarioFacade {
         return false;
     }
 
-    // ===================== COTIZAR =====================
+    // COTIZAR
     public double cotizarEnvio(EnvioDTO dto) {
         if (dto == null) return 0;
         Envio envio = EnvioMapper.toEntity(dto);
         return envioService.calcularCostoDecorado(envio);
     }
 
-    // ===================== CRUD =====================
-    public boolean crearEnvio(EnvioDTO dto) {
-        if (dto == null) return false;
-        Envio e = EnvioMapper.toEntity(dto);
-        return envioService.crearEnvio(e);
+
+    public boolean crearEnvio(EnvioDTO envioDTO) {
+        return envioService.crearEnvio(envioDTO);
+
     }
 
     public boolean modificarEnvio(EnvioDTO dto) {
@@ -65,7 +69,7 @@ public class UsuarioFacade {
         return envioService.cancelarEnvio(e);
     }
 
-    // ===================== RASTREAR =====================
+    // RASTREAR
     public EnvioDTO rastrearEnvio(String id) {
         if (id == null || id.isEmpty()) return null;
 
@@ -77,7 +81,7 @@ public class UsuarioFacade {
         return null;
     }
 
-    // ===================== HISTORIAL =====================
+    // HISTORIAL
     public List<EnvioDTO> obtenerHistorial(
             Object usuario,
             LocalDate inicio,
@@ -117,19 +121,21 @@ public class UsuarioFacade {
         return resultado;
     }
 
-    // ===================== SERVICIOS ADICIONALES =====================
+    //  SERVICIOS ADICIONALES
     public boolean registrarServicio(ServicioAdicionalDTO dto) {
         ServicioAdicional s = ServicioAdicionalMapper.toEntity(dto);
         return servicioService.registrarServicioAdicional(s);
     }
 
 
-    public boolean registrarDireccion(Usuario usuario, DireccionDTO dto) {
-        return admin.getDireccionService().registrarDireccion(usuario, DireccionMapper.toEntity(dto));
+    public boolean registrarDireccion(UsuarioDTO usuario, DireccionDTO dto) {
+        Usuario usuarioActual = UsuarioMapper.toEntity(usuario);
+        return admin.getDireccionService().registrarDireccion(usuarioActual, DireccionMapper.toEntity(dto));
     }
 
-    public boolean eliminarDireccion(Usuario usuario, DireccionDTO dto) {
-        return admin.getDireccionService().eliminarDireccion(usuario, DireccionMapper.toEntity(dto));
+    public boolean eliminarDireccion(UsuarioDTO usuario, DireccionDTO dto) {
+        Usuario usuarioActual = UsuarioMapper.toEntity(usuario);
+        return admin.getDireccionService().eliminarDireccion(usuarioActual, DireccionMapper.toEntity(dto));
     }
 
 }

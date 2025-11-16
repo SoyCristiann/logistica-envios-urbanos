@@ -1,32 +1,31 @@
-package edu.uniquindio.pgII.logistica.patrones;
+package edu.uniquindio.pgII.logistica.patrones.singleton;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.servicios.DireccionService;
-import edu.uniquindio.pgII.logistica.modelo.servicios.EnvioService;
-import edu.uniquindio.pgII.logistica.modelo.servicios.UsuarioService;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import edu.uniquindio.pgII.logistica.patrones.factory.ServiceFactory;
 
 public class AdministradorSingleton {
     private static AdministradorSingleton instance;
     private final ServiceFactory serviceFactory;
 
     private final IUsuarioService usuarioService;
+    private final IRepartidorService repartidorService;
     private final IDireccionService direccionService;
     private final IEnvioService envioService;
     //Pendiente revisar la interfaz de pago
     private final IReporteService reporteService;
-    private final IServicioAdicionalService servicioAdicionalService;
+
+    private final IServicioAdicionalService serviciosAdicionalesService;
 
     private AdministradorSingleton() {
         this.serviceFactory = new ServiceFactory();
         this.usuarioService= serviceFactory.crearUsuarioService();
+        this.repartidorService= serviceFactory.crearRepartidorService();
         this.direccionService= serviceFactory.crearDireccionService();
         this.envioService=  serviceFactory.crearEnvioService();
         this.reporteService= serviceFactory.crearReporteService();
-        this.servicioAdicionalService = serviceFactory.crearServicioAdicionalService();
+
+        this.serviciosAdicionalesService= serviceFactory.crearServiciosAdicionalesService();
+
     }
 
     public static AdministradorSingleton getInstance() {
@@ -39,6 +38,7 @@ public class AdministradorSingleton {
     public IUsuarioService getUsuarioService() {
         return usuarioService;
     }
+    public IRepartidorService getRepartidorService() {return repartidorService;}
     public IDireccionService getDireccionService() {
         return direccionService;
     }
@@ -48,10 +48,10 @@ public class AdministradorSingleton {
     public IReporteService getReporteService() {
         return reporteService;
     }
-    public IServicioAdicionalService getServicioAdicionalService() {
-        return servicioAdicionalService;
-    }
 
+    public IServicioAdicionalService getServiciosAdicionalesService() {
+        return serviciosAdicionalesService;
+    }
 
 
 }

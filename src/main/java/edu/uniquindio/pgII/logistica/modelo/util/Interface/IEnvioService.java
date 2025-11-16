@@ -1,9 +1,13 @@
 package edu.uniquindio.pgII.logistica.modelo.util.Interface;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Repartidor;
+
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
+
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 
 import java.time.LocalDate;
@@ -11,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IEnvioService {
+    public abstract boolean crearEnvio(EnvioDTO envioDTO);
     public abstract boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo);
     public abstract boolean crearEnvio(Envio envio);
     public abstract boolean modificarEnvio(Envio envio);

@@ -1,9 +1,11 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Repartidor;
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioMapper;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
 import edu.uniquindio.pgII.logistica.patrones.decorator.*;
@@ -33,7 +35,10 @@ public class EnvioService implements IEnvioService {
 
     //  Crear envío
     @Override
-    public boolean crearEnvio(Envio envio) {
+
+    public boolean crearEnvio(EnvioDTO envioDTO) {
+        Envio envio= EnvioMapper.toEntity(envioDTO);
+
         if (envio != null) {
             envio.setIdEnvio(generarId());
             envio.setFechaCreacion(LocalDate.now());
@@ -48,8 +53,10 @@ public class EnvioService implements IEnvioService {
                 double costoFinal = calcularCostoDecorado(envio);
                 envio.setCosto(costoFinal);
             }
-
             envios.add(envio);
+            for(Envio e: envios){
+                System.out.println(e);
+            }
             return true;
         }
         return false;
@@ -62,7 +69,9 @@ public class EnvioService implements IEnvioService {
         if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
             envioExistente.setDestino(envio.getDestino());
             envioExistente.setPeso(envio.getPeso());
-            envioExistente.setDimensiones(envio.getDimensiones());
+            envioExistente.setAlto(envio.getAlto());
+            envioExistente.setLargo(envio.getLargo());
+            envioExistente.setAncho(envio.getAncho());
             envioExistente.setFechaEstimada(envio.getFechaEstimada());
             return true;
         }
@@ -221,6 +230,11 @@ public class EnvioService implements IEnvioService {
 
     @Override
     public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
+        return false;
+    }
+
+    @Override
+    public boolean crearEnvio(Envio envio) {
         return false;
     }
 

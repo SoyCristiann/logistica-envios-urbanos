@@ -1,8 +1,5 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Pago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 
@@ -86,8 +83,8 @@ public class UsuarioDTO {
     }
 
     //Rol
-    public String getRolUsuario() {
-        return rolUsuario.toString();
+    public RolUsuario getRolUsuario() {
+        return rolUsuario;
     }
     public void setRolUsuario(RolUsuario rolUsuario) {
         this.rolUsuario = rolUsuario;
@@ -127,5 +124,10 @@ public class UsuarioDTO {
     }
     public void setHistorialEnviosDTO(List<EnvioDTO> historialEnvios) {
         this.historialEnvios = historialEnvios;
+    }
+
+    @Override
+    public String toString() {
+        return nombreCompleto + " - " + rolUsuario;
     }
 }

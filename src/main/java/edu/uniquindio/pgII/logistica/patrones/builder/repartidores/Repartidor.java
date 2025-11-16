@@ -1,11 +1,12 @@
-package edu.uniquindio.pgII.logistica.modelo.dto;
+package edu.uniquindio.pgII.logistica.patrones.builder.repartidores;
 
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepartidorDTO {
+public class Repartidor {
     private String idRepartidor;
     private String nombre;
     private String documento;
@@ -13,20 +14,21 @@ public class RepartidorDTO {
 
     private DisponibilidadRepartidor estadoDisponibilidad;
     private String zonaCobertura;
-    private List<EnvioDTO> enviosAsignados;
+    private List<Envio> enviosAsignados;
 
-    public RepartidorDTO(){
-        this.enviosAsignados=new ArrayList<>();
-    }
+    public Repartidor(RepartidorBuilder builder) {
+        this.idRepartidor = builder.documento;
+        this.nombre= builder.nombre;
+        this.documento= builder.documento;
+        this.telefono= builder.telefono;
+        this.zonaCobertura= builder.zonaCobertura;
+        this.estadoDisponibilidad= builder.estadoDisponibilidad;
 
-    public RepartidorDTO(String nombre, String documento, String telefono, String zonaCobertura, DisponibilidadRepartidor estadoDisponibilidad) {
-        this.idRepartidor = documento;
-        this.nombre= nombre;
-        this.documento= documento;
-        this.telefono= telefono;
-        this.zonaCobertura= zonaCobertura;
-        this.estadoDisponibilidad= estadoDisponibilidad;
-        this.enviosAsignados = new ArrayList<>();
+        if(builder.enviosAsignados!=null){
+            this.enviosAsignados = builder.enviosAsignados;
+        }else{
+            this.enviosAsignados = new ArrayList<>();
+        }
     }
 
     //Métodos Get y Set para CRUD de repartidor
@@ -39,7 +41,7 @@ public class RepartidorDTO {
         return nombre;
     }
 
-    public String getDocumento() {
+    public String getDocumento(){
         return documento;
     }
 
@@ -79,12 +81,12 @@ public class RepartidorDTO {
         this.estadoDisponibilidad = estadoDisponibilidad;
     }
 
-    public List<EnvioDTO> getEnviosAsignadosDTO() {
+    public List<Envio> getEnviosAsignados() {
         return enviosAsignados;
     }
 
-    public void setEnviosAsignadosDTO(List<EnvioDTO> enviosAsignadosDTO) {
-        this.enviosAsignados = enviosAsignadosDTO;
+    public void setEnviosAsignados(List<Envio> enviosAsignados) {
+        this.enviosAsignados = enviosAsignados;
     }
 
     @Override
@@ -97,4 +99,3 @@ public class RepartidorDTO {
                 "Zona Cobertura:" + zonaCobertura + "\n";
     }
 }
-

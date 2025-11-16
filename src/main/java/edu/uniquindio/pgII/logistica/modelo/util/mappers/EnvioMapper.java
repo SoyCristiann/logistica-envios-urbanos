@@ -1,112 +1,85 @@
 package edu.uniquindio.pgII.logistica.modelo.util.mappers;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Repartidor;
-import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.EnvioBuilder;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EnvioMapper {
 
-    // 🔹 Convierte un DTO a Entidad
+    private EnvioMapper(){}
+
     public static Envio toEntity(EnvioDTO dto) {
-        if (dto == null) {
+        IUsuarioService usuarioService = AdministradorSingleton.getInstance().getUsuarioService();
+        IServicioAdicionalService serviciosAdicionales= AdministradorSingleton.getInstance().getServiciosAdicionalesService();
+        IServicioAdicionalService servicioAdicionalService= AdministradorSingleton.getInstance().getServiciosAdicionalesService();
+
+        Usuario usuario= UsuarioMapper.toEntity(usuarioService.buscarUsuarioPorId(dto.getIdUsuario()));
+        if (usuario==null){
             return null;
         }
 
-        Envio envio = new Envio(
-                dto.getOrigen(),
-                dto.getDestino(),
-                dto.getPeso(),
-                dto.getDimensiones(),
-                dto.getCosto(),
-                dto.getEstado()
-        );
+        Direccion origen= DireccionMapper.toEntity(dto.getOrigen());
+        Direccion destino= DireccionMapper.toEntity(dto.getDestino());
 
-        envio.setIdEnvio(dto.getIdEnvio());
-        envio.setFechaCreacion(dto.getFechaCreacion());
-        envio.setFechaEstimada(dto.getFechaEstimada());
+        List<ServicioAdicional> serviciosAdicionalesEntities = listarServiciosAdicionales(dto.getServiciosAdicionales(), servicioAdicionalService);
 
-        // Convertir flags booleanos a servicios adicionales
-        List<ServicioAdicional> servicios = new ArrayList<>();
-        if (dto.isSeguro()) servicios.add(new ServicioAdicional("1", "Seguro", "Cobertura contra pérdida", 2000));
-        if (dto.isFragil()) servicios.add(new ServicioAdicional("2", "Frágil", "Manejo delicado", 1500));
-        if (dto.isFirmaRequerida()) servicios.add(new ServicioAdicional("3", "Firma Requerida", "Entrega con firma", 1000));
-        if (dto.isPrioritario()) servicios.add(new ServicioAdicional("4", "Prioritario", "Entrega express", 3000));
+        EnvioBuilder builder = new EnvioBuilder(origen, destino, dto.getPeso(), dto.getLargo(),dto.getAncho(), dto.getAlto(), usuario);
 
-        envio.setServiciosAdicionales(servicios);
+        if (!serviciosAdicionalesEntities.isEmpty()) {
+            builder.withServiciosAdicionales(serviciosAdicionalesEntities);
+        }
 
-        return envio;
+        return builder.build();
     }
 
 
     public static EnvioDTO toDTO(Envio envio) {
-        if (envio == null) {
-            return null;
-        }
-
-        EnvioDTO dto = new EnvioDTO();
-        dto.setIdEnvio(envio.getIdEnvio());
-        dto.setOrigen(envio.getOrigen());
-        dto.setDestino(envio.getDestino());
-        dto.setPeso(envio.getPeso());
-        dto.setDimensiones(envio.getDimensiones());
-        dto.setCosto(envio.getCosto());
-        dto.setEstado(envio.getEstado());
-        dto.setFechaCreacion(envio.getFechaCreacion());
-        dto.setFechaEstimada(envio.getFechaEstimada());
-
+        List<String> serviciosAdicionalesNombres = new ArrayList<>();
 
         if (envio.getServiciosAdicionales() != null) {
             for (ServicioAdicional servicio : envio.getServiciosAdicionales()) {
-                String nombre = servicio.getNombre().toLowerCase();
-                switch (nombre) {
-                    case "seguro":
-                        dto.setSeguro(true);
-                        break;
-                    case "frágil":
-                    case "fragil":
-                        dto.setFragil(true);
-                        break;
-                    case "firma requerida":
-                        dto.setFirmaRequerida(true);
-                        break;
-                    case "prioritario":
-                        dto.setPrioritario(true);
-                        break;
-                }
+                serviciosAdicionalesNombres.add(servicio.getNombre());
             }
         }
 
-        return dto;
+        return new EnvioDTO(
+                envio.getUsuario().getIdUsuario(),
+                DireccionMapper.toDTO(envio.getOrigen()),
+                DireccionMapper.toDTO(envio.getDestino()),
+                envio.getPeso(),
+                envio.getLargo(),
+                envio.getAncho(),
+                envio.getAlto(),
+                serviciosAdicionalesNombres
+        );
     }
 
-
-    public static void updateEntityFromDTO(EnvioDTO dto, Envio envio) {
-        if (dto == null || envio == null) {
-            return;
+    //Este fragemeno de código se lleva aparte para no extender el código de toEntity.
+    private static List<ServicioAdicional> listarServiciosAdicionales(List<String> nombresServicios, IServicioAdicionalService servicioAdicionalService)
+    {
+        if (nombresServicios == null) {
+            return new ArrayList<>();
         }
 
-        envio.setOrigen(dto.getOrigen());
-        envio.setDestino(dto.getDestino());
-        envio.setPeso(dto.getPeso());
-        envio.setDimensiones(dto.getDimensiones());
-        envio.setCosto(dto.getCosto());
-        envio.setEstado(dto.getEstado());
-        envio.setFechaEstimada(dto.getFechaEstimada());
+        List<ServicioAdicional> entidades = new ArrayList<>();
 
-        // Actualizar lista de servicios adicionales
-        List<ServicioAdicional> servicios = new ArrayList<>();
-        if (dto.isSeguro()) servicios.add(new ServicioAdicional("1", "Seguro", "Cobertura contra pérdida", 2000));
-        if (dto.isFragil()) servicios.add(new ServicioAdicional("2", "Frágil", "Manejo delicado", 1500));
-        if (dto.isFirmaRequerida()) servicios.add(new ServicioAdicional("3", "Firma Requerida", "Entrega con firma", 1000));
-        if (dto.isPrioritario()) servicios.add(new ServicioAdicional("4", "Prioritario", "Entrega express", 3000));
-
-        envio.setServiciosAdicionales(servicios);
+        for (String id : nombresServicios) {
+            ServicioAdicional servicio = servicioAdicionalService.buscarServicioPorId(id);
+            if (servicio != null) {
+                entidades.add(servicio);
+            } else {
+                System.out.println("No se encoentró el servicio: " + id);
+            }
+        }
+        return entidades;
     }
 }
