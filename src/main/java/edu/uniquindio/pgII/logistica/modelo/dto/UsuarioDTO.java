@@ -1,8 +1,5 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Pago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 

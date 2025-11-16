@@ -22,4 +22,8 @@ public class ServiceFactory {
     public IEnvioService crearEnvioService(){
         return new EnvioService();
     }
+
+    public IServicioAdicionalService crearServiciosAdicionalesService(){
+        return new ServicioAdicionalService();
+    }
 }

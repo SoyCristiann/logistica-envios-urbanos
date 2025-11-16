@@ -2,7 +2,7 @@ package edu.uniquindio.pgII.logistica.patrones.fachadas;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.servicios.EnvioService;
 import edu.uniquindio.pgII.logistica.modelo.servicios.ServicioAdicionalService;
@@ -43,8 +43,7 @@ public class UsuarioFacade {
     }
 
     public boolean crearEnvio(EnvioDTO envioDTO) {
-        Envio envio = EnvioMapper.toEntity(envioDTO);
-        return envioService.crearEnvio(envio);
+        return envioService.crearEnvio(envioDTO);
     }
 
     public boolean modificarEnvio(EnvioDTO envioDTO) {

@@ -1,7 +1,7 @@
 package edu.uniquindio.pgII.logistica.patrones.builder.usuario;
 
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 

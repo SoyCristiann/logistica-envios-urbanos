@@ -94,6 +94,16 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
+    public UsuarioDTO buscarUsuarioPorId(String id) {
+        for (Usuario u : usuarios) {
+            if (u.getIdUsuario().equals(id)) {
+                return UsuarioMapper.toDTO(u);
+            }
+        }
+        return null;
+    }
+
+    @Override
     public boolean eliminarUsuario(UsuarioDTO usuario) {
         if (usuario != null) {
             for (Usuario u : usuarios) {
