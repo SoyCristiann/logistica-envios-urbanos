@@ -128,4 +128,9 @@ public class UsuarioDTO {
     public void setHistorialEnviosDTO(List<EnvioDTO> historialEnvios) {
         this.historialEnvios = historialEnvios;
     }
+
+    @Override
+    public String toString() {
+        return nombreCompleto + " - " + rolUsuario;
+    }
 }

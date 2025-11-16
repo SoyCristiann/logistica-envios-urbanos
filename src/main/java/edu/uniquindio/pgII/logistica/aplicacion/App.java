@@ -23,10 +23,6 @@ public class App extends Application {
         stage.setMinHeight(800);
         stage.setMinWidth(1200);
 
-        // Tamaño máximo de la ventana
-        stage.setMaxHeight(800);
-        stage.setMaxWidth(1200);
-
         stage.setResizable(false); //Evita que se maximize la ventana
         stage.centerOnScreen();
 

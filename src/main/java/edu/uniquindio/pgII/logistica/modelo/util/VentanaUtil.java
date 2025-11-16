@@ -1,7 +1,7 @@
 package edu.uniquindio.pgII.logistica.modelo.util;
 
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
-import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -57,7 +57,7 @@ public class VentanaUtil {
 
             if (sesionManager.getUsuarioActivo() != null) {
                 String usuarioLogueado = sesionManager.getUsuarioActivo().getNombreCompleto();
-                RolUsuario rolUsuario = sesionManager.getUsuarioActivo().getRolUsuario();
+                String rolUsuario = sesionManager.getUsuarioActivo().getRolUsuario();
                 label.setText("Bienvenido " + usuarioLogueado + " - Rol: " + rolUsuario);
                 label.setVisible(true);
             }
