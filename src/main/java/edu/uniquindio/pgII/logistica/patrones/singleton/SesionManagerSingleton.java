@@ -1,7 +1,9 @@
-package edu.uniquindio.pgII.logistica.patrones;
+package edu.uniquindio.pgII.logistica.patrones.singleton;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.UsuarioMapper;
 
 public class SesionManagerSingleton {
     private static SesionManagerSingleton instance;
@@ -19,12 +21,12 @@ public class SesionManagerSingleton {
     }
 
     //Metodo para establecer el usuario activo en la sesión
-    public void setUsuarioActivo(Usuario usuario) {
-        this.usuarioActivo = usuario;
+    public void setUsuarioActivo(UsuarioDTO usuario) {
+        this.usuarioActivo = UsuarioMapper.toEntity(usuario);
     }
 
-    public Usuario getUsuarioActivo() {
-        return usuarioActivo;
+    public UsuarioDTO getUsuarioActivo() {
+        return UsuarioMapper.toDTO(usuarioActivo);
     }
 
     //Metodo para identificar el rol del usuario

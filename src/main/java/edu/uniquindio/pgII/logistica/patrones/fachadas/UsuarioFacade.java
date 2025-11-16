@@ -3,7 +3,7 @@ package edu.uniquindio.pgII.logistica.patrones.fachadas;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.servicios.EnvioService;
 import edu.uniquindio.pgII.logistica.modelo.servicios.ServicioAdicionalService;
 import edu.uniquindio.pgII.logistica.modelo.servicios.UsuarioService;

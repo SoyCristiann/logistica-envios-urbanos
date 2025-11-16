@@ -4,10 +4,11 @@ import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.UsuarioBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,44 +64,49 @@ public class UsuarioMapper {
             return null;
         }
 
-        Usuario usuario=new Usuario(
-                usuarioDTO.getIdUsuario(),
-                usuarioDTO.getNombreCompleto(),
-                usuarioDTO.getCorreo(),
-                usuarioDTO.getTelefono(),
-                usuarioDTO.getPassword()
-        );
-        usuario.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
-
-        List<Direccion> direcciones= new ArrayList<>();
-        List<MetodoPago> metodosPago= new ArrayList<>();
-        List<Envio> historialEnvios= new ArrayList<>();
-
-        if(usuarioDTO.getDireccionesFrecuentesDTO()!=null){
+        //Mapear las listas DTO a Entidades
+        List<Direccion> direcciones = new ArrayList<>();
+        if(usuarioDTO.getDireccionesFrecuentesDTO() != null){
             for (DireccionDTO direccionDTO : usuarioDTO.getDireccionesFrecuentesDTO()){
                 direcciones.add(DireccionMapper.toEntity(direccionDTO));
             }
         }
 
-
-        if(usuarioDTO.getMetodosPago()!=null){
-            for (MetodoPago metodoPago : usuarioDTO.getMetodosPago()){
-                metodosPago.add(metodoPago);
-            }
-        }
-
-        if(usuarioDTO.getHistorialEnviosDTO()!=null){
+        List<Envio> historialEnvios = new ArrayList<>();
+        if(usuarioDTO.getHistorialEnviosDTO() != null){
             for (EnvioDTO envioDTO: usuarioDTO.getHistorialEnviosDTO()){
                 historialEnvios.add(EnvioMapper.toEntity(envioDTO));
             }
         }
 
-        usuario.setDireccionesFrecuentes(direcciones);
-        usuario.setMetodosPago(metodosPago);
-        usuario.setHistorialEnvios(historialEnvios);
+        // La lista de MetodosPago es un Enum y puede pasarse directamente (o copiarse si es necesario)
+        List<MetodoPago> metodosPago = new ArrayList<>();
+        if(usuarioDTO.getMetodosPago() != null){
+            metodosPago.addAll(usuarioDTO.getMetodosPago());
+        }
 
-        return usuario;
+        // Iniciar el Builder con los campos obligatorios.
+        UsuarioBuilder builder = new UsuarioBuilder(
+                usuarioDTO.getIdUsuario(),
+                usuarioDTO.getNombreCompleto(),
+                usuarioDTO.getCorreo(),
+                usuarioDTO.getTelefono()
+        );
 
+        //Configurar los campos adicionales
+        builder.withPassword(usuarioDTO.getPassword());
+
+        if(usuarioDTO.getRolUsuario() != null) {
+            builder.withRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+        }
+
+        //Asignar las listas mapeadas al incio
+        builder.withListaDirecciones(direcciones);
+        builder.withHistorialEnvio(historialEnvios);
+        builder.withListaMetodosPago(metodosPago);
+
+        //Construir la entidad.
+        return builder.build();
     }
 
     public static void updateEntityFromDTO(UsuarioDTO usuarioDTO, Usuario usuario){

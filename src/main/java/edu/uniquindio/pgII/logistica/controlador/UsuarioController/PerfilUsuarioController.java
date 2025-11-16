@@ -2,8 +2,7 @@ package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.aplicacion.App;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
-import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,7 +33,7 @@ public class PerfilUsuarioController {
         String telefono = txtTelefono.getText();
 
         SesionManagerSingleton sesion = SesionManagerSingleton.getInstance();
-        Usuario usuarioActual = sesion.getUsuarioActivo();
+        UsuarioDTO usuarioActual = sesion.getUsuarioActivo();
 
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setIdUsuario(usuarioActual.getIdUsuario());

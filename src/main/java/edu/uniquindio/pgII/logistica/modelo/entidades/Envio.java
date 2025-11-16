@@ -1,12 +1,12 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
+import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
+import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio.PREDETERMINADO;
 
 public class Envio {
 

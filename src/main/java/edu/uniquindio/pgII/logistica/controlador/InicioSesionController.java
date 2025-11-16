@@ -4,11 +4,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.InicioSesionDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
-import edu.uniquindio.pgII.logistica.patrones.AdministradorSingleton;
-import edu.uniquindio.pgII.logistica.patrones.SesionManagerSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +76,7 @@ public class InicioSesionController {
         inicioSesionDTO.setPass(pass);
 
         //Se llama al servicio de login utilizando los parametros indicados anteriormente. Retornará un usuario.
-        Usuario usuarioLogueado= usuarioService.iniciarSesion(inicioSesionDTO.getUser(),  inicioSesionDTO.getPass());
+        UsuarioDTO usuarioLogueado= usuarioService.iniciarSesion(inicioSesionDTO.getUser(),  inicioSesionDTO.getPass());
 
         //Validación del loguin exitoso. Si retorna un usuario null, el inicio de sesión es fallido, si retorna un Usuario, el inicio de sesión es exitoso.
 
@@ -84,7 +84,9 @@ public class InicioSesionController {
             // Almacena el usuario en el sesión manager.
             SesionManagerSingleton.getInstance().setUsuarioActivo(usuarioLogueado);
 
-            if (usuarioLogueado.getRolUsuario() == RolUsuario.ADMINISTRADOR ) {
+            System.out.println("Rol usuario:" + usuarioLogueado.getRolUsuario());
+            System.out.println("Rol admin:" + RolUsuario.ADMINISTRADOR.toString());
+            if (usuarioLogueado.getRolUsuario().equals(RolUsuario.ADMINISTRADOR.toString())) {
                 // menu admin
                 cambiarEscena(getClass(), Constantes.administradorMainPage, event);
             } else {
