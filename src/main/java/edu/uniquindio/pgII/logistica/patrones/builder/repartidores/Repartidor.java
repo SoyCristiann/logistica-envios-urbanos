@@ -1,6 +1,6 @@
 package edu.uniquindio.pgII.logistica.patrones.builder.repartidores;
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
 
 import java.util.ArrayList;

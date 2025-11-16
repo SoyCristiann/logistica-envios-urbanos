@@ -2,7 +2,7 @@ package edu.uniquindio.pgII.logistica.modelo.util.mappers;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
 import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.RepartidorBuilder;
 
@@ -11,6 +11,7 @@ import java.util.List;
 
 
 public class RepartidorMapper {
+    private RepartidorMapper(){}
 
     public static RepartidorDTO toDTO(Repartidor repartidor){
         if(repartidor==null){

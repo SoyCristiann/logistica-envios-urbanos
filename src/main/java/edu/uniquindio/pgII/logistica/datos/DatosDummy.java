@@ -1,24 +1,32 @@
 package edu.uniquindio.pgII.logistica.datos;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IRepartidorService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatosDummy {
     private AdministradorSingleton administrador = AdministradorSingleton.getInstance();
     private IUsuarioService usuarioService= administrador.getUsuarioService();
     private IRepartidorService repartidorService= administrador.getRepartidorService();
     private IEnvioService envioService= administrador.getEnvioService();
+    private IDireccionService direccionService= administrador.getDireccionService();
+    private IServicioAdicionalService serviciosService= administrador.getServiciosAdicionalesService();
 
     public DatosDummy(){
         crearUsuariosDummy();
         crearRepartidoresDummy();
+        crearDireccionesDummy();
+        crearServiciosDummy();
+        crearEnviosDummy();
     }
 
     public void crearUsuariosDummy(){
@@ -30,12 +38,12 @@ public class DatosDummy {
             }
         }
 
-        usuarioService.registrarUsuario(new UsuarioDTO("user01","Sofía Herrera","sofia@mail.com","3157778899","pass1"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user02","Laura García","laura@mail.com","3112223344","pass2"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user03","Andrés Pérez","andres@mail.com","3209876543","pass3"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user04","Mateo Cruz","mateo@mail.com","3051112233","pass4"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user05","Valentina Rojas","vale@mail.com","3016667788","pass5"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user02","Alejandro Gómez","alejandro@mail.com","3001234567","pass6"));
+        UsuarioDTO usuario1= usuarioService.registrarUsuario(new UsuarioDTO("1025485798","Sofía Herrera","sofia@mail.com","3157778899","pass1"));
+        UsuarioDTO usuario2= usuarioService.registrarUsuario(new UsuarioDTO("1064857412","Laura García","laura@mail.com","3112223344","pass2"));
+        UsuarioDTO usuario3= usuarioService.registrarUsuario(new UsuarioDTO("1032632323","Andrés Pérez","andres@mail.com","3209876543","pass3"));
+        UsuarioDTO usuario4= usuarioService.registrarUsuario(new UsuarioDTO("1024512458","Mateo Cruz","mateo@mail.com","3051112233","pass4"));
+        UsuarioDTO usuario5= usuarioService.registrarUsuario(new UsuarioDTO("1024125478","Valentina Rojas","vale@mail.com","3016667788","pass5"));
+        UsuarioDTO usuario6= usuarioService.registrarUsuario(new UsuarioDTO("1030625854","Alejandro Gómez","alejandro@mail.com","3001234567","pass6"));
         /*
         usuarioService.registrarUsuario(new UsuarioDTO("user03","Valentina López","vale@mail.com","3109876543","pass7"));
         usuarioService.registrarUsuario(new UsuarioDTO("user04","Daniel Restrepo","daniel.r@mail.com","3216549870","pass8"));
@@ -62,13 +70,95 @@ public class DatosDummy {
         repartidorService.registrarRepartidor(new RepartidorDTO("Juliana Soto", "6090807060", "3141234567", "Oriente", DisponibilidadRepartidor.NO_DISPONIBLE));
     }
 
+    //Crear direcciones
+    public void crearDireccionesDummy(){
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1025485798"),
+                new DireccionDTO("D001", "Calle 5", "12-12", "La esmeralda", "Bogotá", "120021", "Casa esquinera", "Casa de mamá"));
 
-    // Servicios base por defecto
-    public void crearServiciosAdicionalDummy(){
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1025485798"),
+                new DireccionDTO("D002", "Carrera 10", "20-30", "La Castellana", "Armenia", "630001", "Casa con rejas verdes", "Casa Principal")
+        );
 
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1064857412"),
+                new DireccionDTO("D003", "Calle 5", "45-12, Apto 501", "El Peñón", "Cali", "760045", "Edificio de ladrillo", "Apartamento Laura")
+        );
+
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1032632323"),
+                new DireccionDTO("D004", "Avenida 33", "78-15, Bodega 4", "Zona Industrial", "Medellín", "050015", "Recepción por la puerta lateral", "Bodega Andrés")
+        );
+
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1024512458"),
+                new DireccionDTO("D005", "Carrera 2", "99-10", "Altos de Riomar", "Barranquilla", "080001", "Casa blanca", "Casa Abuelos")
+        );
+
+        direccionService.registrarDireccion(
+                usuarioService.buscarUsuarioPorId("1024125478"),
+                new DireccionDTO("D006", "Calle 100", "1-1", "Centro", "Bogotá", "110111", "Torre A, Oficina 702", "Oficina Central")
+        );
+    }
+
+    // Servicios base por defecto - No entiendo cuál es la función de esto en envio
+    /*public void crearServiciosAdicionalDummy(){
         envioService.registrarServicio(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
         envioService.registrarServicio(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
         envioService.registrarServicio(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
         envioService.registrarServicio(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
+    }*/
+
+    public void crearServiciosDummy(){
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
     }
+
+    // Crear envíos
+    public void crearEnviosDummy(){
+        List<String> serviciosEnvio1 = new ArrayList<>();
+        serviciosEnvio1.add("SEG");
+        envioService.crearEnvio(new EnvioDTO(
+                "1025485798",
+                direccionService.buscarDireccionPorId("D001"),
+                direccionService.buscarDireccionPorId("D002"),
+                5,
+                10,
+                20,
+                40,
+                serviciosEnvio1
+        ));
+
+        List<String> serviciosEnvio2 = new ArrayList<>();
+        serviciosEnvio2.add("FRA");
+        serviciosEnvio2.add("PRI");
+        envioService.crearEnvio(new EnvioDTO(
+                "1032632323", // ID Usuario (Andrés)
+                direccionService.buscarDireccionPorId("D004"),
+                direccionService.buscarDireccionPorId("D001"),
+                25.0,
+                50.0,
+                50.0,
+                60.0,
+                serviciosEnvio2
+        ));
+
+
+        List<String> serviciosEnvio3 = new ArrayList<>();
+        serviciosEnvio3.add("FIR");
+        envioService.crearEnvio(new EnvioDTO(
+                "1024125478",
+                direccionService.buscarDireccionPorId("D006"),
+                direccionService.buscarDireccionPorId("D005"),
+                1.2,
+                15.0,
+                10.0,
+                5.0,
+                serviciosEnvio3
+        ));
+    }
+
 }

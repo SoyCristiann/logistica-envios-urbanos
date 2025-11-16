@@ -15,6 +15,7 @@ public interface IUsuarioService {
     public abstract boolean actualizarPerfil(Usuario usuarioActualizado);
     public abstract void agregarDireccionFrecuente(Usuario usuario, Direccion direccion);
     public abstract List<UsuarioDTO> getUsuarios();
+    public abstract UsuarioDTO buscarUsuarioPorId(String id);
     public abstract boolean eliminarUsuario(UsuarioDTO usuario);
     public abstract UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, String  idUsuarioAnterior);
 }

@@ -4,7 +4,9 @@ import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 
 public class DireccionMapper {
+    private DireccionMapper(){}
 
+    // 1. Mapeo de Entidad a DTO
     public static DireccionDTO toDTO(Direccion direccion) {
         if (direccion == null) return null;
 
@@ -16,9 +18,12 @@ public class DireccionMapper {
         dto.setCiudad(direccion.getCiudad());
         dto.setCodigoPostal(direccion.getCodigoPostal());
         dto.setDescripcion(direccion.getDescripcion());
+        dto.setAlias(direccion.getAlias());
+
         return dto;
     }
 
+    // 2. Mapeo de DTO a Entidad
     public static Direccion toEntity(DireccionDTO dto) {
         if (dto == null) return null;
 
@@ -30,10 +35,13 @@ public class DireccionMapper {
         direccion.setCiudad(dto.getCiudad());
         direccion.setCodigoPostal(dto.getCodigoPostal());
         direccion.setDescripcion(dto.getDescripcion());
+        direccion.setAlias(dto.getAlias());
+
         return direccion;
     }
 
 
+    // 3. Actualización de Entidad desde DTO
     public static void updateEntityFromDTO(Direccion direccion, DireccionDTO dto) {
         if (direccion == null || dto == null) return;
 
@@ -44,5 +52,6 @@ public class DireccionMapper {
         if (dto.getCodigoPostal() != null) direccion.setCodigoPostal(dto.getCodigoPostal());
         if (dto.getDescripcion() != null) direccion.setDescripcion(dto.getDescripcion());
         if (dto.getIdDireccion() != null) direccion.setIdDireccion(dto.getIdDireccion());
+        if (dto.getAlias() != null) direccion.setAlias(dto.getAlias());
     }
 }

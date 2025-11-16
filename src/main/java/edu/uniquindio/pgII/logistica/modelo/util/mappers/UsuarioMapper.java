@@ -3,7 +3,7 @@ package edu.uniquindio.pgII.logistica.modelo.util.mappers;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Envio;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
@@ -15,6 +15,8 @@ import java.util.List;
 
 
 public class UsuarioMapper {
+    private UsuarioMapper(){}
+
 
     public static UsuarioDTO toDTO(Usuario usuario){
         if(usuario==null){

@@ -1,15 +1,16 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicioAdicionalService {
+public class ServicioAdicionalService implements IServicioAdicionalService {
 
     private List<ServicioAdicional> serviciosAdicionales;
 
-    public ServicioAdicionalService() {
+    public ServicioAdicionalService(){
         this.serviciosAdicionales = new ArrayList<>();
     }
 
@@ -19,12 +20,13 @@ public class ServicioAdicionalService {
 //
 //    }
 
+    @Override
     public boolean registrarServicioAdicional(ServicioAdicional servicioAdicionalNuevo) {
         if (servicioAdicionalNuevo == null || servicioAdicionalNuevo.getIdService() == null) {
             return false;
         }
 
-        ServicioAdicional existente = buscarPorId(servicioAdicionalNuevo.getIdService());
+        ServicioAdicional existente = buscarServicioPorId(servicioAdicionalNuevo.getIdService());
         if (existente != null) {
             return false;
         }
@@ -33,13 +35,13 @@ public class ServicioAdicionalService {
         return true;
     }
 
-
+    @Override
     public boolean actualizarServicio(ServicioAdicional servicioAdicionalActualizado) {
         if (servicioAdicionalActualizado == null || servicioAdicionalActualizado.getIdService() == null) {
             return false;
         }
 
-        ServicioAdicional existente = buscarPorId(servicioAdicionalActualizado.getIdService());
+        ServicioAdicional existente = buscarServicioPorId(servicioAdicionalActualizado.getIdService());
         if (existente != null) {
             existente.setNombre(servicioAdicionalActualizado.getNombre());
             existente.setDescripcion(servicioAdicionalActualizado.getDescripcion());
@@ -50,13 +52,13 @@ public class ServicioAdicionalService {
         return false;
     }
 
-
+    @Override
     public boolean eliminarServicio(ServicioAdicional servicioAdicional) {
         if (servicioAdicional == null || servicioAdicional.getIdService() == null) {
             return false;
         }
 
-        ServicioAdicional existente = buscarPorId(servicioAdicional.getIdService());
+        ServicioAdicional existente = buscarServicioPorId(servicioAdicional.getIdService());
         if (existente != null) {
             serviciosAdicionales.remove(existente);
             return true;
@@ -65,8 +67,8 @@ public class ServicioAdicionalService {
         return false;
     }
 
-
-    public ServicioAdicional buscarPorId(String idService) {
+    @Override
+    public ServicioAdicional buscarServicioPorId(String idService) {
         for (ServicioAdicional s : serviciosAdicionales) {
             if (s.getIdService().equals(idService)) {
                 return s;
@@ -75,12 +77,12 @@ public class ServicioAdicionalService {
         return null;
     }
 
-
-    public ArrayList<ServicioAdicional> listarServicios() {
+    @Override
+    public List<ServicioAdicional> listarServicios() {
         return new ArrayList<>(serviciosAdicionales);
     }
 
-
+    @Override
     public ServicioAdicional buscarPorNombre(String nombre) {
         for (ServicioAdicional s : serviciosAdicionales) {
             if (s.getNombre().equalsIgnoreCase(nombre)) {

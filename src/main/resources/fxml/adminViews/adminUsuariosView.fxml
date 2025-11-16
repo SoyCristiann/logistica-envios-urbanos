@@ -117,11 +117,30 @@
                     </content>
                 </Tab>
 
-                <Tab text="Métricas">
+                <Tab fx:id="tabAdminEnvios" closable="false" text="Envíos">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <fx:include source="adminEnviosView.fxml" />
+                        </AnchorPane>
                     </content>
                 </Tab>
+
+                <Tab fx:id="tabAdminMetricas" closable="false" text="Metricas">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <fx:include source="adminMetricasView.fxml"/>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
+                <Tab fx:id="tabPerfilMetricas" closable="false" text="Mi Perfil">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <fx:include source="adminPerfilView.fxml"/>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+
             </tabs>
         </TabPane>
     </children>
