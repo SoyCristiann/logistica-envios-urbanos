@@ -1,13 +1,7 @@
 package edu.uniquindio.pgII.logistica.patrones;
 
-import edu.uniquindio.pgII.logistica.modelo.servicios.DireccionService;
-import edu.uniquindio.pgII.logistica.modelo.servicios.EnvioService;
-import edu.uniquindio.pgII.logistica.modelo.servicios.ReporteService;
-import edu.uniquindio.pgII.logistica.modelo.servicios.UsuarioService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IDireccionService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IReporteService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.modelo.servicios.*;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
 
 public class ServiceFactory {
 
@@ -25,5 +19,9 @@ public class ServiceFactory {
 
     public IEnvioService crearEnvioService(){
         return new EnvioService();
+    }
+
+    public IServicioAdicionalService crearServicioAdicionalService(){
+        return new ServicioAdicionalService();
     }
 }

@@ -32,6 +32,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Crear envío
+    @Override
     public boolean crearEnvio(Envio envio) {
         if (envio != null) {
             envio.setIdEnvio(generarId());
@@ -55,6 +56,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Modificar envío (solo si sigue en estado SOLICITADO)
+    @Override
     public boolean modificarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
@@ -68,6 +70,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Cancelar envío
+    @Override
     public boolean cancelarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
@@ -77,7 +80,8 @@ public class EnvioService implements IEnvioService {
         return false;
     }
 
-    //  Asignar repartidor
+    //  Asignar repartidor(Lo hace el admin)
+    @Override
     public boolean asignarRepartidor(Envio envio, Repartidor repartidor) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null && repartidor != null) {
@@ -89,6 +93,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Actualizar estado
+    @Override
     public boolean actualizarEstado(Envio envio, EstadoEnvio nuevoEstado) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null) {
@@ -99,11 +104,13 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Consultar detalle
+    @Override
     public Envio consultarDetalle(Envio envio) {
         return buscarEnvioPorId(envio.getIdEnvio());
     }
 
     //  Consultar historial de envíos de un usuario
+    @Override
     public ArrayList<Envio> consultarHistorial(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin, EstadoEnvio estado) {
         ArrayList<Envio> listaFiltrada = new ArrayList<>();
 
@@ -123,6 +130,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Agregar servicio adicional
+    @Override
     public boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().add(servicio);
@@ -135,6 +143,7 @@ public class EnvioService implements IEnvioService {
 
 
     //  Eliminar servicio adicional
+    @Override
     public boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().remove(servicio);
@@ -146,6 +155,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Calcular costo base (tarifa inicial)
+    @Override
     public double calcularCostoBase(Envio envio) {
         double peso = envio.getPeso();
         double volumen = 1; // simplificado
@@ -158,6 +168,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Calcular costo total decorado
+    @Override
     public double calcularCostoDecorado(Envio envio) {
         // Si el costo base aun no ha sido calculado, lo hace
         if (envio.getCosto() == 0) {
@@ -203,6 +214,7 @@ public class EnvioService implements IEnvioService {
     }
 
     //  Listar todos
+    @Override
     public ArrayList<Envio> listarEnvios() {
         return new ArrayList<>(envios);
     }
@@ -210,5 +222,10 @@ public class EnvioService implements IEnvioService {
     @Override
     public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
         return false;
+    }
+
+    @Override
+    public List<Envio> getEnvios() {
+        return envios;
     }
 }

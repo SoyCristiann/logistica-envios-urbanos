@@ -1,11 +1,16 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Usuario;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServicioAdicionalService {
+public class ServicioAdicionalService implements IServicioAdicionalService {
 
     private List<ServicioAdicional> serviciosAdicionales;
 
@@ -19,6 +24,7 @@ public class ServicioAdicionalService {
 //
 //    }
 
+    @Override
     public boolean registrarServicioAdicional(ServicioAdicional servicioAdicionalNuevo) {
         if (servicioAdicionalNuevo == null || servicioAdicionalNuevo.getIdService() == null) {
             return false;
@@ -33,7 +39,7 @@ public class ServicioAdicionalService {
         return true;
     }
 
-
+    @Override
     public boolean actualizarServicio(ServicioAdicional servicioAdicionalActualizado) {
         if (servicioAdicionalActualizado == null || servicioAdicionalActualizado.getIdService() == null) {
             return false;
@@ -50,7 +56,7 @@ public class ServicioAdicionalService {
         return false;
     }
 
-
+    @Override
     public boolean eliminarServicio(ServicioAdicional servicioAdicional) {
         if (servicioAdicional == null || servicioAdicional.getIdService() == null) {
             return false;
@@ -65,7 +71,7 @@ public class ServicioAdicionalService {
         return false;
     }
 
-
+    @Override
     public ServicioAdicional buscarPorId(String idService) {
         for (ServicioAdicional s : serviciosAdicionales) {
             if (s.getIdService().equals(idService)) {
@@ -75,7 +81,7 @@ public class ServicioAdicionalService {
         return null;
     }
 
-
+    @Override
     public ArrayList<ServicioAdicional> listarServicios() {
         return new ArrayList<>(serviciosAdicionales);
     }
@@ -89,6 +95,8 @@ public class ServicioAdicionalService {
         }
         return null;
     }
+
+
 
     //
 //    public double calcularCostoConExtras(EnvioDTO envioDTO) {

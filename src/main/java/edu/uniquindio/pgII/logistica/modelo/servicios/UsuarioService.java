@@ -50,8 +50,9 @@ public class UsuarioService implements IUsuarioService {
 
 
     @Override
+    // metodo pafra actualizar datos, para el mismo usuario
     public boolean actualizarPerfil(Usuario usuarioActualizado) {
-        if (usuarioActualizado != null) {
+        if (usuarioActualizado != null || usuarioActualizado.getTelefono() != null || usuarioActualizado.getCorreo() != null || usuarioActualizado.getNombreCompleto() != null) {
             Usuario usuarioEncontrado = buscarUsuario(usuarioActualizado);
             if (usuarioEncontrado != null) {
                 usuarioEncontrado.setNombreCompleto(usuarioActualizado.getNombreCompleto());
@@ -72,6 +73,8 @@ public class UsuarioService implements IUsuarioService {
 
     }
 
+
+
     public Usuario buscarUsuario(Usuario usuario) {
         if (usuario != null) {
             for (Usuario u : usuarios) {
@@ -88,6 +91,7 @@ public class UsuarioService implements IUsuarioService {
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
+
 
     @Override
     public boolean eliminarUsuario(UsuarioDTO usuario) {

@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>GestionEnviosPage.fxml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #bbbbbb;}
+.s1 { color: #d19a66;}
+.s2 { color: #89ca78;}
+.s3 { color: #bbbbbb;}
+.s4 { color: #ef596f;}
+.s5 { color: #5c6370; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#282c34">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+GestionEnviosPage.fxml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;UTF-8&quot;</span><span class="s0">?&gt;</span>
+
+<span class="s0">&lt;?</span><span class="s1">import </span><span class="s2">javafx.geometry.Insets</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;?</span><span class="s1">import </span><span class="s2">javafx.scene.control.*</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;?</span><span class="s1">import </span><span class="s2">javafx.scene.layout.*</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;?</span><span class="s1">import </span><span class="s2">javafx.scene.text.Font</span><span class="s0">?&gt;</span>
+
+<span class="s0">&lt;</span><span class="s4">AnchorPane </span><span class="s1">xmlns</span><span class="s2">=&quot;http://javafx.com/javafx&quot;</span>
+            <span class="s1">xmlns:fx</span><span class="s2">=&quot;http://javafx.com/fxml/1&quot;</span>
+            <span class="s1">fx:controller</span><span class="s2">=&quot;edu.uniquindio.pgII.logistica.controlador.UsuarioController.GestionEnviosController&quot;</span>
+            <span class="s1">prefHeight</span><span class="s2">=&quot;900&quot; </span><span class="s1">prefWidth</span><span class="s2">=&quot;1200&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;</span><span class="s4">children</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;</span><span class="s4">VBox </span><span class="s1">alignment</span><span class="s2">=&quot;TOP_CENTER&quot; </span><span class="s1">spacing</span><span class="s2">=&quot;20&quot; </span><span class="s1">prefWidth</span><span class="s2">=&quot;1200&quot; </span><span class="s1">prefHeight</span><span class="s2">=&quot;900&quot;</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;</span><span class="s4">padding</span><span class="s0">&gt;&lt;</span><span class="s4">Insets </span><span class="s1">top</span><span class="s2">=&quot;30&quot; </span><span class="s1">right</span><span class="s2">=&quot;40&quot; </span><span class="s1">bottom</span><span class="s2">=&quot;30&quot; </span><span class="s1">left</span><span class="s2">=&quot;40&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">padding</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Gestión de Envíos&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s4">font</span><span class="s0">&gt;&lt;</span><span class="s4">Font </span><span class="s1">size</span><span class="s2">=&quot;36&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">font</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s4">Label</span><span class="s0">&gt;</span>
+
+            <span class="s5">&lt;!-- ===================== COTIZAR ===================== --&gt;</span>
+            <span class="s0">&lt;</span><span class="s4">TitledPane </span><span class="s1">text</span><span class="s2">=&quot;Cotizar Envío&quot; </span><span class="s1">expanded</span><span class="s2">=&quot;false&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s4">content</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s4">VBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s4">padding</span><span class="s0">&gt;&lt;</span><span class="s4">Insets </span><span class="s1">top</span><span class="s2">=&quot;10&quot; </span><span class="s1">right</span><span class="s2">=&quot;10&quot; </span><span class="s1">bottom</span><span class="s2">=&quot;10&quot; </span><span class="s1">left</span><span class="s2">=&quot;10&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">padding</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">GridPane </span><span class="s1">hgap</span><span class="s2">=&quot;10&quot; </span><span class="s1">vgap</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">columnConstraints</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">ColumnConstraints </span><span class="s1">halignment</span><span class="s2">=&quot;RIGHT&quot; </span><span class="s1">prefWidth</span><span class="s2">=&quot;150&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">ColumnConstraints </span><span class="s1">prefWidth</span><span class="s2">=&quot;250&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s4">columnConstraints</span><span class="s0">&gt;</span>
+
+                            <span class="s0">&lt;</span><span class="s4">children</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Origen:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;0&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;0&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtOrigen&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;0&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Destino:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;0&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtDestino&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Peso (kg):&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;2&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;0&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtPeso&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;2&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Dimensiones:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;3&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;0&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtDimensiones&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;3&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s4">children</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">GridPane</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;15&quot; </span><span class="s1">alignment</span><span class="s2">=&quot;CENTER&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkSeguro&quot; </span><span class="s1">text</span><span class="s2">=&quot;Seguro&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkFragil&quot; </span><span class="s1">text</span><span class="s2">=&quot;Frágil&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkFirma&quot; </span><span class="s1">text</span><span class="s2">=&quot;Firma requerida&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkPrioritario&quot; </span><span class="s1">text</span><span class="s2">=&quot;Prioritario&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot; </span><span class="s1">alignment</span><span class="s2">=&quot;CENTER&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Cotizar Envío&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnCotizar&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#cotizarEnvio&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Limpiar&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnLimpiarCotizacion&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#limpiarCotizacion&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">fx:id</span><span class="s2">=&quot;lblResultado&quot; </span><span class="s1">style</span><span class="s2">=&quot;-fx-font-weight: bold;&quot;</span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s4">VBox</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;/</span><span class="s4">content</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s4">TitledPane</span><span class="s0">&gt;</span>
+
+            <span class="s5">&lt;!-- ===================== CRUD ENVÍOS ===================== --&gt;</span>
+            <span class="s0">&lt;</span><span class="s4">TitledPane </span><span class="s1">text</span><span class="s2">=&quot;Crear / Modificar / Cancelar Envío&quot; </span><span class="s1">expanded</span><span class="s2">=&quot;false&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s4">content</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s4">VBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s4">padding</span><span class="s0">&gt;&lt;</span><span class="s4">Insets </span><span class="s1">top</span><span class="s2">=&quot;10&quot; </span><span class="s1">right</span><span class="s2">=&quot;10&quot; </span><span class="s1">bottom</span><span class="s2">=&quot;10&quot; </span><span class="s1">left</span><span class="s2">=&quot;10&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">padding</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">GridPane </span><span class="s1">hgap</span><span class="s2">=&quot;10&quot; </span><span class="s1">vgap</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">columnConstraints</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">ColumnConstraints </span><span class="s1">halignment</span><span class="s2">=&quot;RIGHT&quot; </span><span class="s1">prefWidth</span><span class="s2">=&quot;150&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">ColumnConstraints </span><span class="s1">prefWidth</span><span class="s2">=&quot;250&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s4">columnConstraints</span><span class="s0">&gt;</span>
+
+                            <span class="s0">&lt;</span><span class="s4">children</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;ID Envío:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;0&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtIdEnvio&quot; </span><span class="s1">editable</span><span class="s2">=&quot;false&quot; </span><span class="s1">promptText</span><span class="s2">=&quot;Autogenerado&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Origen:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtOrigenCrear&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;1&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Destino:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;2&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtDestinoCrear&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;2&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Peso:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;3&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtPesoCrear&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;3&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Dimensiones:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;4&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtDimensionesCrear&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;4&quot;</span><span class="s0">/&gt;</span>
+
+                                <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Descripción:&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;5&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtDescripcion&quot; </span><span class="s1">GridPane.columnIndex</span><span class="s2">=&quot;1&quot; </span><span class="s1">GridPane.rowIndex</span><span class="s2">=&quot;5&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s4">children</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">GridPane</span><span class="s0">&gt;</span>
+
+                        <span class="s5">&lt;!-- Servicios adicionales en la sección crear/modificar --&gt;</span>
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;15&quot; </span><span class="s1">alignment</span><span class="s2">=&quot;CENTER&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkSeguroCrear&quot; </span><span class="s1">text</span><span class="s2">=&quot;Seguro&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkFragilCrear&quot; </span><span class="s1">text</span><span class="s2">=&quot;Frágil&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkFirmaCrear&quot; </span><span class="s1">text</span><span class="s2">=&quot;Firma requerida&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">CheckBox </span><span class="s1">fx:id</span><span class="s2">=&quot;chkPrioritarioCrear&quot; </span><span class="s1">text</span><span class="s2">=&quot;Prioritario&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;15&quot; </span><span class="s1">alignment</span><span class="s2">=&quot;CENTER&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Crear&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#crearEnvio&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Modificar&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#modificarEnvio&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnModificar&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Cancelar&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#cancelarEnvio&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnCancelar&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s4">VBox</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;/</span><span class="s4">content</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s4">TitledPane</span><span class="s0">&gt;</span>
+
+            <span class="s5">&lt;!-- ===================== RASTREAR ===================== --&gt;</span>
+            <span class="s0">&lt;</span><span class="s4">TitledPane </span><span class="s1">text</span><span class="s2">=&quot;Rastrear Envío&quot; </span><span class="s1">expanded</span><span class="s2">=&quot;false&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s4">content</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s4">VBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s4">padding</span><span class="s0">&gt;&lt;</span><span class="s4">Insets </span><span class="s1">top</span><span class="s2">=&quot;10&quot; </span><span class="s1">right</span><span class="s2">=&quot;10&quot; </span><span class="s1">bottom</span><span class="s2">=&quot;10&quot; </span><span class="s1">left</span><span class="s2">=&quot;10&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">padding</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;ID Envío:&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">TextField </span><span class="s1">fx:id</span><span class="s2">=&quot;txtIdRastreo&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Rastrear&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#rastrearEnvio&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">fx:id</span><span class="s2">=&quot;lblRastreoResultado&quot; </span><span class="s1">style</span><span class="s2">=&quot;-fx-font-style: italic;&quot;</span><span class="s0">/&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s4">VBox</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;/</span><span class="s4">content</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s4">TitledPane</span><span class="s0">&gt;</span>
+
+            <span class="s5">&lt;!-- ===================== HISTORIAL ===================== --&gt;</span>
+            <span class="s0">&lt;</span><span class="s4">TitledPane </span><span class="s1">text</span><span class="s2">=&quot;Historial de Envíos&quot; </span><span class="s1">expanded</span><span class="s2">=&quot;true&quot;</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;</span><span class="s4">content</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;</span><span class="s4">VBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;</span><span class="s4">padding</span><span class="s0">&gt;&lt;</span><span class="s4">Insets </span><span class="s1">top</span><span class="s2">=&quot;10&quot; </span><span class="s1">right</span><span class="s2">=&quot;10&quot; </span><span class="s1">bottom</span><span class="s2">=&quot;10&quot; </span><span class="s1">left</span><span class="s2">=&quot;10&quot;</span><span class="s0">/&gt;&lt;/</span><span class="s4">padding</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;10&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Desde:&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">DatePicker </span><span class="s1">fx:id</span><span class="s2">=&quot;dpFechaInicio&quot;</span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Hasta:&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">DatePicker </span><span class="s1">fx:id</span><span class="s2">=&quot;dpFechaFin&quot;</span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;</span><span class="s4">Label </span><span class="s1">text</span><span class="s2">=&quot;Estado:&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">ComboBox </span><span class="s1">fx:id</span><span class="s2">=&quot;cbEstado&quot; </span><span class="s1">promptText</span><span class="s2">=&quot;Seleccione estado&quot;</span><span class="s0">/&gt;</span>
+
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Filtrar&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#filtrarHistorial&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">TableView </span><span class="s1">fx:id</span><span class="s2">=&quot;tablaEnvios&quot; </span><span class="s1">prefHeight</span><span class="s2">=&quot;250&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">columns</span><span class="s0">&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TableColumn </span><span class="s1">fx:id</span><span class="s2">=&quot;colId&quot; </span><span class="s1">text</span><span class="s2">=&quot;ID&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TableColumn </span><span class="s1">fx:id</span><span class="s2">=&quot;colOrigen&quot; </span><span class="s1">text</span><span class="s2">=&quot;Origen&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TableColumn </span><span class="s1">fx:id</span><span class="s2">=&quot;colDestino&quot; </span><span class="s1">text</span><span class="s2">=&quot;Destino&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TableColumn </span><span class="s1">fx:id</span><span class="s2">=&quot;colEstado&quot; </span><span class="s1">text</span><span class="s2">=&quot;Estado&quot;</span><span class="s0">/&gt;</span>
+                                <span class="s0">&lt;</span><span class="s4">TableColumn </span><span class="s1">fx:id</span><span class="s2">=&quot;colCosto&quot; </span><span class="s1">text</span><span class="s2">=&quot;Costo&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;/</span><span class="s4">columns</span><span class="s0">&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">TableView</span><span class="s0">&gt;</span>
+
+                        <span class="s0">&lt;</span><span class="s4">HBox </span><span class="s1">spacing</span><span class="s2">=&quot;15&quot; </span><span class="s1">alignment</span><span class="s2">=&quot;CENTER&quot;</span><span class="s0">&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Descargar CSV&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnDescargarCSV&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#descargarCSV&quot;</span><span class="s0">/&gt;</span>
+                            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Descargar PDF&quot; </span><span class="s1">fx:id</span><span class="s2">=&quot;btnDescargarPDF&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#descargarPDF&quot;</span><span class="s0">/&gt;</span>
+                        <span class="s0">&lt;/</span><span class="s4">HBox</span><span class="s0">&gt;</span>
+                    <span class="s0">&lt;/</span><span class="s4">VBox</span><span class="s0">&gt;</span>
+                <span class="s0">&lt;/</span><span class="s4">content</span><span class="s0">&gt;</span>
+            <span class="s0">&lt;/</span><span class="s4">TitledPane</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;</span><span class="s4">Button </span><span class="s1">text</span><span class="s2">=&quot;Volver&quot; </span><span class="s1">onAction</span><span class="s2">=&quot;#volverAlMenu&quot;</span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;/</span><span class="s4">VBox</span><span class="s0">&gt;</span>
+    <span class="s0">&lt;/</span><span class="s4">children</span><span class="s0">&gt;</span>
+<span class="s0">&lt;/</span><span class="s4">AnchorPane</span><span class="s0">&gt;</span>
+</pre>
+</body>
+</html>

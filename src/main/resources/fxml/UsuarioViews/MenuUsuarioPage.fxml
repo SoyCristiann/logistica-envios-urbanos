@@ -1,67 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/21"
-            fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController"
-            prefWidth="1200" prefHeight="800">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController">
 
-    <!-- Título principal -->
-    <Label layoutX="360" layoutY="60" text="MENÚ PRINCIPAL DEL USUARIO">
-        <font>
-            <Font name="System Bold" size="36" />
-        </font>
-    </Label>
+    <children>
+        <VBox alignment="CENTER" spacing="30" prefHeight="800.0" prefWidth="1200.0">
+            <padding>
+                <Insets top="50" bottom="50" left="50" right="50"/>
+            </padding>
 
-    <!-- Etiqueta que muestra el usuario logueado -->
-    <Label fx:id="lblUsuario" layoutX="420" layoutY="120" text="Bienvenido usuario">
-        <font>
-            <Font size="18" />
-        </font>
-    </Label>
+            <!-- Título -->
+            <Label text="Menú Principal - Usuario">
+                <font>
+                    <Font size="40"/>
+                </font>
+            </Label>
 
-    <!-- Contenedor de botones -->
-    <VBox spacing="18"
-          AnchorPane.topAnchor="180"
-          AnchorPane.leftAnchor="460"
-          AnchorPane.rightAnchor="460"
-          AnchorPane.bottomAnchor="80">
+            <!-- Nombre del usuario -->
+            <Label fx:id="lblUsuario" text="Bienvenido, Usuario" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-        <Button fx:id="btnPerfil" text="Gestionar Perfil" onAction="#abrirPerfil"
-                prefWidth="280" prefHeight="45" />
+            <!-- Sección de botones -->
+            <VBox alignment="CENTER" spacing="20">
+                <children>
+                    <Button fx:id="btnPerfil"
+                            text="Gestión de Perfil"
+                            onAction="#abrirPerfil"
+                            prefWidth="300" prefHeight="50"
+                            style="-fx-font-size: 16px;"/>
 
-        <Button fx:id="btnCotizar" text="Cotizar Envío" onAction="#abrirCotizarEnvio"
-                prefWidth="280" prefHeight="45" />
+                    <Button fx:id="btnGestionEnvios"
+                            text="Gestión de Envíos"
+                            onAction="#abrirGestionEnvios"
+                            prefWidth="300" prefHeight="50"
+                            style="-fx-font-size: 16px;"/>
 
-        <Button fx:id="btnCrearEnvio" text="Crear Envío" onAction="#abrirCrearEnvio"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnMisEnvios" text="Modificar / Cancelar Envío" onAction="#abrirMisEnvios"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnPago" text="Pagos y Comprobantes" onAction="#abrirPagos"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnRastreo" text="Rastrear Envío" onAction="#abrirRastreo"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnServicios" text="Servicios Adicionales" onAction="#abrirServicios"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnHistorial" text="Historial de Envíos" onAction="#abrirHistorial"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnReportes" text="Reportes (PDF / CSV)" onAction="#abrirReportes"
-                prefWidth="280" prefHeight="45" />
-
-        <Button fx:id="btnCerrarSesion" text="Cerrar Sesión" onAction="#cerrarSesion"
-                prefWidth="280" prefHeight="45" />
-
-    </VBox>
-
+                    <Button fx:id="btnCerrarSesion"
+                            text="Cerrar Sesión"
+                            onAction="#cerrarSesion"
+                            prefWidth="300" prefHeight="50"
+                            style="-fx-font-size: 16px;"/>
+                </children>
+            </VBox>
+        </VBox>
+    </children>
 </AnchorPane>
