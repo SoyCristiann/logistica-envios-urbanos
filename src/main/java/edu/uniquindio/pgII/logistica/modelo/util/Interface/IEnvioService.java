@@ -30,8 +30,10 @@ public interface IEnvioService {
     public abstract ArrayList<Envio> consultarHistorial(Usuario usuario, LocalDate fechaInicio, LocalDate fechaFin, EstadoEnvio estado);
     public abstract boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio);
     public abstract boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio);
-    public abstract double calcularCostoBase(Envio envio);
-    public abstract double calcularCostoDecorado(Envio envio);
+    // public abstract double calcularCostoBase(Envio envio);
+    // public abstract double calcularCostoDecorado(Envio envio);
     public abstract ArrayList<Envio> listarEnvios();
 
+    public abstract double calcularCostoCotizacion(Envio envio);
+    public abstract double calcularCostoTotal(Envio envio);
 }

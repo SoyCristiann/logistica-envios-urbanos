@@ -22,12 +22,12 @@ import java.util.List;
 
 public class PerfilUsuarioController {
 
-    // CAMPOS DE PERFIL
+    // Campos del perfil
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
 
-    // CAMPOS DIRECCIONES
+    // Campos de dirección
     @FXML private TextField txtCalle, txtNumero, txtBarrio, txtCiudad, txtCodigoPostal, txtDescripcionDir, txtAlias;
     @FXML private TableView<DireccionDTO> tablaDirecciones;
     @FXML private TableColumn<DireccionDTO, String> colAlias, colCiudad, colBarrio, colDescripcion;
@@ -39,7 +39,7 @@ public class PerfilUsuarioController {
 
     private UsuarioDTO usuarioActual;
     private UsuarioFacade facade = new UsuarioFacade();
-    private List<DireccionDTO> direccionesUsuario = new ArrayList<>();
+    private List<DireccionDTO> direccionesUsuario = usuarioActual.getDireccionesFrecuentesDTO();
 
     @FXML
     public void initialize() {
@@ -52,8 +52,7 @@ public class PerfilUsuarioController {
         colBarrio.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getBarrio()));
         colDescripcion.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescripcion()));
 
-        // Visibilidad inicial de secciones
-        // Perfil visible por defecto, las otras dos ocultas.
+        
         if (seccionPerfil != null) {
             seccionPerfil.setVisible(true);
             seccionPerfil.setManaged(true);
@@ -87,7 +86,10 @@ public class PerfilUsuarioController {
 
         boolean ok = facade.actualizarPerfil(dto);
 
-        System.out.println(ok ? "Perfil actualizado" : "No se pudo actualizar");
+        if (ok){
+            System.out.println("Perfil actualizado");
+        }
+        System.out.println("No se pudo actualizar");
     }
 
 

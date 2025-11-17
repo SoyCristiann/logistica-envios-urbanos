@@ -1,14 +1,13 @@
+
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
 
-import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EnvioDTO {
-    private String idEnvio;
+    private String idUsuario;
     private DireccionDTO origen;
     private DireccionDTO destino;
     private double peso;
@@ -17,31 +16,30 @@ public class EnvioDTO {
     private double ancho;
     private EstadoEnvio estado;
 
-    private List<ServicioAdicional> serviciosAdicionales;
+    private List<String> serviciosAdicionales;
 
     public EnvioDTO() {}
 
-    public EnvioDTO(String idUsuario, DireccionDTO origen, DireccionDTO destino, double peso, double largo, double ancho, double alto) {
-        this.idEnvio = idUsuario;
+    public EnvioDTO(String idUsuario, DireccionDTO origen, DireccionDTO destino, double peso, double largo, double ancho, double alto, List<String> serviciosAdicionales) {
+        this.idUsuario = idUsuario;
         this.origen = origen;
         this.destino = destino;
         this.peso = peso;
         this.alto = alto;
         this.largo = largo;
         this.ancho = ancho;
-        this.serviciosAdicionales= new ArrayList<>(serviciosAdicionales);
-        this.estado = estado;
+        this.serviciosAdicionales= serviciosAdicionales;
 
     }
 
     // Getters y Setters
 
-    public String getIdEnvio() {
-        return idEnvio;
+    public String getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setIdEnvio(String idUsuario) {
-        this.idEnvio = idUsuario;
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public DireccionDTO getOrigen() {
@@ -92,11 +90,11 @@ public class EnvioDTO {
         this.ancho = ancho;
     }
 
-    public List<ServicioAdicional> getServiciosAdicionales() {
+    public List<String> getServiciosAdicionales() {
         return serviciosAdicionales;
     }
 
-    public void setServiciosAdicionales(List<ServicioAdicional> serviciosAdicionales) {
+    public void setServiciosAdicionales(List<String> serviciosAdicionales) {
         this.serviciosAdicionales = serviciosAdicionales;
     }
 
@@ -106,4 +104,5 @@ public class EnvioDTO {
     public void setEstado(EstadoEnvio estado) {
         this.estado = estado;
     }
+
 }

@@ -1,316 +1,259 @@
 package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
+import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
-import javafx.event.ActionEvent;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
+import java.io.FileWriter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestionEnviosController {
 
-    // COTIZAR (entrada rápida)
-    @FXML private TextField txtOrigen;
-    @FXML private TextField txtDestino;
+    @FXML private ComboBox<Direccion> cbOrigenCotizar;
+    @FXML private ComboBox<Direccion> cbDestinoCotizar;
     @FXML private TextField txtPeso;
+    // Mantengo txtDimensiones por compatibilidad (no lo borré)
     @FXML private TextField txtDimensiones;
-
-    @FXML private CheckBox chkSeguro;       // cotizar
-    @FXML private CheckBox chkFragil;       // cotizar
-    @FXML private CheckBox chkFirma;        // cotizar
-    @FXML private CheckBox chkPrioritario;  // cotizar
-
     @FXML private Label lblResultado;
-    @FXML private Button btnLimpiarCotizacion;
 
-    // CRUD ENVÍOS (crear / modificar)
-    @FXML private TextField txtIdEnvio;
-    @FXML private TextField txtOrigenCrear;
-    @FXML private TextField txtDestinoCrear;
+    @FXML private CheckBox chkSeguroCotizar;
+    @FXML private CheckBox chkFragilCotizar;
+    @FXML private CheckBox chkFirmaCotizar;
+    @FXML private CheckBox chkPrioritarioCotizar;
+
+    // --- NUEVOS campos para COTIZAR (tipo double en la UI -> parseo en controlador) ---
+    @FXML private TextField txtAncho;
+    @FXML private TextField txtLargo;
+    @FXML private TextField txtAlto;
+
+    @FXML private ComboBox<Direccion> cbOrigenCrear;
+    @FXML private ComboBox<Direccion> cbDestinoCrear;
     @FXML private TextField txtPesoCrear;
-    @FXML private TextField txtDimensionesCrear;
-    @FXML private TextField txtDescripcion;
 
-    // checkboxes para CREAR / MODIFICAR (separados de los de cotizar)
     @FXML private CheckBox chkSeguroCrear;
     @FXML private CheckBox chkFragilCrear;
     @FXML private CheckBox chkFirmaCrear;
     @FXML private CheckBox chkPrioritarioCrear;
 
-    // RASTREO
+    @FXML private TextField txtAnchoCrear;
+    @FXML private TextField txtLargoCrear;
+    @FXML private TextField txtAltoCrear;
+
     @FXML private TextField txtIdRastreo;
     @FXML private Label lblRastreoResultado;
 
-    // HISTORIAL
     @FXML private TableView<EnvioDTO> tablaEnvios;
-    @FXML private TableColumn<EnvioDTO,String> colId;
-    @FXML private TableColumn<EnvioDTO,String> colOrigen;
-    @FXML private TableColumn<EnvioDTO,String> colDestino;
-    @FXML private TableColumn<EnvioDTO,String> colEstado;
-    @FXML private TableColumn<EnvioDTO,Double> colCosto;
+    @FXML private TableColumn<Envio, String> colId;
+    @FXML private TableColumn<Envio, String> colOrigen;
+    @FXML private TableColumn<Envio, String> colDestino;
+    @FXML private TableColumn<Envio, String> colEstado;
+    @FXML private TableColumn<Envio, Double> colCosto;
 
     @FXML private DatePicker dpFechaInicio;
     @FXML private DatePicker dpFechaFin;
     @FXML private ComboBox<String> cbEstado;
 
-    // Botones dinámicos junto a la tabla
-    @FXML private Button btnModificar;   // habilitado solo si estado == SOLICITADO
-    @FXML private Button btnCancelar;    // habilitado solo si estado == SOLICITADO
-    @FXML private Button btnDescargarCSV;
-    @FXML private Button btnDescargarPDF;
+    @FXML private Button btnModificar;
+    @FXML private Button btnCancelar;
 
     private final UsuarioFacade facade = new UsuarioFacade();
 
+    // Inicializar vista
     @FXML
-    public void initialize() {
-        // Column factories
-        colId.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getIdEnvio()));
-        colOrigen.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getOrigen()));
-        colDestino.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(c.getValue().getDestino()));
-        colEstado.setCellValueFactory(c -> new javafx.beans.property.SimpleStringProperty(
-                c.getValue() != null && c.getValue().getEstado() != null ? c.getValue().getEstado().name() : "N/A"
-        ));
-        colCosto.setCellValueFactory(c -> new javafx.beans.property.SimpleDoubleProperty(c.getValue().getCosto()).asObject());
-
-        // Estados en ComboBox
-        cbEstado.getItems().clear();
-        cbEstado.getItems().add("Todos");
-        for (EstadoEnvio e : EstadoEnvio.values()) {
-            cbEstado.getItems().add(e.name());
-        }
-        cbEstado.getSelectionModel().select("Todos");
-
-        // Botones inicialmente deshabilitados
-        if (btnModificar != null) btnModificar.setDisable(true);
-        if (btnCancelar != null) btnCancelar.setDisable(true);
-
-        // Listener de selección en la tabla
-        tablaEnvios.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
-            seleccionarEnvioTabla(newSel);
-        });
-
-        // Cargar listado inicial
+    private void initialize() {
+        inicializarColumnas();
+        inicializarEstados();
+        cargarDirecciones();
         cargarHistorial();
+        btnModificar.setDisable(true);
+        btnCancelar.setDisable(true);
     }
 
-    // COTIZAR
+    // Inicializar columnas de la tabla
+    private void inicializarColumnas() {
+        colId.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getIdEnvio()));
+        colOrigen.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigen().getDireccionCompleta()));
+        colDestino.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestino().getDireccionCompleta()));
+        colEstado.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getEstado().name()));
+        colCosto.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCosto()).asObject());
+    }
 
+    // Inicializar combo de estados
+    private void inicializarEstados() {
+        cbEstado.getItems().add("Todos");
+        for (EstadoEnvio e : EstadoEnvio.values()) cbEstado.getItems().add(e.name());
+        cbEstado.getSelectionModel().select("Todos");
+    }
+
+    // Cargar direcciones del usuario
+    private void cargarDirecciones() {
+        List<Direccion> direcciones = facade.obtenerDirecciones();
+        cbOrigenCotizar.getItems().setAll(direcciones);
+        cbDestinoCotizar.getItems().setAll(direcciones);
+        cbOrigenCrear.getItems().setAll(direcciones);
+        cbDestinoCrear.getItems().setAll(direcciones);
+    }
+
+    // Cotizar envío
     @FXML
-    private void cotizarEnvio() {
+    private void cotizarEnvio() { // Falta la implementacion de la calculacion de los costos
         try {
             EnvioDTO dto = new EnvioDTO();
 
-            dto.setOrigen(txtOrigen.getText());
-            dto.setDestino(txtDestino.getText());
-            dto.setPeso(Double.parseDouble(txtPeso.getText()));
-            dto.setDimensiones(txtDimensiones.getText());
+            dto.setOrigen(DireccionMapper.toDTO(cbOrigenCotizar.getValue()));
+            dto.setDestino(DireccionMapper.toDTO(cbDestinoCotizar.getValue()));
 
-            dto.setSeguro(chkSeguro.isSelected());
-            dto.setFragil(chkFragil.isSelected());
-            dto.setFirmaRequerida(chkFirma.isSelected());
-            dto.setPrioritario(chkPrioritario.isSelected());
+            dto.setPeso(Double.parseDouble(txtPeso.getText().trim()));
+
+            dto.setAncho(Double.parseDouble(txtAncho.getText().trim()));
+            dto.setLargo(Double.parseDouble(txtLargo.getText().trim()));
+            dto.setAlto(Double.parseDouble(txtAlto.getText().trim()));
 
             double costo = facade.cotizarEnvio(dto);
             lblResultado.setText("Costo estimado: $" + costo);
-
         } catch (Exception e) {
-            lblResultado.setText("Error en los datos.");
+            lblResultado.setText("Datos inválidos");
         }
     }
 
+    // limpiar formulario de cotización
     @FXML
-    private void limpiarCotizacion(ActionEvent event) {
-        txtOrigen.clear();
-        txtDestino.clear();
+    private void limpiarCotizacion() {
+        cbOrigenCotizar.setValue(null);
+        cbDestinoCotizar.setValue(null);
         txtPeso.clear();
         txtDimensiones.clear();
-        chkSeguro.setSelected(false);
-        chkFragil.setSelected(false);
-        chkFirma.setSelected(false);
-        chkPrioritario.setSelected(false);
+
+        if (txtAncho != null) txtAncho.clear();
+        if (txtLargo != null) txtLargo.clear();
+        if (txtAlto != null) txtAlto.clear();
+
+        chkSeguroCotizar.setSelected(false);
+        chkFragilCotizar.setSelected(false);
+        chkFirmaCotizar.setSelected(false);
+        chkPrioritarioCotizar.setSelected(false);
         lblResultado.setText("");
     }
 
-    // CREAR
-
+    // Crear envío
     @FXML
     private void crearEnvio() {
         try {
             EnvioDTO dto = new EnvioDTO();
 
-            dto.setOrigen(txtOrigenCrear.getText());
-            dto.setDestino(txtDestinoCrear.getText());
-            dto.setPeso(Double.parseDouble(txtPesoCrear.getText()));
-            dto.setDimensiones(txtDimensionesCrear.getText());
-            dto.setFechaCreacion(LocalDate.now());
-            dto.setEstado(EstadoEnvio.SOLICITADO);
+            // uso DireccionMapper para mantener DTO consistente
+            dto.setOrigen(DireccionMapper.toDTO(cbOrigenCrear.getValue()));
+            dto.setDestino(DireccionMapper.toDTO(cbDestinoCrear.getValue()));
 
-            // Servicios adicionales desde la UI de crear
-            dto.setSeguro(chkSeguroCrear.isSelected());
-            dto.setFragil(chkFragilCrear.isSelected());
-            dto.setFirmaRequerida(chkFirmaCrear.isSelected());
-            dto.setPrioritario(chkPrioritarioCrear.isSelected());
+            dto.setPeso(Double.parseDouble(txtPesoCrear.getText().trim()));
+
+            dto.setAncho(Double.parseDouble(txtAnchoCrear.getText().trim()));
+            dto.setLargo(Double.parseDouble(txtLargoCrear.getText().trim()));
+            dto.setAlto(Double.parseDouble(txtAltoCrear.getText().trim()));
+
 
             boolean ok = facade.crearEnvio(dto);
-            mostrar(ok ? "Envío creado" : "No se pudo crear el envío");
-
-            limpiarCamposCrear();
+            mostrar(ok ? "Envío creado" : "No se pudo crear");
             cargarHistorial();
-
-        } catch (Exception ex) {
-            mostrar("Datos inválidos");
-        }
-    }
-
-    private void limpiarCamposCrear() {
-        txtIdEnvio.clear();
-        txtOrigenCrear.clear();
-        txtDestinoCrear.clear();
-        txtPesoCrear.clear();
-        txtDimensionesCrear.clear();
-        txtDescripcion.clear();
-        chkSeguroCrear.setSelected(false);
-        chkFragilCrear.setSelected(false);
-        chkFirmaCrear.setSelected(false);
-        chkPrioritarioCrear.setSelected(false);
-    }
-
-    // MODIFICAR
-
-    @FXML
-    private void modificarEnvio() {
-        try {
-            EnvioDTO dto = new EnvioDTO();
-            dto.setIdEnvio(txtIdEnvio.getText());
-            dto.setOrigen(txtOrigenCrear.getText());
-            dto.setDestino(txtDestinoCrear.getText());
-            dto.setPeso(Double.parseDouble(txtPesoCrear.getText()));
-            dto.setDimensiones(txtDimensionesCrear.getText());
-
-            // Servicios en modificación
-            dto.setSeguro(chkSeguroCrear.isSelected());
-            dto.setFragil(chkFragilCrear.isSelected());
-            dto.setFirmaRequerida(chkFirmaCrear.isSelected());
-            dto.setPrioritario(chkPrioritarioCrear.isSelected());
-
-            boolean ok = facade.modificarEnvio(dto);
-            mostrar(ok ? "Envío modificado" : "No se pudo modificar");
-
-            cargarHistorial();
-
         } catch (Exception e) {
             mostrar("Datos inválidos");
         }
     }
 
-    // CANCELAR
+    // Modificar envío
+    @FXML
+    private void modificarEnvio() {
+        try {
+            EnvioDTO dto = new EnvioDTO();
 
+            // si en tu flujo necesitas id, puedes setearlo aquí: dto.setIdEnvio(txtIdEnvio.getText());
+            dto.setOrigen(DireccionMapper.toDTO(cbOrigenCrear.getValue()));
+            dto.setDestino(DireccionMapper.toDTO(cbDestinoCrear.getValue()));
+            dto.setPeso(Double.parseDouble(txtPesoCrear.getText().trim()));
+
+            // agrego dimensiones en la modificación también
+            dto.setAncho(Double.parseDouble(txtAnchoCrear.getText().trim()));
+            dto.setLargo(Double.parseDouble(txtLargoCrear.getText().trim()));
+            dto.setAlto(Double.parseDouble(txtAltoCrear.getText().trim()));
+
+            boolean ok = facade.modificarEnvio(dto);
+            mostrar(ok ? "Modificado" : "No se pudo modificar");
+            cargarHistorial();
+        } catch (Exception e) {
+            mostrar("Datos inválidos");
+        }
+    }
+
+    // Cancelar envío
     @FXML
     private void cancelarEnvio() {
         EnvioDTO dto = new EnvioDTO();
-        dto.setIdEnvio(txtIdEnvio.getText());
 
         boolean ok = facade.cancelarEnvio(dto);
-        mostrar(ok ? "Envío cancelado" : "No se puede cancelar");
-
+        mostrar(ok ? "Cancelado" : "No se pudo cancelar");
         cargarHistorial();
     }
 
-    // RASTREAR
-
+    // Rastrear
     @FXML
     private void rastrearEnvio() {
         EnvioDTO dto = facade.rastrearEnvio(txtIdRastreo.getText());
-
         if (dto != null) {
-            lblRastreoResultado.setText("Estado: " + (dto.getEstado() != null ? dto.getEstado().name() : "N/A")
-                    + " | Destino: " + dto.getDestino());
+            lblRastreoResultado.setText("Estado: " + dto.getEstado().name());
         } else {
-            lblRastreoResultado.setText("No encontrado.");
+            lblRastreoResultado.setText("No encontrado");
         }
     }
 
-    // HISTORIAL
-
+    // Filtrar historial
     @FXML
     private void filtrarHistorial() {
         String estado = cbEstado.getValue();
-        if (estado == null) estado = "Todos";
         LocalDate ini = dpFechaInicio.getValue();
         LocalDate fin = dpFechaFin.getValue();
+        tablaEnvios.getItems().setAll(facade.obtenerHistorial(null, ini, fin, estado));
 
-        List<EnvioDTO> lista = facade.obtenerHistorial(null, ini, fin, estado);
-        tablaEnvios.getItems().setAll(lista);
     }
 
+    // Cargar historial completo
     private void cargarHistorial() {
-        List<EnvioDTO> lista = facade.obtenerHistorial(null, null, null, "Todos");
-        tablaEnvios.getItems().setAll(lista);
+        tablaEnvios.getItems().setAll(facade.obtenerHistorial(null, null, null, "Todos"));
     }
 
-    private void mostrar(String texto) {
+    //descargar CSV (PENDIENTE)
+    @FXML
+    private void descargarCSV() {
+        System.out.print("Generar CSV");
+    }
+
+    // descargar PDF (PENDIENTE)
+    @FXML
+    private void descargarPDF() {
+        System.out.print("Generar PDF");
+    }
+
+    // Alertas
+    private void mostrar(String t) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
-        a.setContentText(texto);
+        a.setContentText(t);
         a.showAndWait();
     }
 
-    // TABLA: selección y acciones dinámicas
-
-    private void seleccionarEnvioTabla(EnvioDTO seleccionado) {
-        if (seleccionado == null) {
-            // Desactivar acciones si no hay selección
-            if (btnModificar != null) btnModificar.setDisable(true);
-            if (btnCancelar != null) btnCancelar.setDisable(true);
-            return;
-        }
-
-        // Rellenar campos de edición con datos del DTO seleccionado
-        txtIdEnvio.setText(seleccionado.getIdEnvio() != null ? seleccionado.getIdEnvio() : "");
-        txtOrigenCrear.setText(seleccionado.getOrigen() != null ? seleccionado.getOrigen() : "");
-        txtDestinoCrear.setText(seleccionado.getDestino() != null ? seleccionado.getDestino() : "");
-        txtPesoCrear.setText(String.valueOf(seleccionado.getPeso()));
-        txtDimensionesCrear.setText(seleccionado.getDimensiones() != null ? seleccionado.getDimensiones() : "");
-        txtDescripcion.setText("");
-
-
-        chkSeguroCrear.setSelected(seleccionado.isSeguro());
-        chkFragilCrear.setSelected(seleccionado.isFragil());
-        chkFirmaCrear.setSelected(seleccionado.isFirmaRequerida());
-        chkPrioritarioCrear.setSelected(seleccionado.isPrioritario());
-
-
-        EstadoEnvio estado = seleccionado.getEstado();
-        boolean habilitarAcciones = estado != null && estado == EstadoEnvio.SOLICITADO;
-
-        if (btnModificar != null) btnModificar.setDisable(!habilitarAcciones);
-        if (btnCancelar != null) btnCancelar.setDisable(!habilitarAcciones);
-    }
-
-    // descargar CSV / PDF
-
+    // Volver al menú
     @FXML
-    private void descargarCSV(ActionEvent event) {
-        // falta implementar
-        mostrar("Funcionalidad Descargar CSV (pendiente implementar export real).");
-    }
-
-    @FXML
-    private void descargarPDF(ActionEvent event) {
-        // falta implementar
-        mostrar("Funcionalidad Descargar PDF (pendiente implementar export real).");
-    }
-
-    // VOLVER
-
-    @FXML
-    private void volverAlMenu(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
-        System.out.println("Volver al menú…");
+    private void volverAlMenu(javafx.event.ActionEvent e) {
+        VentanaUtil.cambiarEscena(getClass(), Constantes.menuUsuarioPage, e);
     }
 }

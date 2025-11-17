@@ -197,7 +197,7 @@ public class Envio {
         String origenInfo = (this.origen != null ? this.origen.getAlias() : "N/A");
         String destinoInfo = (this.destino != null ? this.destino.getAlias() : "N/A");
 
-        return "📦 Envio {" +
+        return " Envio {" +
                 "\n  ID Envío: " + this.idEnvio +
                 "\n  Estado: " + this.estado +
                 "\n  Costo Total: $" + String.format("%.2f", this.costo) +

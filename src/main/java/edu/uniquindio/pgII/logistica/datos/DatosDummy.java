@@ -1,5 +1,5 @@
-package edu.uniquindio.pgII.logistica.datos;
 
+package edu.uniquindio.pgII.logistica.datos;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
@@ -7,16 +7,12 @@ import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
-
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
-import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.time.LocalDate;
 
 public class DatosDummy {
     private AdministradorSingleton administrador = AdministradorSingleton.getInstance();
@@ -28,12 +24,10 @@ public class DatosDummy {
 
     public DatosDummy(){
         crearUsuariosDummy();
-
         crearRepartidoresDummy();
         crearDireccionesDummy();
         crearServiciosDummy();
         crearEnviosDummy();
-
     }
 
     public void crearUsuariosDummy(){
@@ -51,17 +45,7 @@ public class DatosDummy {
         UsuarioDTO usuario4= usuarioService.registrarUsuario(new UsuarioDTO("1024512458","Mateo Cruz","mateo@mail.com","3051112233","pass4"));
         UsuarioDTO usuario5= usuarioService.registrarUsuario(new UsuarioDTO("1024125478","Valentina Rojas","vale@mail.com","3016667788","pass5"));
         UsuarioDTO usuario6= usuarioService.registrarUsuario(new UsuarioDTO("1030625854","Alejandro Gómez","alejandro@mail.com","3001234567","pass6"));
-        /*
-        usuarioService.registrarUsuario(new UsuarioDTO("user03","Valentina López","vale@mail.com","3109876543","pass7"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user04","Daniel Restrepo","daniel.r@mail.com","3216549870","pass8"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user05","Camila Vargas","camilav@mail.com","3182223344","pass9"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user06","Juan Pablo Soto","juanp@mail.com","3015556677","pass10"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user07","Isabella Cruz","isabelac@mail.com","3054445566","pass11"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user08","Sebastián Mora","sebastianm@mail.com","3137778800","pass12"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user09","Mariana Ríos","marianar@mail.com","3203332211","pass13"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user10","Felipe Torres","felipe.t@mail.com","3161110099","pass14"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user11","Andrea Pérez","andrea@mail.com","3049991122","pass15"));
-        */
+
     }
 
     public void crearRepartidoresDummy(){
@@ -109,13 +93,6 @@ public class DatosDummy {
         );
     }
 
-    // Servicios base por defecto - No entiendo cuál es la función de esto en envio
-    /*public void crearServiciosAdicionalDummy(){
-        envioService.registrarServicio(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
-        envioService.registrarServicio(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
-        envioService.registrarServicio(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
-        envioService.registrarServicio(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
-    }*/
 
     public void crearServiciosDummy(){
         serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
@@ -124,83 +101,48 @@ public class DatosDummy {
         serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
     }
 
-
     // Crear envíos
-    public void crearEnviosDummy() {
-
-
+    public void crearEnviosDummy(){
         List<String> serviciosEnvio1 = new ArrayList<>();
         serviciosEnvio1.add("SEG");
-
-        DireccionDTO origen1 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D001")
-        );
-        DireccionDTO destino1 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D001")
-        );
-
-        envioService.crearEnvio(
-                new EnvioDTO(
-                        "1025458798",
-                        origen1,
-                        destino1,
-                        5,
-                        10,
-                        20,
-                        40,
-                        serviciosEnvio1
-                )
-        );
-
+        envioService.crearEnvio(new EnvioDTO(
+                "1025485798",
+                direccionService.buscarDireccionPorId("D001"),
+                direccionService.buscarDireccionPorId("D002"),
+                5,
+                10,
+                20,
+                40,
+                serviciosEnvio1
+        ));
 
         List<String> serviciosEnvio2 = new ArrayList<>();
         serviciosEnvio2.add("FRA");
         serviciosEnvio2.add("PRI");
-
-        DireccionDTO origen2 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D004")
-        );
-        DireccionDTO destino2 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D001")
-        );
-
-        envioService.crearEnvio(
-                new EnvioDTO(
-                        "1032632323",
-                        origen2,
-                        destino2,
-                        25.0,
-                        50.0,
-                        50.0,
-                        60.0,
-                        serviciosEnvio2
-                )
-        );
+        envioService.crearEnvio(new EnvioDTO(
+                "1032632323", // ID Usuario (Andrés)
+                direccionService.buscarDireccionPorId("D004"),
+                direccionService.buscarDireccionPorId("D001"),
+                25.0,
+                50.0,
+                50.0,
+                60.0,
+                serviciosEnvio2
+        ));
 
 
         List<String> serviciosEnvio3 = new ArrayList<>();
         serviciosEnvio3.add("FIR");
-
-        DireccionDTO origen3 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D006")
-        );
-        DireccionDTO destino3 = DireccionMapper.toDTO(
-                direccionService.buscarDireccionPorId("D005")
-        );
-
-        envioService.crearEnvio(
-                new EnvioDTO(
-                        "1024125478",
-                        origen3,
-                        destino3,
-                        1.2,
-                        15.0,
-                        10.0,
-                        5.0,
-                        serviciosEnvio3
-                )
-        );
+        envioService.crearEnvio(new EnvioDTO(
+                "1024125478",
+                direccionService.buscarDireccionPorId("D006"),
+                direccionService.buscarDireccionPorId("D005"),
+                1.2,
+                15.0,
+                10.0,
+                5.0,
+                serviciosEnvio3
+        ));
     }
-
 
 }

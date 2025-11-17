@@ -5,6 +5,7 @@ import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.ServicioAdicionalDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 
+import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
@@ -48,7 +49,7 @@ public class UsuarioFacade {
     public double cotizarEnvio(EnvioDTO dto) {
         if (dto == null) return 0;
         Envio envio = EnvioMapper.toEntity(dto);
-        return envioService.calcularCostoDecorado(envio);
+        return envioService.calcularCostoCotizacion(envio);
     }
 
 
@@ -83,7 +84,7 @@ public class UsuarioFacade {
 
     // HISTORIAL
     public List<EnvioDTO> obtenerHistorial(
-            Object usuario,
+            UsuarioDTO usuario,
             LocalDate inicio,
             LocalDate fin,
             String estadoTexto) {
@@ -136,6 +137,11 @@ public class UsuarioFacade {
     public boolean eliminarDireccion(UsuarioDTO usuario, DireccionDTO dto) {
         Usuario usuarioActual = UsuarioMapper.toEntity(usuario);
         return admin.getDireccionService().eliminarDireccion(usuarioActual, DireccionMapper.toEntity(dto));
+    }
+
+    public List<Direccion> obtenerDirecciones(){
+        ArrayList<Direccion> listaDirecciones = admin.getDireccionService().listarDirecciones();
+        return listaDirecciones;
     }
 
 }

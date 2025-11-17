@@ -99,7 +99,7 @@ public class UsuarioMapper {
         builder.withPassword(usuarioDTO.getPassword());
 
         if(usuarioDTO.getRolUsuario() != null) {
-            builder.withRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+            builder.withRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario().toString()));
         }
 
         //Asignar las listas mapeadas al incio
@@ -120,7 +120,7 @@ public class UsuarioMapper {
         usuario.setCorreo(usuarioDTO.getCorreo());
         usuario.setTelefono(usuarioDTO.getTelefono());
         usuario.setPassword(usuarioDTO.getPassword());
-        usuario.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+        usuario.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario().toString()));
 
         //Direcciones, metodo de pago e historial de envios
         List<Direccion> direcciones= new ArrayList<>();

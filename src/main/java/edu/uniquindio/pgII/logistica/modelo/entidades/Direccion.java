@@ -110,4 +110,18 @@ public class Direccion {
         return texto;
     }
 
+    @Override
+    public String toString() {
+        return "Direccion{" +
+                " idDireccion='" + idDireccion + '\'' +
+                ", calle='" + calle + '\'' +
+                ", numero='" + numero + '\'' +
+                ", barrio='" + barrio + '\'' +
+                ", ciudad='" + ciudad + '\'' +
+                ", codigoPostal='" + codigoPostal + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", alias='" + alias + '\'' +
+                '}';
+    }
+
 }

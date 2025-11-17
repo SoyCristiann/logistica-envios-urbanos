@@ -18,7 +18,7 @@
                 <font><Font size="36"/></font>
             </Label>
 
-            <!-- ===================== COTIZAR ===================== -->
+
             <TitledPane text="Cotizar Envío" expanded="false">
                 <content>
                     <VBox spacing="10">
@@ -31,30 +31,39 @@
                             </columnConstraints>
 
                             <children>
-                                <Label text="Origen:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                                <TextField fx:id="txtOrigen" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                                <Label text="Origen:" GridPane.rowIndex="0"/>
+                                <ComboBox fx:id="cbOrigenCotizar" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-                                <Label text="Destino:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                                <TextField fx:id="txtDestino" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                                <Label text="Destino:" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="cbDestinoCotizar" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-                                <Label text="Peso (kg):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                                <TextField fx:id="txtPeso" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                                <Label text="Peso (kg):" GridPane.rowIndex="2"/>
+                                <TextField fx:id="txtPeso" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                                <Label text="Dimensiones:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                                <TextField fx:id="txtDimensiones" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+
+                                <Label text="Largo (cm):" GridPane.rowIndex="3"/>
+                                <TextField fx:id="txtLargoCot" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                                <Label text="Ancho (cm):" GridPane.rowIndex="4"/>
+                                <TextField fx:id="txtAnchoCot" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                                <Label text="Alto (cm):" GridPane.rowIndex="5"/>
+                                <TextField fx:id="txtAltoCot" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
                             </children>
                         </GridPane>
 
                         <HBox spacing="15" alignment="CENTER">
-                            <CheckBox fx:id="chkSeguro" text="Seguro"/>
-                            <CheckBox fx:id="chkFragil" text="Frágil"/>
-                            <CheckBox fx:id="chkFirma" text="Firma requerida"/>
-                            <CheckBox fx:id="chkPrioritario" text="Prioritario"/>
+                            <CheckBox fx:id="chkSeguroCotizar" text="Seguro"/>
+                            <CheckBox fx:id="chkFragilCotizar" text="Frágil"/>
+                            <CheckBox fx:id="chkFirmaCotizar" text="Firma requerida"/>
+                            <CheckBox fx:id="chkPrioritarioCotizar" text="Prioritario"/>
                         </HBox>
 
                         <HBox spacing="10" alignment="CENTER">
-                            <Button text="Cotizar Envío" fx:id="btnCotizar" onAction="#cotizarEnvio"/>
-                            <Button text="Limpiar" fx:id="btnLimpiarCotizacion" onAction="#limpiarCotizacion"/>
+                            <Button text="Cotizar Envío" onAction="#cotizarEnvio"/>
+                            <Button text="Limpiar" onAction="#limpiarCotizacion"/>
                         </HBox>
 
                         <Label fx:id="lblResultado" style="-fx-font-weight: bold;"/>
@@ -62,7 +71,7 @@
                 </content>
             </TitledPane>
 
-            <!-- ===================== CRUD ENVÍOS ===================== -->
+
             <TitledPane text="Crear / Modificar / Cancelar Envío" expanded="false">
                 <content>
                     <VBox spacing="10">
@@ -75,27 +84,33 @@
                             </columnConstraints>
 
                             <children>
+
                                 <Label text="ID Envío:" GridPane.rowIndex="0"/>
                                 <TextField fx:id="txtIdEnvio" editable="false" promptText="Autogenerado" GridPane.columnIndex="1"/>
 
                                 <Label text="Origen:" GridPane.rowIndex="1"/>
-                                <TextField fx:id="txtOrigenCrear" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="cbOrigenCrear" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
                                 <Label text="Destino:" GridPane.rowIndex="2"/>
-                                <TextField fx:id="txtDestinoCrear" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <ComboBox fx:id="cbDestinoCrear" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                                <Label text="Peso:" GridPane.rowIndex="3"/>
+                                <Label text="Peso (kg):" GridPane.rowIndex="3"/>
                                 <TextField fx:id="txtPesoCrear" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                                <Label text="Dimensiones:" GridPane.rowIndex="4"/>
-                                <TextField fx:id="txtDimensionesCrear" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <!-- NUEVOS CAMPOS: LARGO, ANCHO, ALTO -->
 
-                                <Label text="Descripción:" GridPane.rowIndex="5"/>
-                                <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                <Label text="Largo (cm):" GridPane.rowIndex="4"/>
+                                <TextField fx:id="txtLargoCrear" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                                <Label text="Ancho (cm):" GridPane.rowIndex="5"/>
+                                <TextField fx:id="txtAnchoCrear" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                                <Label text="Alto (cm):" GridPane.rowIndex="6"/>
+                                <TextField fx:id="txtAltoCrear" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
                             </children>
                         </GridPane>
 
-                        <!-- Servicios adicionales en la sección crear/modificar -->
                         <HBox spacing="15" alignment="CENTER">
                             <CheckBox fx:id="chkSeguroCrear" text="Seguro"/>
                             <CheckBox fx:id="chkFragilCrear" text="Frágil"/>
@@ -105,35 +120,32 @@
 
                         <HBox spacing="15" alignment="CENTER">
                             <Button text="Crear" onAction="#crearEnvio"/>
-                            <Button text="Modificar" onAction="#modificarEnvio" fx:id="btnModificar"/>
-                            <Button text="Cancelar" onAction="#cancelarEnvio" fx:id="btnCancelar"/>
+                            <Button text="Modificar" fx:id="btnModificar" onAction="#modificarEnvio"/>
+                            <Button text="Cancelar" fx:id="btnCancelar" onAction="#cancelarEnvio"/>
                         </HBox>
                     </VBox>
                 </content>
             </TitledPane>
 
-            <!-- ===================== RASTREAR ===================== -->
+
             <TitledPane text="Rastrear Envío" expanded="false">
                 <content>
                     <VBox spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
-
                         <HBox spacing="10">
                             <Label text="ID Envío:"/>
                             <TextField fx:id="txtIdRastreo"/>
                             <Button text="Rastrear" onAction="#rastrearEnvio"/>
                         </HBox>
 
-                        <Label fx:id="lblRastreoResultado" style="-fx-font-style: italic;"/>
+                        <Label fx:id="lblRastreoResultado"/>
                     </VBox>
                 </content>
             </TitledPane>
 
-            <!-- ===================== HISTORIAL ===================== -->
+
             <TitledPane text="Historial de Envíos" expanded="true">
                 <content>
                     <VBox spacing="10">
-                        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
 
                         <HBox spacing="10">
                             <Label text="Desde:"/>
@@ -143,7 +155,7 @@
                             <DatePicker fx:id="dpFechaFin"/>
 
                             <Label text="Estado:"/>
-                            <ComboBox fx:id="cbEstado" promptText="Seleccione estado"/>
+                            <ComboBox fx:id="cbEstado"/>
 
                             <Button text="Filtrar" onAction="#filtrarHistorial"/>
                         </HBox>
@@ -159,8 +171,8 @@
                         </TableView>
 
                         <HBox spacing="15" alignment="CENTER">
-                            <Button text="Descargar CSV" fx:id="btnDescargarCSV" onAction="#descargarCSV"/>
-                            <Button text="Descargar PDF" fx:id="btnDescargarPDF" onAction="#descargarPDF"/>
+                            <Button text="Descargar CSV" onAction="#descargarCSV"/>
+                            <Button text="Descargar PDF" onAction="#descargarPDF"/>
                         </HBox>
                     </VBox>
                 </content>

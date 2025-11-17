@@ -36,23 +36,22 @@ public class EnvioService implements IEnvioService {
     //  Crear envío
     @Override
 
-    public boolean crearEnvio(EnvioDTO envioDTO) {
-        Envio envio= EnvioMapper.toEntity(envioDTO);
+    public boolean crearEnvio(Envio envio) {
 
         if (envio != null) {
             envio.setIdEnvio(generarId());
             envio.setFechaCreacion(LocalDate.now());
             envio.setEstado(EstadoEnvio.SOLICITADO);
 
-            // Calcular tarifa base
-            double costoBase = calcularCostoBase(envio);
-            envio.setCosto(costoBase);
+//            // Calcular tarifa base
+//            double costoBase = calcularCostoBase(envio);
+//            envio.setCosto(costoBase);
 
             // Aplicar servicios adicionales si los tiene
-            if (envio.getServiciosAdicionales() != null && !envio.getServiciosAdicionales().isEmpty()) {
-                double costoFinal = calcularCostoDecorado(envio);
+
+                double costoFinal = calcularCostoTotal(envio);
                 envio.setCosto(costoFinal);
-            }
+
             envios.add(envio);
             for(Envio e: envios){
                 System.out.println(e);
@@ -61,6 +60,8 @@ public class EnvioService implements IEnvioService {
         }
         return false;
     }
+
+
 
     //  Modificar envío (solo si sigue en estado SOLICITADO)
     @Override
@@ -83,7 +84,7 @@ public class EnvioService implements IEnvioService {
     public boolean cancelarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
         if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
-            envioExistente.setEstado(EstadoEnvio.INCIDENCIA);
+            envioExistente.setEstado(EstadoEnvio.CANCELADO);
             return true;
         }
         return false;
@@ -143,7 +144,7 @@ public class EnvioService implements IEnvioService {
     public boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().add(servicio);
-            double costoFinal = calcularCostoDecorado(envio);
+            double costoFinal = calcularCostoServicio(envio);
             envio.setCosto(costoFinal);
             return true;
         }
@@ -156,13 +157,16 @@ public class EnvioService implements IEnvioService {
     public boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().remove(servicio);
-            double costoFinal = calcularCostoDecorado(envio);
+            double costoFinal = calcularCostoTotal(envio);
             envio.setCosto(Math.max(costoFinal, 0));
             return true;
         }
         return false;
     }
 
+
+    // estos métodos se usaban cuando se implementaba decorator, al usar builder para agregar un servicio Adicional cambia el proceso
+    /*
     //  Calcular costo base (tarifa inicial)
     @Override
     public double calcularCostoBase(Envio envio) {
@@ -208,7 +212,8 @@ public class EnvioService implements IEnvioService {
 
         //  Retorna el costo final decorado
         return envioDecorado.getCosto();
-    }
+
+    } */
 
 
 
@@ -229,14 +234,35 @@ public class EnvioService implements IEnvioService {
     }
 
     @Override
+    public double calcularCostoCotizacion(Envio envio) {
+
+        return 0;
+    }
+
+    public  double calcularCostoServicio(Envio envio) {
+
+        return 0;
+    }
+
+    @Override
+    public double calcularCostoTotal(Envio envio) {
+
+        return 0;
+    }
+
+    @Override
+    // para datos dummy
+    public boolean crearEnvio(EnvioDTO envioDTO) {
+        return false;
+    }
+
+
+
+    @Override
     public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
         return false;
     }
 
-    @Override
-    public boolean crearEnvio(Envio envio) {
-        return false;
-    }
 
     @Override
     public List<Envio> getEnvios() {
