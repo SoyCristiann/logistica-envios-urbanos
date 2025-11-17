@@ -26,7 +26,7 @@ public class App extends Application {
         stage.setResizable(false); //Evita que se maximize la ventana
         stage.centerOnScreen();
 
-        stage.setTitle("Inicio de Sesión");
+        stage.setTitle("Gestión Logística");
         stage.setScene(scene);
         stage.show();
     }

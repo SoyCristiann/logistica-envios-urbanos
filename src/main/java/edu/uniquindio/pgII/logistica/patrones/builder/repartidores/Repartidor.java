@@ -91,11 +91,6 @@ public class Repartidor {
 
     @Override
     public String toString() {
-        return "Id:" + idRepartidor + "\n" +
-                "Nombre:" + nombre + "\n" +
-                "Documento:" + documento + "\n" +
-                "Telefono:" + telefono + "\n" +
-                "Disponibilidad:" + estadoDisponibilidad + "\n" +
-                "Zona Cobertura:" + zonaCobertura + "\n";
+        return  nombre;
     }
 }

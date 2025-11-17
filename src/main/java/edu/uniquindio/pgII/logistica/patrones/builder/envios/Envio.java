@@ -22,7 +22,7 @@ public class Envio {
     private double costo;
     private EstadoEnvio estado;
     private LocalDate fechaCreacion;
-    private LocalDate fechaEstimada;
+    private LocalDate fechaEntrega;
     private Usuario usuario;
     private Repartidor repartidor;
 
@@ -45,7 +45,7 @@ public class Envio {
         this.costo = builder.costo;
         this.estado = builder.estado;
         this.fechaCreacion = builder.fechaCreacion;
-        this.fechaEstimada = builder.fechaEstimada;
+        this.fechaEntrega = builder.fechaEstimada;
         this.usuario = builder.usuario;
         if(builder.serviciosAdicionales!=null){
             this.serviciosAdicionales = builder.serviciosAdicionales;
@@ -139,12 +139,12 @@ public class Envio {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaEstimada() {
-        return fechaEstimada;
+    public LocalDate getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFechaEstimada(LocalDate fechaEstimada) {
-        this.fechaEstimada = fechaEstimada;
+    public void setFechaEntrega(LocalDate fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public Usuario getUsuario() {
@@ -170,52 +170,4 @@ public class Envio {
     public void setServiciosAdicionales(List<ServicioAdicional> serviciosAdicionales) {
         this.serviciosAdicionales = serviciosAdicionales;
     }
-
-    @Override
-    public String toString() {
-        List<String> serviciosNombres = new ArrayList<>();
-        if (this.serviciosAdicionales != null) {
-            for (ServicioAdicional servicio : this.serviciosAdicionales) {
-                if (servicio != null) {
-                    serviciosNombres.add(servicio.getNombre());
-                }
-            }
-        }
-
-        String serviciosString = "[";
-        for (int i = 0; i < serviciosNombres.size(); i++) {
-            serviciosString += serviciosNombres.get(i);
-            if (i < serviciosNombres.size() - 1) {
-                serviciosString += ", ";
-            }
-        }
-        serviciosString += "]";
-
-
-        String usuarioInfo = (this.usuario != null ? this.usuario.getIdUsuario() + " (" + this.usuario.getNombreCompleto() + ")" : "N/A");
-        String repartidorInfo = (this.repartidor != null ? this.repartidor.getNombre() + " (ID: " + this.repartidor.getIdRepartidor() + ")" : "Sin asignar");
-        String origenInfo = (this.origen != null ? this.origen.getAlias() : "N/A");
-        String destinoInfo = (this.destino != null ? this.destino.getAlias() : "N/A");
-
-        return "📦 Envio {" +
-                "\n  ID Envío: " + this.idEnvio +
-                "\n  Estado: " + this.estado +
-                "\n  Costo Total: $" + String.format("%.2f", this.costo) +
-                "\n  --- Fechas ---" +
-                "\n  Creación: " + this.fechaCreacion +
-                "\n  Estimada: " + this.fechaEstimada +
-                "\n  --- Usuario y Repartidor ---" +
-                "\n  Usuario: " + usuarioInfo +
-                "\n  Repartidor: " + repartidorInfo +
-                "\n  --- Ubicaciones ---" +
-                "\n  Origen: " + origenInfo +
-                "\n  Destino: " + destinoInfo +
-                "\n  --- Dimensiones ---" +
-                "\n  Peso: " + this.peso + " kg" +
-                "\n  Dimensiones: " + this.largo + "x" + this.ancho + "x" + this.alto + " cm" +
-                "\n  --- Servicios Adicionales ---" +
-                "\n  Servicios: " + serviciosString +
-                "\n}";
-    }
-
 }
