@@ -1,7 +1,11 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioAdminDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioAdminMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioMapper;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.RepartidorMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
@@ -73,10 +77,29 @@ public class EnvioService implements IEnvioService {
             envioExistente.setAlto(envio.getAlto());
             envioExistente.setLargo(envio.getLargo());
             envioExistente.setAncho(envio.getAncho());
-            envioExistente.setFechaEstimada(envio.getFechaEstimada());
+            envioExistente.setFechaEntrega(envio.getFechaEntrega());
             return true;
         }
         return false;
+    }
+
+    // este método es para actualizar el envío desde la vista administrador. Puede modificar el estado, agregar repartidor y recalcular el valor según medidas.
+    public Envio actualizarEnvioAdmin(EnvioAdminDTO envio) {
+        Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+        if (envioExistente != null) {
+            envioExistente.setPeso(envio.getPeso());
+            envioExistente.setAlto(envio.getAlto());
+            envioExistente.setLargo(envio.getLargo());
+            envioExistente.setAncho(envio.getAncho());
+            envioExistente.setCosto(calcularCostoDecorado(EnvioAdminMapper.toEntity(envio)));
+            System.out.println("E nuevo costo es: " +  envioExistente.getCosto());
+            envioExistente.setEstado(envio.getEstado());
+            envioExistente.setFechaEntrega(envio.getFechaEntrega());
+            envioExistente.setRepartidor(RepartidorMapper.toEntity(envio.getRepartidor()));
+            System.out.println("Repartidor asignado: " +   envioExistente.getRepartidor().getNombre());
+            return envioExistente;
+        }
+        return null;
     }
 
     //  Cancelar envío
@@ -175,6 +198,7 @@ public class EnvioService implements IEnvioService {
         double distancia = 10; // simulacion
         double prioridad = 1;
 
+        //Por qué la variable es tipo var?
         var tarifa = tarifaService.calcularTarifa(peso, volumen, distancia, prioridad);
         envio.setCosto(tarifa.getTotal());
         return tarifa.getTotal();
@@ -218,7 +242,8 @@ public class EnvioService implements IEnvioService {
 
 
     //  Buscar envío por ID
-    private Envio buscarEnvioPorId(String id) {
+    @Override
+    public Envio buscarEnvioPorId(String id) {
         for (Envio e : envios) {
             if (e.getIdEnvio().equals(id)) {
                 return e;
@@ -227,10 +252,11 @@ public class EnvioService implements IEnvioService {
         return null;
     }
 
-    //  Listar todos
+
     @Override
-    public ArrayList<Envio> listarEnvios() {
-        return new ArrayList<>(envios);
+    public List<Envio> getEnvios() {
+        return envios;
+
     }
 
     @Override
@@ -264,8 +290,5 @@ public class EnvioService implements IEnvioService {
     }
 
 
-    @Override
-    public List<Envio> getEnvios() {
-        return envios;
-    }
+
 }

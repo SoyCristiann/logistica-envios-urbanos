@@ -2,7 +2,6 @@ package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
-import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IRepartidorService;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.RepartidorMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;

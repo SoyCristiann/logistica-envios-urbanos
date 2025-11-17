@@ -95,21 +95,9 @@ public class DireccionDTO {
     }
 
 
-
-    public String getDireccionCompleta() {
-        String texto = "";
-
-        if (alias != null && !alias.isEmpty()) texto += alias + " — ";
-
-        texto += (calle != null ? calle : "") +
-                " " +
-                (numero != null ? "# " + numero : "") +
-                ", " +
-                (barrio != null ? barrio : "") +
-                ", " +
-                (ciudad != null ? ciudad : "");
-
-        return texto;
+    @Override
+    public String toString() {
+        return getCiudad();
     }
 
 }

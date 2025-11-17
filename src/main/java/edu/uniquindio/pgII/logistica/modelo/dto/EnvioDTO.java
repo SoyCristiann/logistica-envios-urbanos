@@ -29,7 +29,6 @@ public class EnvioDTO {
         this.largo = largo;
         this.ancho = ancho;
         this.serviciosAdicionales= serviciosAdicionales;
-
     }
 
     // Getters y Setters

@@ -94,6 +94,7 @@ public class Direccion {
         this.alias = alias;
     }
 
+
     public String getDireccionCompleta() {
         String texto = "";
 
@@ -110,18 +111,10 @@ public class Direccion {
         return texto;
     }
 
+
     @Override
     public String toString() {
-        return "Direccion{" +
-                " idDireccion='" + idDireccion + '\'' +
-                ", calle='" + calle + '\'' +
-                ", numero='" + numero + '\'' +
-                ", barrio='" + barrio + '\'' +
-                ", ciudad='" + ciudad + '\'' +
-                ", codigoPostal='" + codigoPostal + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", alias='" + alias + '\'' +
-                '}';
+        return getCiudad();
     }
 
 }
