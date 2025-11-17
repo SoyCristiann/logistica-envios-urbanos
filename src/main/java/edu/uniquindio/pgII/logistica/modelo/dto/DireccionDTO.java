@@ -93,4 +93,9 @@ public class DireccionDTO {
     public void setAlias(String alias) {
         this.alias = alias;
     }
+
+    @Override
+    public String toString() {
+        return getCiudad();
+    }
 }

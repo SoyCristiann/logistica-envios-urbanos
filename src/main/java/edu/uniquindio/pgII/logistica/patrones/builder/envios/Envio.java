@@ -22,7 +22,7 @@ public class Envio {
     private double costo;
     private EstadoEnvio estado;
     private LocalDate fechaCreacion;
-    private LocalDate fechaEstimada;
+    private LocalDate fechaEntrega;
     private Usuario usuario;
     private Repartidor repartidor;
 
@@ -45,7 +45,7 @@ public class Envio {
         this.costo = builder.costo;
         this.estado = builder.estado;
         this.fechaCreacion = builder.fechaCreacion;
-        this.fechaEstimada = builder.fechaEstimada;
+        this.fechaEntrega = builder.fechaEstimada;
         this.usuario = builder.usuario;
         if(builder.serviciosAdicionales!=null){
             this.serviciosAdicionales = builder.serviciosAdicionales;
@@ -139,12 +139,12 @@ public class Envio {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public LocalDate getFechaEstimada() {
-        return fechaEstimada;
+    public LocalDate getFechaEntrega() {
+        return fechaEntrega;
     }
 
-    public void setFechaEstimada(LocalDate fechaEstimada) {
-        this.fechaEstimada = fechaEstimada;
+    public void setFechaEntrega(LocalDate fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
     }
 
     public Usuario getUsuario() {
@@ -203,7 +203,7 @@ public class Envio {
                 "\n  Costo Total: $" + String.format("%.2f", this.costo) +
                 "\n  --- Fechas ---" +
                 "\n  Creación: " + this.fechaCreacion +
-                "\n  Estimada: " + this.fechaEstimada +
+                "\n  Estimada: " + this.fechaEntrega +
                 "\n  --- Usuario y Repartidor ---" +
                 "\n  Usuario: " + usuarioInfo +
                 "\n  Repartidor: " + repartidorInfo +
