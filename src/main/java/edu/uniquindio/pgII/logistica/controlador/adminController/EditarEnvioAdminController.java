@@ -2,24 +2,18 @@ package edu.uniquindio.pgII.logistica.controlador.adminController;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioAdminDTO;
-import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
-import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
-import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IRepartidorService;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioAdminMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.RepartidorMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
-import edu.uniquindio.pgII.logistica.patrones.builder.envios.EnvioBuilder;
-import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
