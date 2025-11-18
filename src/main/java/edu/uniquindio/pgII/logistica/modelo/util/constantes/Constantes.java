@@ -32,8 +32,7 @@ public class Constantes {
 
     // CONSTANTES DE COSTOS BASE
     public static final double precioBase = 5000;
-    public static final double precioPorPeso = 200;
-    public static final double precioPorVolumen = 100;
-    public static final double precioPorPrioridad = 500;
-    public static final double precioPorDistancia = 50;
+    public static final double precioPorPeso = 2000;
+    public static final double precioPorVolumen = 1000;
+    // public static final double precioPorDistancia = 50;
 }

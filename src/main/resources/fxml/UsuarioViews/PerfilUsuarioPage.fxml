@@ -14,7 +14,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="900" prefWidth="1200"
             xmlns="http://javafx.com/javafx/25"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -22,31 +21,25 @@
 
     <children>
 
-        <!-- ====== TÍTULO ====== -->
         <Label layoutX="430" layoutY="30" text="GESTIÓN DE PERFIL">
             <font><Font size="36" /></font>
         </Label>
 
+        <Label fx:id="lblNombreUsuario"
+               layoutX="430"
+               layoutY="80"
+               text="Usuario Actual"
+               style="-fx-font-size: 20; -fx-text-fill: #333;" />
 
-        <!-- ========================================================= -->
-        <!--   SCROLL GENERAL PARA EVITAR QUE TODO SE APACHE O CORTE   -->
-        <!-- ========================================================= -->
         <ScrollPane layoutX="200" layoutY="100" prefWidth="800" prefHeight="750" fitToWidth="true">
             <content>
 
-                <!-- CONTENEDOR PRINCIPAL -->
                 <VBox spacing="30" prefWidth="780" style="-fx-padding: 20;">
-
-
-                    <!-- ================================================= -->
-                    <!-- =============== PANEL 1: DATOS DE PERFIL ========= -->
-                    <!-- ================================================= -->
 
                     <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 10;">
                         <Button text="Editar Perfil" style="-fx-font-size: 18; -fx-font-weight: bold;"
                                 onMouseClicked="#togglePerfilSection"/>
 
-                        <!-- Contenido Perfil -->
                         <VBox fx:id="seccionPerfil" spacing="15" visible="true">
 
                             <HBox spacing="10">
@@ -67,7 +60,6 @@
                             <HBox spacing="20" alignment="CENTER">
                                 <Button fx:id="btnGuardar" onAction="#guardarPerfil"
                                         prefHeight="40" prefWidth="200" text="Guardar Cambios" />
-
                                 <Button fx:id="btnVolver" onAction="#volverMenu"
                                         prefHeight="40" prefWidth="200" text="Volver al Menú" />
                             </HBox>
@@ -75,18 +67,11 @@
                         </VBox>
                     </VBox>
 
-
-
-                    <!-- ======================================================= -->
-                    <!-- =============== PANEL 2: AGREGAR DIRECCIÓN ============ -->
-                    <!-- ======================================================= -->
-
                     <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 10;">
                         <Button text="Agregar Dirección"
                                 style="-fx-font-size: 18; -fx-font-weight: bold;"
                                 onMouseClicked="#toggleAgregarDireccionSection"/>
 
-                        <!-- Contenido Agregar Dirección -->
                         <VBox fx:id="seccionAgregarDireccion" spacing="20" visible="false">
 
                             <GridPane hgap="10" vgap="10">
@@ -129,18 +114,11 @@
                         </VBox>
                     </VBox>
 
-
-
-                    <!-- ======================================================= -->
-                    <!-- =============== PANEL 3: TABLA DIRECCIONES ============ -->
-                    <!-- ======================================================= -->
-
                     <VBox spacing="10" style="-fx-background-color: #f0f0f0; -fx-padding: 15; -fx-background-radius: 10;">
                         <Button text="Ver Direcciones Registradas"
                                 style="-fx-font-size: 18; -fx-font-weight: bold;"
                                 onMouseClicked="#toggleTablaSection"/>
 
-                        <!-- Tabla -->
                         <VBox fx:id="seccionTabla" spacing="15" visible="false">
 
                             <TableView fx:id="tablaDirecciones" prefHeight="300">

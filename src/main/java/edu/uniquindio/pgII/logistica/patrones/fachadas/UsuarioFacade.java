@@ -97,7 +97,12 @@ public class UsuarioFacade {
             } catch (Exception ignored) {}
         }
 
+
         List<Envio> lista = envioService.listarEnvios();
+        if (lista == null) {
+            lista = new ArrayList<>();
+        }
+
         List<EnvioDTO> resultado = new ArrayList<>();
 
         for (Envio e : lista) {
@@ -121,6 +126,7 @@ public class UsuarioFacade {
 
         return resultado;
     }
+
 
     //  SERVICIOS ADICIONALES
     public boolean registrarServicio(ServicioAdicionalDTO dto) {

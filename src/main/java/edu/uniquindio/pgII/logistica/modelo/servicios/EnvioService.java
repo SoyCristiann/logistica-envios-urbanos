@@ -2,9 +2,7 @@ package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioAdminDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
-import edu.uniquindio.pgII.logistica.modelo.dto.RepartidorDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioAdminMapper;
-import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.RepartidorMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import edu.uniquindio.pgII.logistica.patrones.builder.repartidores.Repartidor;
@@ -187,19 +185,25 @@ public class EnvioService implements IEnvioService {
         return false;
     }
 
+    @Override
+    public ArrayList<Envio> listarEnvios() {
+        return null;
+    }
+
 
     // estos métodos se usaban cuando se implementaba decorator, al usar builder para agregar un servicio Adicional cambia el proceso
-    /*
+
     //  Calcular costo base (tarifa inicial)
     @Override
     public double calcularCostoBase(Envio envio) {
         double peso = envio.getPeso();
-        double volumen = 1; // simplificado
-        double distancia = 10; // simulacion
-        double prioridad = 1;
+        double alto = envio.getAlto();
+        double largo = envio.getLargo();
+        double ancho = envio.getAncho();
 
-        //Por qué la variable es tipo var?
-        var tarifa = tarifaService.calcularTarifa(peso, volumen, distancia, prioridad);
+
+
+        var tarifa = tarifaService.calcularTarifa(peso, alto, ancho, largo, envio.getServiciosAdicionales());
         envio.setCosto(tarifa.getTotal());
         return tarifa.getTotal();
     }
@@ -217,7 +221,7 @@ public class EnvioService implements IEnvioService {
 
 
         for (ServicioAdicional servicio : envio.getServiciosAdicionales()) {
-            switch (servicio.getNombre().toLowerCase()) {
+            switch (servicio.getNombreServicio().toLowerCase()) {
                 case "seguro":
                     envioDecorado = new EnvioConSeguro(envioDecorado);
                     break;
@@ -237,7 +241,7 @@ public class EnvioService implements IEnvioService {
         //  Retorna el costo final decorado
         return envioDecorado.getCosto();
 
-    } */
+    }
 
 
 
@@ -288,6 +292,7 @@ public class EnvioService implements IEnvioService {
     public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
         return false;
     }
+
 
 
 

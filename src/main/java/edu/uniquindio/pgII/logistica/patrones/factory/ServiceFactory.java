@@ -26,4 +26,6 @@ public class ServiceFactory {
     public IServicioAdicionalService crearServiciosAdicionalesService(){
         return new ServicioAdicionalService();
     }
+
+    public ITarifaService crearTarifaService(){return new TarifaService();}
 }

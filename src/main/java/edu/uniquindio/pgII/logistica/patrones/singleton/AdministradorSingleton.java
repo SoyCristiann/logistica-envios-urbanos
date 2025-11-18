@@ -11,8 +11,8 @@ public class AdministradorSingleton {
     private final IRepartidorService repartidorService;
     private final IDireccionService direccionService;
     private final IEnvioService envioService;
-    //Pendiente revisar la interfaz de pago
     private final IReporteService reporteService;
+    private final ITarifaService tarifaService;
 
     private final IServicioAdicionalService serviciosAdicionalesService;
 
@@ -23,7 +23,7 @@ public class AdministradorSingleton {
         this.direccionService= serviceFactory.crearDireccionService();
         this.envioService=  serviceFactory.crearEnvioService();
         this.reporteService= serviceFactory.crearReporteService();
-
+        this.tarifaService= serviceFactory.crearTarifaService();
         this.serviciosAdicionalesService= serviceFactory.crearServiciosAdicionalesService();
 
     }
@@ -39,19 +39,16 @@ public class AdministradorSingleton {
         return usuarioService;
     }
     public IRepartidorService getRepartidorService() {return repartidorService;}
-    public IDireccionService getDireccionService() {
-        return direccionService;
-    }
+    public IDireccionService getDireccionService() {return direccionService;}
     public IEnvioService getEnvioService() {
         return envioService;
     }
     public IReporteService getReporteService() {
         return reporteService;
     }
+    public IServicioAdicionalService getServiciosAdicionalesService() {return serviciosAdicionalesService;}
+    public ITarifaService getTarifaService() {return tarifaService;}
 
-    public IServicioAdicionalService getServiciosAdicionalesService() {
-        return serviciosAdicionalesService;
-    }
 
 
 }

@@ -9,6 +9,10 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FirmaRequeridaStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FragilStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.PrioridadStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.SeguroStrategy;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
 import java.util.ArrayList;
@@ -95,10 +99,10 @@ public class DatosDummy {
 
 
     public void crearServiciosDummy(){
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", new FragilStrategy(),3000));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", new FirmaRequeridaStrategy(),1500));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", new PrioridadStrategy(), 2000));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", new SeguroStrategy(), 2500));
     }
 
     // Crear envíos

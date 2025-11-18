@@ -10,8 +10,7 @@ public class ServicioAdicionalMapper {
 
         ServicioAdicionalDTO dto = new ServicioAdicionalDTO();
         dto.setIdService(servicio.getIdService());
-        dto.setNombre(servicio.getNombre());
-        dto.setDescripcion(servicio.getDescripcion());
+        dto.setNombre(servicio.getNombreServicio());
         dto.setCosto(servicio.getCosto());
         return dto;
     }
@@ -22,7 +21,7 @@ public class ServicioAdicionalMapper {
         return new ServicioAdicional(
                 dto.getIdService(),
                 dto.getNombre(),
-                dto.getDescripcion(),
+                dto.getStrategy(),
                 dto.getCosto()
         );
     }
@@ -33,8 +32,7 @@ public class ServicioAdicionalMapper {
     public static void updateEntityFromDTO(ServicioAdicional servicio, ServicioAdicionalDTO dto) {
         if (servicio == null || dto == null) return;
 
-        if (dto.getNombre() != null) servicio.setNombre(dto.getNombre());
-        if (dto.getDescripcion() != null) servicio.setDescripcion(dto.getDescripcion());
+        if (dto.getNombre() != null) servicio.setNombreServicio(dto.getNombre());
         if (dto.getCosto() != 0) servicio.setCosto(dto.getCosto());
         if (dto.getIdService() != null) servicio.setIdService(dto.getIdService());
     }

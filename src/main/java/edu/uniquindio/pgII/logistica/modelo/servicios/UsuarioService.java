@@ -52,21 +52,32 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    // metodo pafra actualizar datos, para el mismo usuario
     public boolean actualizarPerfil(Usuario usuarioActualizado) {
-        if (usuarioActualizado != null || usuarioActualizado.getTelefono() != null || usuarioActualizado.getCorreo() != null || usuarioActualizado.getNombreCompleto() != null) {
-            Usuario usuarioEncontrado = buscarUsuario(usuarioActualizado);
-            if (usuarioEncontrado != null) {
-                usuarioEncontrado.setNombreCompleto(usuarioActualizado.getNombreCompleto());
-                usuarioEncontrado.setCorreo(usuarioActualizado.getCorreo());
-                usuarioEncontrado.setTelefono(usuarioActualizado.getTelefono());
-                // no se puede modificar la contrasena
-                // el rol del usuario no se puede modificar desde aquí
-                return true;
-            }
+
+        Usuario usuarioEnLista = buscarUsuario(usuarioActualizado); // mirar si existe (por si acaso)
+
+        if (usuarioEnLista == null) {
+            System.out.println("ERROR: Intento de actualizar un usuario inexistente.");
+            return false;
         }
-        return false;
+
+        if (usuarioActualizado.getNombreCompleto() == null || usuarioActualizado.getNombreCompleto().isBlank() ||
+                usuarioActualizado.getCorreo() == null || usuarioActualizado.getCorreo().isBlank() ||
+                usuarioActualizado.getTelefono() == null || usuarioActualizado.getTelefono().isBlank()) {
+
+            System.out.println("ERROR: Campos incompletos para actualizar perfil.");
+            return false;
+        }
+
+        usuarioEnLista.setNombreCompleto(usuarioActualizado.getNombreCompleto());
+        usuarioEnLista.setCorreo(usuarioActualizado.getCorreo());
+        usuarioEnLista.setTelefono(usuarioActualizado.getTelefono());
+        usuarioEnLista.setDireccionesFrecuentes(usuarioActualizado.getDireccionesFrecuentes());
+        // rol y password no se cambian desde el usuario
+
+        return true;
     }
+
 
     @Override
     public void agregarDireccionFrecuente(Usuario usuario, Direccion direccion) {

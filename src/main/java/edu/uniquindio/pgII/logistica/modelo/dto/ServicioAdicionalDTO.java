@@ -1,18 +1,23 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
+import edu.uniquindio.pgII.logistica.patrones.Strategy.ServicioCostoStrategy;
+
 public class ServicioAdicionalDTO {
 
     private String idService;
     private String nombre;
     private String descripcion;
+    private ServicioCostoStrategy strategy;
     private double costo;
+
 
     public ServicioAdicionalDTO() {}
 
-    public ServicioAdicionalDTO(String idService, String nombre, String descripcion, double costo) {
+    public ServicioAdicionalDTO(String idService, String nombre, String descripcion, ServicioCostoStrategy strategy, double costo ) {
         this.idService = idService;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.strategy = strategy;
         this.costo = costo;
     }
 
@@ -48,5 +53,12 @@ public class ServicioAdicionalDTO {
 
     public void setCosto(double costo) {
         this.costo = costo;
+    }
+
+    public ServicioCostoStrategy getStrategy() {
+        return strategy;
+    }
+    public void setStrategy(ServicioCostoStrategy strategy) {
+        this.strategy = strategy;
     }
 }

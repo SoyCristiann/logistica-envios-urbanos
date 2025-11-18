@@ -1,12 +1,6 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
-import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
-
-import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
-import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
 
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
 
@@ -51,8 +45,7 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
 
         ServicioAdicional existente = buscarServicioPorId(servicioAdicionalActualizado.getIdService());
         if (existente != null) {
-            existente.setNombre(servicioAdicionalActualizado.getNombre());
-            existente.setDescripcion(servicioAdicionalActualizado.getDescripcion());
+            existente.setNombreServicio(servicioAdicionalActualizado.getNombreServicio());
             existente.setCosto(servicioAdicionalActualizado.getCosto());
             return true;
         }
@@ -97,7 +90,7 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
     @Override
     public ServicioAdicional buscarPorNombre(String nombre) {
         for (ServicioAdicional s : serviciosAdicionales) {
-            if (s.getNombre().equalsIgnoreCase(nombre)) {
+            if (s.getNombreServicio().equalsIgnoreCase(nombre)) {
                 return s;
             }
         }

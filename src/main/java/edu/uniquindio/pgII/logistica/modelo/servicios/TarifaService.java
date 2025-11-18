@@ -1,65 +1,94 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
+import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Tarifa;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.ITarifaService;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
 
+public class TarifaService implements ITarifaService {
 
-public class TarifaService {
+    private final List<Tarifa> tarifas = new ArrayList<>();
+    private int contador = 1;
 
-    private List<Tarifa> tarifas;
-    private int contador;
 
-    public TarifaService() {
-        this.tarifas = new ArrayList<>();
-        this.contador = 1;
+    private String generarId() {
+        return "TAR-" + (contador++);
     }
 
-    // Genera un número de id sencillo para cada tarifa
-    public String generarId() {
-        String id = "TAR-" + contador;
-        contador++;
-        return id;
-    }
+    // Calcular tarifa según peso, volumen y servicios adicionales
+    @Override
+    public Tarifa calcularTarifa(double peso, double alto, double ancho, double largo,
+                                 List<ServicioAdicional> servicios) {
 
-    // Crea una tarifa con valores básicos
-    public Tarifa calcularTarifa(double peso, double volumen, double distancia, double prioridad) {
         double costoBase = Constantes.precioBase;
         double costoPorPeso = Constantes.precioPorPeso * peso;
-        double costoPorVolumen = Constantes.precioPorVolumen * 100;
-        double recargoPrioridad = Constantes.precioPorPrioridad * 500;
-        double recargoDistancia = Constantes.precioPorDistancia * 50;
+        double volumen = alto * ancho * largo;
+        double costoPorVolumen = volumen * Constantes.precioPorVolumen;
 
-        double total = costoBase + costoPorPeso + costoPorVolumen + recargoPrioridad + recargoDistancia;
+        double costoServicios = 0;
 
-        Tarifa tarifa = new Tarifa(
+        if (servicios != null) {
+            for (ServicioAdicional s : servicios) {
+
+                double costoPorEste = 0;
+                if (s.getStrategy() != null) {
+                    costoPorEste = s.getStrategy().calcularCosto(peso, alto, ancho, largo);
+                }
+                s.setCosto(costoPorEste);
+                costoServicios += costoPorEste;
+            }
+        }
+
+        double total = costoBase + costoPorPeso + costoPorVolumen + costoServicios;
+
+        Tarifa t = new Tarifa(
                 generarId(),
                 costoBase,
                 costoPorPeso,
                 costoPorVolumen,
-                recargoPrioridad,
-                recargoDistancia,
-                total
+                total,
+                servicios
         );
 
-        tarifas.add(tarifa);
-        return tarifa;
+        return t;
     }
 
 
-    public String desglosarComponentes(Tarifa tarifa) {
-        return "Detalles de la tarifa:\n" +
-                "Costo base: " + tarifa.getCostoBase() + "\n" +
-                "Costo por peso: " + tarifa.getCostoPorPeso() + "\n" +
-                "Costo por volumen: " + tarifa.getCostoPorVolumen() + "\n" +
-                "Recargo por prioridad: " + tarifa.getRecargoPrioridad() + "\n" +
-                "Recargo por distancia: " + tarifa.getRecargoDistancia() + "\n" +
-                "Total: " + tarifa.getTotal();
+
+
+    // Desglose en texto
+    @Override
+    public String desglosar(Tarifa t) {
+
+        String serviciosTexto = "";
+
+        if(t.getServiciosIncluidos() != null && !t.getServiciosIncluidos().isEmpty()) {
+            for (ServicioAdicional s : t.getServiciosIncluidos()) {
+                serviciosTexto += "- " + s.getNombreServicio() + ": " + s.getCosto() + "\n";
+            }
+        } else {
+            serviciosTexto = "No tiene servicios adicionales\n";
+        }
+
+        String texto =
+                "Tarifa\n" +
+                        "Costo base: " + t.getCostoBase() + "\n" +
+                        "Costo por peso: " + t.getCostoPorPeso() + "\n" +
+                        "Costo por volumen: " + t.getCostoPorVolumen() + "\n" +
+                        "Servicios adicionales:\n" +
+                        serviciosTexto +
+                        "Total: " + t.getTotal();
+
+        return texto;
     }
 
-    public ArrayList<Tarifa> listarTarifas() {
+
+    // Listar tarifas creadas
+    public List<Tarifa> listarTarifas() {
         return new ArrayList<>(tarifas);
     }
 }

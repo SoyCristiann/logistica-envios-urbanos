@@ -2,14 +2,11 @@ package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
-
-import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
-import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
 import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
-
 import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -22,61 +19,71 @@ import java.util.List;
 
 public class PerfilUsuarioController {
 
-    // Campos del perfil
+    // Perfil
     @FXML private TextField txtNombre;
     @FXML private TextField txtCorreo;
     @FXML private TextField txtTelefono;
+    @FXML private Label lblNombreUsuario;
 
-    // Campos de dirección
+    // Dirección
     @FXML private TextField txtCalle, txtNumero, txtBarrio, txtCiudad, txtCodigoPostal, txtDescripcionDir, txtAlias;
     @FXML private TableView<DireccionDTO> tablaDirecciones;
     @FXML private TableColumn<DireccionDTO, String> colAlias, colCiudad, colBarrio, colDescripcion;
 
-    // Secciones (vistas Desplegables)
+    // Secciones
     @FXML private VBox seccionPerfil;
     @FXML private VBox seccionAgregarDireccion;
     @FXML private VBox seccionTabla;
 
     private UsuarioDTO usuarioActual;
     private UsuarioFacade facade = new UsuarioFacade();
-    private List<DireccionDTO> direccionesUsuario = usuarioActual.getDireccionesFrecuentesDTO();
+    private List<DireccionDTO> direccionesUsuario = new ArrayList<>();
 
     @FXML
     public void initialize() {
 
         usuarioActual = SesionManagerSingleton.getInstance().getUsuarioActivo();
 
-        // Configurar columnas tabla
+        // Cargar datos actuales
+        if (lblNombreUsuario != null)
+            lblNombreUsuario.setText(usuarioActual.getNombreCompleto());
+
+        txtNombre.setText(usuarioActual.getNombreCompleto());
+        txtCorreo.setText(usuarioActual.getCorreo());
+        txtTelefono.setText(usuarioActual.getTelefono());
+
+        // Tabla
         colAlias.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getAlias()));
         colCiudad.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCiudad()));
         colBarrio.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getBarrio()));
         colDescripcion.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescripcion()));
 
-        
-        if (seccionPerfil != null) {
-            seccionPerfil.setVisible(true);
-            seccionPerfil.setManaged(true);
-        }
-        if (seccionAgregarDireccion != null) {
-            seccionAgregarDireccion.setVisible(false);
-            seccionAgregarDireccion.setManaged(false);
-        }
-        if (seccionTabla != null) {
-            seccionTabla.setVisible(false);
-            seccionTabla.setManaged(false);
-        }
+        // Secciones
+        seccionPerfil.setVisible(true);
+        seccionPerfil.setManaged(true);
+
+        seccionAgregarDireccion.setVisible(false);
+        seccionAgregarDireccion.setManaged(false);
+
+        seccionTabla.setVisible(false);
+        seccionTabla.setManaged(false);
 
         cargarDirecciones();
     }
 
-
-    // PERFIL
-
+    // Guardar perfil
     @FXML
     private void guardarPerfil() {
 
+        String idActivo = SesionManagerSingleton.getInstance().getUsuarioActivo().getIdUsuario();
+
+        if (!usuarioActual.getIdUsuario().equals(idActivo)) {
+            System.out.println("Error de seguridad");
+            return;
+        }
+
         UsuarioDTO dto = new UsuarioDTO();
-        dto.setIdUsuario(usuarioActual.getIdUsuario());
+        dto.setIdUsuario(idActivo);
         dto.setNombreCompleto(txtNombre.getText());
         dto.setCorreo(txtCorreo.getText());
         dto.setTelefono(txtTelefono.getText());
@@ -86,29 +93,24 @@ public class PerfilUsuarioController {
 
         boolean ok = facade.actualizarPerfil(dto);
 
-        if (ok){
-            System.out.println("Perfil actualizado");
+        if (ok) {
+            // Actualizar sesión
+            SesionManagerSingleton.getInstance().setUsuarioActivo(dto);
+            usuarioActual = dto;
+
+            // Actualizar label
+            lblNombreUsuario.setText(dto.getNombreCompleto());
         }
-        System.out.println("No se pudo actualizar");
     }
-
-
-    // DIRECCIONES
 
     // Cargar direcciones
     private void cargarDirecciones() {
-
         direccionesUsuario.clear();
-
-        for (DireccionDTO direccion : usuarioActual.getDireccionesFrecuentesDTO()) {
-            direccionesUsuario.add(direccion);
-        }
-
+        direccionesUsuario.addAll(usuarioActual.getDireccionesFrecuentesDTO());
         tablaDirecciones.getItems().setAll(direccionesUsuario);
     }
 
-
-
+    // Agregar dirección
     @FXML
     private void agregarDireccion() {
 
@@ -139,66 +141,42 @@ public class PerfilUsuarioController {
         txtAlias.clear();
     }
 
+    // Eliminar dirección
     @FXML
     private void eliminarDireccionSeleccionada() {
-
         DireccionDTO seleccionada = tablaDirecciones.getSelectionModel().getSelectedItem();
-        if (seleccionada == null) {
-            System.out.println("Debe seleccionar una dirección");
-            return;
-        }
+        if (seleccionada == null) return;
 
         boolean eliminado = facade.eliminarDireccion(usuarioActual, seleccionada);
 
-        if (eliminado) {
-            cargarDirecciones();
-        }
+        if (eliminado) cargarDirecciones();
     }
 
-
-    // VOLVER
-
+    // Volver
     @FXML
     private void volverMenu(ActionEvent event) throws Exception {
         VentanaUtil.cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
     }
 
-    // TOGGLE SECTIONS (UI Helpers)
-
-    /**
-     * Muestra/oculta la sección de perfil.
-     * Está enlazado al onMouseClicked del botón "Editar Perfil" en el FXML.
-     */
+    // Alternar secciones
     @FXML
-    private void togglePerfilSection(MouseEvent event) {
-        if (seccionPerfil == null) return;
-        boolean nuevoEstado = !seccionPerfil.isVisible();
-        seccionPerfil.setVisible(nuevoEstado);
-        seccionPerfil.setManaged(nuevoEstado);
+    private void togglePerfilSection(MouseEvent e) {
+        boolean b = !seccionPerfil.isVisible();
+        seccionPerfil.setVisible(b);
+        seccionPerfil.setManaged(b);
     }
 
-    /**
-     * Muestra/oculta la sección de agregar dirección.
-     * Está enlazado al onMouseClicked del botón "Agregar Dirección" en el FXML.
-     */
     @FXML
-    private void toggleAgregarDireccionSection(MouseEvent event) {
-        if (seccionAgregarDireccion == null) return;
-        boolean nuevoEstado = !seccionAgregarDireccion.isVisible();
-        seccionAgregarDireccion.setVisible(nuevoEstado);
-        seccionAgregarDireccion.setManaged(nuevoEstado);
+    private void toggleAgregarDireccionSection(MouseEvent e) {
+        boolean b = !seccionAgregarDireccion.isVisible();
+        seccionAgregarDireccion.setVisible(b);
+        seccionAgregarDireccion.setManaged(b);
     }
 
-    /**
-     * Muestra/oculta la sección de tabla de direcciones.
-     * Está enlazado al onMouseClicked del botón "Ver Direcciones Registradas" en el FXML.
-     */
     @FXML
-    private void toggleTablaSection(MouseEvent event) {
-        if (seccionTabla == null) return;
-        boolean nuevoEstado = !seccionTabla.isVisible();
-        seccionTabla.setVisible(nuevoEstado);
-        seccionTabla.setManaged(nuevoEstado);
+    private void toggleTablaSection(MouseEvent e) {
+        boolean b = !seccionTabla.isVisible();
+        seccionTabla.setVisible(b);
+        seccionTabla.setManaged(b);
     }
-
 }

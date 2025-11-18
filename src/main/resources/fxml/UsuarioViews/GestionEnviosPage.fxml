@@ -173,6 +173,8 @@
                         <HBox spacing="15" alignment="CENTER">
                             <Button text="Descargar CSV" onAction="#descargarCSV"/>
                             <Button text="Descargar PDF" onAction="#descargarPDF"/>
+                            <Button text="Pagar Envío" onAction="#pagarEnvio"/>
+
                         </HBox>
                     </VBox>
                 </content>

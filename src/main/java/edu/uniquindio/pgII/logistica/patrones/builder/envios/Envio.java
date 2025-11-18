@@ -178,7 +178,7 @@ public class Envio {
         if (this.serviciosAdicionales != null) {
             for (ServicioAdicional servicio : this.serviciosAdicionales) {
                 if (servicio != null) {
-                    serviciosNombres.add(servicio.getNombre());
+                    serviciosNombres.add(servicio.getNombreServicio());
                 }
             }
         }

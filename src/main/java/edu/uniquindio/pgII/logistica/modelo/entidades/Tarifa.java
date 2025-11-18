@@ -1,26 +1,26 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Tarifa {
 
     private String idTarifa;
     private double costoBase;
     private double costoPorPeso;
     private double costoPorVolumen;
-    private double recargoPrioridad;
-    private double recargoDistancia;
     private double total;
+    private List<ServicioAdicional> serviciosIncluidos;
 
     // CONSTRUCTOR
 
-
-    public Tarifa(String idTarifa, double costoBase, double costoPorPeso, double costoPorVolumen, double recargoPrioridad, double recargoDistancia, double total) {
+    public Tarifa(String idTarifa, double costoBase, double costoPorPeso, double costoPorVolumen, double total,  List<ServicioAdicional> serviciosIncluidos) {
         this.idTarifa = idTarifa;
         this.costoBase = costoBase;
         this.costoPorPeso = costoPorPeso;
         this.costoPorVolumen = costoPorVolumen;
-        this.recargoPrioridad = recargoPrioridad;
-        this.recargoDistancia = recargoDistancia;
         this.total = total;
+        this.serviciosIncluidos =  serviciosIncluidos;
     }
 
     // GETTERS AND SETTERS
@@ -57,21 +57,6 @@ public class Tarifa {
         this.costoPorVolumen = costoPorVolumen;
     }
 
-    public double getRecargoPrioridad() {
-        return recargoPrioridad;
-    }
-
-    public void setRecargoPrioridad(double recargoPrioridad) {
-        this.recargoPrioridad = recargoPrioridad;
-    }
-
-    public double getRecargoDistancia() {
-        return recargoDistancia;
-    }
-
-    public void setRecargoDistancia(double recargoDistancia) {
-        this.recargoDistancia = recargoDistancia;
-    }
 
     public double getTotal() {
         return total;
@@ -80,4 +65,15 @@ public class Tarifa {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public List<ServicioAdicional> getServiciosIncluidos() {
+        return serviciosIncluidos;
+    }
+
+    public void setServiciosIncluidos(List<ServicioAdicional> serviciosIncluidos) {
+        this.serviciosIncluidos = serviciosIncluidos;
+    }
+
+
+
 }
