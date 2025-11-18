@@ -15,7 +15,9 @@ import java.util.List;
 
 public class EnvioUsuarioMapper {
 
-    public  static EnvioUsuarioDTO toDTO(Envio envio) {
+    public static EnvioUsuarioDTO toDTO(Envio envio) {
+        if (envio == null) return null;
+
         return new EnvioUsuarioDTO(
                 envio.getUsuario().getIdUsuario(),
                 DireccionMapper.toDTO(envio.getOrigen()),
@@ -29,42 +31,40 @@ public class EnvioUsuarioMapper {
                 envio.getCosto(),
                 UsuarioMapper.toDTO(envio.getUsuario())
         );
-
     }
 
     public static Envio toEntity(EnvioUsuarioDTO dto) {
-        if (dto == null) {
-            throw new IllegalArgumentException("El DTO no puede ser null");
-        }
+        if (dto == null) throw new IllegalArgumentException("El DTO no puede ser null");
 
         IUsuarioService usuarioService = AdministradorSingleton.getInstance().getUsuarioService();
-        IServicioAdicionalService servicioAdicionalService = AdministradorSingleton.getInstance().getServiciosAdicionalesService();
+        IServicioAdicionalService servicioService = AdministradorSingleton.getInstance().getServiciosAdicionalesService();
 
-        // Buscar usuario
-        Usuario usuario = UsuarioMapper.toEntity(usuarioService.buscarUsuarioPorId(dto.getIdEnvio()));
+        // --- Obtener usuario real ---
+        if (dto.getUsuario() == null || dto.getUsuario().getIdUsuario() == null) {
+            throw new IllegalArgumentException("Usuario inválido en el DTO");
+        }
+        Usuario usuario = UsuarioMapper.toEntity(usuarioService.buscarUsuarioPorId(dto.getUsuario().getIdUsuario()));
         if (usuario == null) {
-            throw new IllegalArgumentException("Usuario no encontrado con id: " + dto.getIdEnvio());
+            throw new IllegalArgumentException("Usuario no encontrado con id: " + dto.getUsuario().getIdUsuario());
         }
 
-        // Convertir direcciones
+        // --- Direcciones ---
         Direccion origen = DireccionMapper.toEntity(dto.getOrigen());
         Direccion destino = DireccionMapper.toEntity(dto.getDestino());
         if (origen == null || destino == null) {
             throw new IllegalArgumentException("Dirección origen o destino inválida");
         }
 
-        // Obtener servicios adicionales válidos
-        List<ServicioAdicional> serviciosAdicionalesEntities = new ArrayList<>();
+        // --- Servicios adicionales ---
+        List<ServicioAdicional> servicios = new ArrayList<>();
         if (dto.getServiciosAdicionales() != null) {
             for (ServicioAdicional s : dto.getServiciosAdicionales()) {
-                ServicioAdicional servicio = servicioAdicionalService.buscarServicioPorId(s.getIdService());
-                if (servicio != null) {
-                    serviciosAdicionalesEntities.add(servicio);
-                }
+                ServicioAdicional serv = servicioService.buscarServicioPorId(s.getIdService());
+                if (serv != null) servicios.add(serv);
             }
         }
 
-        // Construir envío
+        // --- Construir Envío ---
         EnvioBuilder builder = new EnvioBuilder(
                 origen,
                 destino,
@@ -75,19 +75,12 @@ public class EnvioUsuarioMapper {
                 usuario
         );
 
-        if (!serviciosAdicionalesEntities.isEmpty()) {
-            builder.withServiciosAdicionales(serviciosAdicionalesEntities);
-        }
+        if (!servicios.isEmpty()) builder.withServiciosAdicionales(servicios);
 
         Envio envio = builder.build();
 
-        if (dto.getFechaCreacion() != null) {
-            envio.setFechaCreacion(dto.getFechaCreacion());
-        }
+        if (dto.getFechaCreacion() != null) envio.setFechaCreacion(dto.getFechaCreacion());
 
         return envio;
     }
-
-
-
 }

@@ -11,40 +11,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsuarioService implements IUsuarioService {
-    private List<Usuario> usuarios;
+
+    private List<Usuario> usuarios; // lista de usuarios
 
     public UsuarioService() {
-        this.usuarios = new ArrayList<>();
+        this.usuarios = new ArrayList<>(); // crear lista
     }
 
     @Override
     public UsuarioDTO iniciarSesion(String correo, String pass) {
 
+        // buscar usuario por correo
         Usuario usuarioSesion = null;
-        //Busca dentro del listado de usuarios, si el correo ingresado corresponde a alguno de los usuarios registrados.
         for (Usuario u : usuarios) {
             if (u.getCorreo().equals(correo)) {
-                usuarioSesion = u; //Una vez encuentra el usuario lo asigna a usuarioSesion y finaliza el for con break;
+                usuarioSesion = u;
                 break;
             }
         }
 
+        // no existe
         if (usuarioSesion == null) {
-            return null; // Si no encuentra el correo en la lista de usuarios, retorna null.
+            return null;
         }
 
+        // validar contraseña
         if (usuarioSesion.getPassword().equals(pass)) {
-            return UsuarioMapper.toDTO(usuarioSesion); //Si encuentra la contraseña, retorna el usuario. Esto sería un inicio de sesión exitoso.
-        } else {
-            return null; //Si al final no encuentra la contraseña, retorna null por contraseña no encoentrada.
+            return UsuarioMapper.toDTO(usuarioSesion);
         }
+
+        return null; // contraseña incorrecta
     }
 
     @Override
     public UsuarioDTO registrarUsuario(UsuarioDTO nuevoUsuario) {
+
+        // agregar usuario nuevo
         usuarios.add(UsuarioMapper.toEntity(nuevoUsuario));
-        for(Usuario usuario : usuarios){
-            if(usuario.getIdUsuario().equals(nuevoUsuario.getIdUsuario())){
+
+        // buscar para devolver el DTO recién agregado
+        for (Usuario usuario : usuarios) {
+            if (usuario.getIdUsuario().equals(nuevoUsuario.getIdUsuario())) {
                 return UsuarioMapper.toDTO(usuario);
             }
         }
@@ -54,52 +61,51 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public boolean actualizarPerfil(Usuario usuarioActualizado) {
 
-        Usuario usuarioEnLista = buscarUsuario(usuarioActualizado); // mirar si existe (por si acaso)
+        // buscar usuario existente
+        Usuario usuarioEnLista = buscarUsuario(usuarioActualizado);
 
         if (usuarioEnLista == null) {
-            System.out.println("ERROR: Intento de actualizar un usuario inexistente.");
+            return false; // no existe
+        }
+
+        // validar datos obligatorios
+        if (usuarioActualizado.getNombreCompleto() == null ||
+                usuarioActualizado.getCorreo() == null ||
+                usuarioActualizado.getTelefono() == null) {
+
             return false;
         }
 
-        if (usuarioActualizado.getNombreCompleto() == null || usuarioActualizado.getNombreCompleto().isBlank() ||
-                usuarioActualizado.getCorreo() == null || usuarioActualizado.getCorreo().isBlank() ||
-                usuarioActualizado.getTelefono() == null || usuarioActualizado.getTelefono().isBlank()) {
-
-            System.out.println("ERROR: Campos incompletos para actualizar perfil.");
-            return false;
-        }
-
+        // actualizar datos
         usuarioEnLista.setNombreCompleto(usuarioActualizado.getNombreCompleto());
         usuarioEnLista.setCorreo(usuarioActualizado.getCorreo());
         usuarioEnLista.setTelefono(usuarioActualizado.getTelefono());
         usuarioEnLista.setDireccionesFrecuentes(usuarioActualizado.getDireccionesFrecuentes());
-        // rol y password no se cambian desde el usuario
 
         return true;
     }
 
-
     @Override
     public void agregarDireccionFrecuente(Usuario usuario, Direccion direccion) {
-
+        // agregar dirección al usuario
+        usuario.agregarDireccion(direccion);
     }
 
-
     private Usuario buscarUsuario(Usuario usuario) {
-
+        // buscar por ID
         if (usuario != null) {
             for (Usuario u : usuarios) {
                 if (u.getIdUsuario().equals(usuario.getIdUsuario())) {
                     return u;
                 }
             }
-
         }
         return null;
     }
 
     @Override
     public List<UsuarioDTO> getUsuarios() {
+        // devolver lista de usuarios DTO
         List<UsuarioDTO> usuariosDTO = new ArrayList<>();
         for (Usuario u : usuarios) {
             usuariosDTO.add(UsuarioMapper.toDTO(u));
@@ -109,6 +115,7 @@ public class UsuarioService implements IUsuarioService {
 
     @Override
     public UsuarioDTO buscarUsuarioPorId(String id) {
+        // buscar usuario por id
         for (Usuario u : usuarios) {
             if (u.getIdUsuario().equals(id)) {
                 return UsuarioMapper.toDTO(u);
@@ -117,9 +124,10 @@ public class UsuarioService implements IUsuarioService {
         return null;
     }
 
-
     @Override
     public boolean eliminarUsuario(UsuarioDTO usuario) {
+
+        // eliminar usuario
         if (usuario != null) {
             for (Usuario u : usuarios) {
                 if (u.getIdUsuario().equals(usuario.getIdUsuario())) {
@@ -127,29 +135,30 @@ public class UsuarioService implements IUsuarioService {
                     return true;
                 }
             }
-            return false;
         }
+
         return false;
     }
 
-    //Este metodo actualiza un usuario desde la vista del administrador. No puede actualizar la contraseña pero sí modificar el rol.
     @Override
     public UsuarioDTO actualizarUsuario(UsuarioDTO usuarioDTO, String idUsuarioAnterior) {
+
+        // actualizar datos desde admin
         if (usuarioDTO != null) {
             for (Usuario u : usuarios) {
                 if (u.getIdUsuario().equals(idUsuarioAnterior)) {
+
+                    // actualizar campos
                     u.setIdUsuario(usuarioDTO.getIdUsuario());
                     u.setNombreCompleto(usuarioDTO.getNombreCompleto());
                     u.setCorreo(usuarioDTO.getCorreo());
                     u.setTelefono(usuarioDTO.getTelefono());
                     u.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+
                     return UsuarioMapper.toDTO(u);
                 }
             }
-            return null;
         }
         return null;
     }
-
-
 }

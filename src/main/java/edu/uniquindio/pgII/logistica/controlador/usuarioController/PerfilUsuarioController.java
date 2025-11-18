@@ -10,11 +10,12 @@ import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.event.ActionEvent;
-import javafx.scene.layout.VBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PerfilUsuarioController {
@@ -36,8 +37,8 @@ public class PerfilUsuarioController {
     @FXML private VBox seccionTabla;
 
     private UsuarioDTO usuarioActual;
-    private UsuarioFacade facade = new UsuarioFacade();
-    private List<DireccionDTO> direccionesUsuario = new ArrayList<>();
+    private final UsuarioFacade facade = new UsuarioFacade();
+    private final ObservableList<DireccionDTO> direccionesUsuario = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -45,9 +46,7 @@ public class PerfilUsuarioController {
         usuarioActual = SesionManagerSingleton.getInstance().getUsuarioActivo();
 
         // Cargar datos actuales
-        if (lblNombreUsuario != null)
-            lblNombreUsuario.setText(usuarioActual.getNombreCompleto());
-
+        lblNombreUsuario.setText(usuarioActual.getNombreCompleto());
         txtNombre.setText(usuarioActual.getNombreCompleto());
         txtCorreo.setText(usuarioActual.getCorreo());
         txtTelefono.setText(usuarioActual.getTelefono());
@@ -57,14 +56,13 @@ public class PerfilUsuarioController {
         colCiudad.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getCiudad()));
         colBarrio.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getBarrio()));
         colDescripcion.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescripcion()));
+        tablaDirecciones.setItems(direccionesUsuario);
 
         // Secciones
         seccionPerfil.setVisible(true);
         seccionPerfil.setManaged(true);
-
         seccionAgregarDireccion.setVisible(false);
         seccionAgregarDireccion.setManaged(false);
-
         seccionTabla.setVisible(false);
         seccionTabla.setManaged(false);
 
@@ -74,32 +72,30 @@ public class PerfilUsuarioController {
     // Guardar perfil
     @FXML
     private void guardarPerfil() {
-
         String idActivo = SesionManagerSingleton.getInstance().getUsuarioActivo().getIdUsuario();
-
         if (!usuarioActual.getIdUsuario().equals(idActivo)) {
-            System.out.println("Error de seguridad");
+            mostrar("Error de seguridad");
             return;
         }
 
         UsuarioDTO dto = new UsuarioDTO();
         dto.setIdUsuario(idActivo);
-        dto.setNombreCompleto(txtNombre.getText());
-        dto.setCorreo(txtCorreo.getText());
-        dto.setTelefono(txtTelefono.getText());
+        dto.setNombreCompleto(txtNombre.getText().trim());
+        dto.setCorreo(txtCorreo.getText().trim());
+        dto.setTelefono(txtTelefono.getText().trim());
         dto.setPassword(usuarioActual.getPassword());
         dto.setRolUsuario(usuarioActual.getRolUsuarioEnum());
-        dto.setDireccionesFrecuentesDTO(direccionesUsuario);
+        dto.setDireccionesFrecuentesDTO(List.copyOf(direccionesUsuario));
 
         boolean ok = facade.actualizarPerfil(dto);
 
         if (ok) {
-            // Actualizar sesión
             SesionManagerSingleton.getInstance().setUsuarioActivo(dto);
             usuarioActual = dto;
-
-            // Actualizar label
             lblNombreUsuario.setText(dto.getNombreCompleto());
+            mostrar("Perfil actualizado correctamente");
+        } else {
+            mostrar("No se pudo actualizar el perfil");
         }
     }
 
@@ -107,28 +103,39 @@ public class PerfilUsuarioController {
     private void cargarDirecciones() {
         direccionesUsuario.clear();
         direccionesUsuario.addAll(usuarioActual.getDireccionesFrecuentesDTO());
-        tablaDirecciones.getItems().setAll(direccionesUsuario);
     }
 
     // Agregar dirección
     @FXML
     private void agregarDireccion() {
+        if (!validarCamposDireccion()) return;
 
         DireccionDTO dto = new DireccionDTO();
-        dto.setCalle(txtCalle.getText());
-        dto.setNumero(txtNumero.getText());
-        dto.setBarrio(txtBarrio.getText());
-        dto.setCiudad(txtCiudad.getText());
-        dto.setCodigoPostal(txtCodigoPostal.getText());
-        dto.setDescripcion(txtDescripcionDir.getText());
-        dto.setAlias(txtAlias.getText());
+        dto.setCalle(txtCalle.getText().trim());
+        dto.setNumero(txtNumero.getText().trim());
+        dto.setBarrio(txtBarrio.getText().trim());
+        dto.setCiudad(txtCiudad.getText().trim());
+        dto.setCodigoPostal(txtCodigoPostal.getText().trim());
+        dto.setDescripcion(txtDescripcionDir.getText().trim());
+        dto.setAlias(txtAlias.getText().trim());
 
         boolean creada = facade.registrarDireccion(usuarioActual, dto);
 
         if (creada) {
             limpiarCamposDireccion();
             cargarDirecciones();
+            mostrar("Dirección agregada correctamente");
+        } else {
+            mostrar("No se pudo agregar la dirección");
         }
+    }
+
+    private boolean validarCamposDireccion() {
+        if (txtCalle.getText().isEmpty() || txtCiudad.getText().isEmpty() || txtAlias.getText().isEmpty()) {
+            mostrar("Calle, Ciudad y Alias son obligatorios");
+            return false;
+        }
+        return true;
     }
 
     private void limpiarCamposDireccion() {
@@ -148,11 +155,16 @@ public class PerfilUsuarioController {
         if (seleccionada == null) return;
 
         boolean eliminado = facade.eliminarDireccion(usuarioActual, seleccionada);
+        if (eliminado) {
+            cargarDirecciones();
+            mostrar("Dirección eliminada");
+        } else {
+            mostrar("No se pudo eliminar la dirección");
+        }
 
-        if (eliminado) cargarDirecciones();
     }
 
-    // Volver
+    // Volver al menú
     @FXML
     private void volverMenu(ActionEvent event) throws Exception {
         VentanaUtil.cambiarEscena(getClass(), Constantes.menuUsuarioPage, event);
@@ -161,22 +173,34 @@ public class PerfilUsuarioController {
     // Alternar secciones
     @FXML
     private void togglePerfilSection(MouseEvent e) {
-        boolean b = !seccionPerfil.isVisible();
-        seccionPerfil.setVisible(b);
-        seccionPerfil.setManaged(b);
+        seccionPerfil.setVisible(!seccionPerfil.isVisible());
+        seccionPerfil.setManaged(seccionPerfil.isVisible());
     }
 
     @FXML
     private void toggleAgregarDireccionSection(MouseEvent e) {
-        boolean b = !seccionAgregarDireccion.isVisible();
-        seccionAgregarDireccion.setVisible(b);
-        seccionAgregarDireccion.setManaged(b);
+        seccionAgregarDireccion.setVisible(!seccionAgregarDireccion.isVisible());
+        seccionAgregarDireccion.setManaged(seccionAgregarDireccion.isVisible());
     }
 
     @FXML
     private void toggleTablaSection(MouseEvent e) {
-        boolean b = !seccionTabla.isVisible();
-        seccionTabla.setVisible(b);
-        seccionTabla.setManaged(b);
+        seccionTabla.setVisible(!seccionTabla.isVisible());
+        seccionTabla.setManaged(seccionTabla.isVisible());
     }
+
+    public void recargarDirecciones() {
+        UsuarioDTO actualizado = facade.obtenerUsuarioPorId(usuarioActual.getIdUsuario());
+        if (actualizado != null) {
+            usuarioActual = actualizado;
+            cargarDirecciones();
+        }
+    }
+
+    private void mostrar(String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+
 }
