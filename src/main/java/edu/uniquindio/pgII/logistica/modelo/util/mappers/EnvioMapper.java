@@ -19,16 +19,15 @@ public class EnvioMapper {
 
     public static Envio toEntity(EnvioDTO dto) {
         IUsuarioService usuarioService = AdministradorSingleton.getInstance().getUsuarioService();
-        IServicioAdicionalService serviciosAdicionales= AdministradorSingleton.getInstance().getServiciosAdicionalesService();
         IServicioAdicionalService servicioAdicionalService= AdministradorSingleton.getInstance().getServiciosAdicionalesService();
 
-        Usuario usuario= UsuarioMapper.toEntity(usuarioService.buscarUsuarioPorId(dto.getIdUsuario()));
-        if (usuario==null){
+        Usuario usuario = UsuarioMapper.toEntity(usuarioService.buscarUsuarioPorId(dto.getIdUsuario()));
+        if (usuario == null){
             return null;
         }
 
-        Direccion origen= DireccionMapper.toEntity(dto.getOrigen());
-        Direccion destino= DireccionMapper.toEntity(dto.getDestino());
+        Direccion origen = DireccionMapper.toEntity(dto.getOrigen());
+        Direccion destino = DireccionMapper.toEntity(dto.getDestino());
 
         List<ServicioAdicional> serviciosAdicionalesEntities = listarServiciosAdicionales(dto.getServiciosAdicionales(), servicioAdicionalService);
 
@@ -38,7 +37,14 @@ public class EnvioMapper {
             builder.withServiciosAdicionales(serviciosAdicionalesEntities);
         }
 
-        return builder.build();
+        Envio envio = builder.build();
+
+        if (dto.getFechaCreacion() != null) {
+            envio.setFechaCreacion(dto.getFechaCreacion());
+        }
+        // --------------------------------------------------------------------
+
+        return envio;
     }
 
 
@@ -59,6 +65,7 @@ public class EnvioMapper {
                 envio.getLargo(),
                 envio.getAncho(),
                 envio.getAlto(),
+                envio.getFechaCreacion(),
                 serviciosAdicionalesNombres
         );
     }

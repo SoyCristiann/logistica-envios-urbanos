@@ -23,6 +23,7 @@ public class SesionManagerSingleton {
     //Metodo para establecer el usuario activo en la sesión
     public void setUsuarioActivo(UsuarioDTO usuario) {
         this.usuarioActivo = UsuarioMapper.toEntity(usuario);
+        System.out.println("Sesión iniciada: " + usuarioActivo.getNombreCompleto());
     }
 
     public UsuarioDTO getUsuarioActivo() {
@@ -35,6 +36,12 @@ public class SesionManagerSingleton {
             return false;
         }
         return true;
+    }
+
+    //Método para cierre de sesión, limpia el usuario logueado.
+    public void cerrarSesion() {
+        this.usuarioActivo = null;
+        System.out.println("Sesión cerrada: " + this.usuarioActivo);
     }
 
 

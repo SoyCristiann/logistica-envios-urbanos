@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.adminController.graficos.ServiciosUsadosController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
+            <BarChart fx:id="barChart" title="Frecuencia de Servicios Adicionales">
+                <xAxis>
+                    <CategoryAxis fx:id="xAxis" label="Servicio Adicional" side="BOTTOM" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="yAxis" label="Cantidad de Usos" side="LEFT" />
+                </yAxis>
+            </BarChart>
+
+        </VBox>
+    </children>
+</AnchorPane>
