@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.MenuUsuarioController">
+<AnchorPane prefHeight="800" prefWidth="1200" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uniquindio.pgII.logistica.controlador.usuarioController.MenuUsuarioController">
 
     <children>
         <Label layoutX="363.0" layoutY="64.0" text="MENÚ PRINCIPAL USUARIO">

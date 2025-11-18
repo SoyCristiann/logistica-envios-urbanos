@@ -6,19 +6,17 @@ public class ServicioAdicionalDTO {
 
     private String idService;
     private String nombre;
-    private String descripcion;
     private ServicioCostoStrategy strategy;
-    private double costo;
+
 
 
     public ServicioAdicionalDTO() {}
 
-    public ServicioAdicionalDTO(String idService, String nombre, String descripcion, ServicioCostoStrategy strategy, double costo ) {
+    public ServicioAdicionalDTO(String idService, String nombre, ServicioCostoStrategy strategy ) {
         this.idService = idService;
         this.nombre = nombre;
-        this.descripcion = descripcion;
         this.strategy = strategy;
-        this.costo = costo;
+
     }
 
     // GETTERS Y SETTERS
@@ -39,21 +37,15 @@ public class ServicioAdicionalDTO {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
+//
+//    public double getCosto() {
+//        return costo;
+//    }
+//
+//    public void setCosto(double costo) {
+//        this.costo = costo;
+//    }
 
     public ServicioCostoStrategy getStrategy() {
         return strategy;

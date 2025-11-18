@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
+package edu.uniquindio.pgII.logistica.controlador.usuarioController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +42,6 @@ public class MenuUsuarioController {
 
     private final SesionManagerSingleton sesionManager = SesionManagerSingleton.getInstance();
 
-    // ---------------- EVENTOS ----------------
 
     @FXML
     void abrirPerfil(ActionEvent event) {
@@ -54,20 +53,10 @@ public class MenuUsuarioController {
         VentanaUtil.cambiarEscena(getClass(), Constantes.gestionEnviosPage, event);
     }
 
-<<<<<<< HEAD
-    @FXML
-    void cerrarSesion(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.inicioSesionPage, event);
-    }
-=======
->>>>>>> main
-
-    // ---------------- INICIALIZACIÓN ----------------
     @FXML
     void initialize() {
         VentanaUtil.setUsuarioLogueado(lblUsuario);
     }
-
 
 
     @FXML

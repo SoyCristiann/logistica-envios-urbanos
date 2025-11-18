@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -7,7 +6,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="edu.uniquindio.pgII.logistica.controlador.UsuarioController.GestionEnviosController"
+            fx:controller="edu.uniquindio.pgII.logistica.controlador.usuarioController.GestionEnviosController"
             prefHeight="900" prefWidth="1200">
 
     <children>
@@ -17,7 +16,6 @@
             <Label text="Gestión de Envíos">
                 <font><Font size="36"/></font>
             </Label>
-
 
             <TitledPane text="Cotizar Envío" expanded="false">
                 <content>
@@ -40,8 +38,6 @@
                                 <Label text="Peso (kg):" GridPane.rowIndex="2"/>
                                 <TextField fx:id="txtPeso" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-
-
                                 <Label text="Largo (cm):" GridPane.rowIndex="3"/>
                                 <TextField fx:id="txtLargoCot" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
@@ -50,7 +46,6 @@
 
                                 <Label text="Alto (cm):" GridPane.rowIndex="5"/>
                                 <TextField fx:id="txtAltoCot" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-
                             </children>
                         </GridPane>
 
@@ -71,7 +66,6 @@
                 </content>
             </TitledPane>
 
-
             <TitledPane text="Crear / Modificar / Cancelar Envío" expanded="false">
                 <content>
                     <VBox spacing="10">
@@ -84,7 +78,6 @@
                             </columnConstraints>
 
                             <children>
-
                                 <Label text="ID Envío:" GridPane.rowIndex="0"/>
                                 <TextField fx:id="txtIdEnvio" editable="false" promptText="Autogenerado" GridPane.columnIndex="1"/>
 
@@ -97,8 +90,6 @@
                                 <Label text="Peso (kg):" GridPane.rowIndex="3"/>
                                 <TextField fx:id="txtPesoCrear" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                                <!-- NUEVOS CAMPOS: LARGO, ANCHO, ALTO -->
-
                                 <Label text="Largo (cm):" GridPane.rowIndex="4"/>
                                 <TextField fx:id="txtLargoCrear" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
@@ -107,7 +98,6 @@
 
                                 <Label text="Alto (cm):" GridPane.rowIndex="6"/>
                                 <TextField fx:id="txtAltoCrear" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-
                             </children>
                         </GridPane>
 
@@ -127,7 +117,6 @@
                 </content>
             </TitledPane>
 
-
             <TitledPane text="Rastrear Envío" expanded="false">
                 <content>
                     <VBox spacing="10">
@@ -142,11 +131,9 @@
                 </content>
             </TitledPane>
 
-
             <TitledPane text="Historial de Envíos" expanded="true">
                 <content>
                     <VBox spacing="10">
-
                         <HBox spacing="10">
                             <Label text="Desde:"/>
                             <DatePicker fx:id="dpFechaInicio"/>
@@ -174,7 +161,6 @@
                             <Button text="Descargar CSV" onAction="#descargarCSV"/>
                             <Button text="Descargar PDF" onAction="#descargarPDF"/>
                             <Button text="Pagar Envío" onAction="#pagarEnvio"/>
-
                         </HBox>
                     </VBox>
                 </content>

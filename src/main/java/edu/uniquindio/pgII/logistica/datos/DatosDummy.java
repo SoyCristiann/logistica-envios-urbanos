@@ -100,10 +100,10 @@ public class DatosDummy {
 
 
     public void crearServiciosDummy(){
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", new FragilStrategy(),3000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", new FirmaRequeridaStrategy(),1500));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", new PrioridadStrategy(), 2000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", new SeguroStrategy(), 2500));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", new FragilStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", new FirmaRequeridaStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", new PrioridadStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", new SeguroStrategy()));
     }
 
     // Crear envíos

@@ -1,14 +1,21 @@
-package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
+package edu.uniquindio.pgII.logistica.controlador.usuarioController;
 
-import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.EnvioUsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.ServicioAdicionalDTO;
+import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.entidades.Direccion;
+import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil;
 import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.DireccionMapper;
+import edu.uniquindio.pgII.logistica.modelo.util.mappers.ServicioAdicionalMapper;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FirmaRequeridaStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FragilStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.PrioridadStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.SeguroStrategy;
 import edu.uniquindio.pgII.logistica.patrones.fachadas.UsuarioFacade;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
-import javafx.beans.property.SimpleDoubleProperty;
+import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,10 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestionEnviosController {
-
-    // ===============================
-    //  FXML ELEMENTOS
-    // ===============================
 
     @FXML private ComboBox<Direccion> cbOrigenCotizar;
     @FXML private ComboBox<Direccion> cbDestinoCotizar;
@@ -37,7 +40,6 @@ public class GestionEnviosController {
 
     @FXML private Label lblResultado;
 
-    // Crear/Modificar/Cancelar
     @FXML private TextField txtIdEnvio;
     @FXML private ComboBox<Direccion> cbOrigenCrear;
     @FXML private ComboBox<Direccion> cbDestinoCrear;
@@ -54,28 +56,23 @@ public class GestionEnviosController {
     @FXML private Button btnModificar;
     @FXML private Button btnCancelar;
 
-    // Rastrear
     @FXML private TextField txtIdRastreo;
     @FXML private Label lblRastreoResultado;
 
-    // Tabla
-    @FXML private TableView<EnvioDTO> tablaEnvios;
-    @FXML private TableColumn<EnvioDTO, String> colId;
-    @FXML private TableColumn<EnvioDTO, String> colOrigen;
-    @FXML private TableColumn<EnvioDTO, String> colDestino;
-    @FXML private TableColumn<EnvioDTO, String> colEstado;
-    @FXML private TableColumn<EnvioDTO, Double> colCosto;
+    @FXML private TableView<EnvioUsuarioDTO> tablaEnvios;
+    @FXML private TableColumn<EnvioUsuarioDTO, String> colId;
+    @FXML private TableColumn<EnvioUsuarioDTO, String> colOrigen;
+    @FXML private TableColumn<EnvioUsuarioDTO, String> colDestino;
+    @FXML private TableColumn<EnvioUsuarioDTO, String> colEstado;
+    @FXML private TableColumn<EnvioUsuarioDTO, String> colCosto;
 
-    // Historial
     @FXML private DatePicker dpFechaInicio;
     @FXML private DatePicker dpFechaFin;
     @FXML private ComboBox<String> cbEstado;
 
     private final UsuarioFacade facade = new UsuarioFacade();
+    private final UsuarioDTO usuarioActual = SesionManagerSingleton.getInstance().getUsuarioActivo();
 
-    // ===============================
-    //  INICIALIZACIÓN
-    // ===============================
     @FXML
     private void initialize() {
         inicializarColumnas();
@@ -91,18 +88,15 @@ public class GestionEnviosController {
 
     private void inicializarColumnas() {
         colId.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getIdEnvio()));
-        colOrigen.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getOrigen().getDireccionCompleta()));
-        colDestino.setCellValueFactory(c -> new SimpleStringProperty(
-                c.getValue().getDestino().getDireccionCompleta()));
+        colOrigen.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getOrigen().getCiudad()));
+        colDestino.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDestino().getCiudad()));
         colEstado.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getEstado().name()));
-        colCosto.setCellValueFactory(c -> new SimpleDoubleProperty(c.getValue().getCosto()).asObject());
+        colCosto.setCellValueFactory(c -> new SimpleStringProperty(String.valueOf(c.getValue().getCosto())));
     }
 
     private void inicializarEstados() {
         cbEstado.getItems().add("Todos");
-        for (EstadoEnvio e : EstadoEnvio.values())
-            cbEstado.getItems().add(e.name());
+        for (EstadoEnvio e : EstadoEnvio.values()) cbEstado.getItems().add(e.name());
         cbEstado.getSelectionModel().select("Todos");
     }
 
@@ -114,49 +108,39 @@ public class GestionEnviosController {
         cbDestinoCrear.getItems().setAll(direcciones);
     }
 
-    // ===============================
-    //  FUNCIONES DE SERVICIOS ADICIONALES
-    // ===============================
-
-    private List<ServicioAdicionalDTO> obtenerServiciosCotizar() {
-        List<ServicioAdicionalDTO> lista = new ArrayList<>();
-
-        if (chkSeguroCotizar.isSelected()) lista.add(new ServicioAdicionalDTO("Seguro"));
-        if (chkFragilCotizar.isSelected()) lista.add(new ServicioAdicionalDTO("Fragil"));
-        if (chkFirmaCotizar.isSelected()) lista.add(new ServicioAdicionalDTO("Firma"));
-        if (chkPrioritarioCotizar.isSelected()) lista.add(new ServicioAdicionalDTO("Prioritario"));
-
+    private List<ServicioAdicional> obtenerServiciosCotizar() {
+        List<ServicioAdicional> lista = new ArrayList<>();
+        if (chkSeguroCotizar.isSelected()) lista.add(new ServicioAdicional("", "Seguro", new SeguroStrategy()));
+        if (chkFragilCotizar.isSelected()) lista.add(new ServicioAdicional("", "Fragil", new FragilStrategy()));
+        if (chkFirmaCotizar.isSelected()) lista.add(new ServicioAdicional("", "Firma", new FirmaRequeridaStrategy()));
+        if (chkPrioritarioCotizar.isSelected()) lista.add(new ServicioAdicional("", "Prioritario", new PrioridadStrategy()));
         return lista;
     }
 
-    private List<ServicioAdicionalDTO> obtenerServiciosCrear() {
-        List<ServicioAdicionalDTO> lista = new ArrayList<>();
-
-        if (chkSeguroCrear.isSelected()) lista.add(new ServicioAdicionalDTO("Seguro"));
-        if (chkFragilCrear.isSelected()) lista.add(new ServicioAdicionalDTO("Fragil"));
-        if (chkFirmaCrear.isSelected()) lista.add(new ServicioAdicionalDTO("Firma"));
-        if (chkPrioritarioCrear.isSelected()) lista.add(new ServicioAdicionalDTO("Prioritario"));
-
+    private List<ServicioAdicional> obtenerServiciosCrear() {
+        List<ServicioAdicional> lista = new ArrayList<>();
+        if (chkSeguroCrear.isSelected()) lista.add(new ServicioAdicional("", "Seguro", new SeguroStrategy()));
+        if (chkFragilCrear.isSelected()) lista.add(new ServicioAdicional("", "Fragil", new FragilStrategy()));
+        if (chkFirmaCrear.isSelected()) lista.add(new ServicioAdicional("", "Firma", new FirmaRequeridaStrategy()));
+        if (chkPrioritarioCrear.isSelected()) lista.add(new ServicioAdicional("", "Prioritario", new PrioridadStrategy()));
         return lista;
     }
 
-    // ===============================
-    //  COTIZAR ENVÍO
-    // ===============================
     @FXML
     private void cotizarEnvio() {
         try {
-            EnvioDTO dto = new EnvioDTO();
-
+            EnvioUsuarioDTO dto = new EnvioUsuarioDTO();
             dto.setOrigen(DireccionMapper.toDTO(cbOrigenCotizar.getValue()));
             dto.setDestino(DireccionMapper.toDTO(cbDestinoCotizar.getValue()));
-
             dto.setPeso(Double.parseDouble(txtPeso.getText()));
             dto.setLargo(Double.parseDouble(txtLargoCot.getText()));
             dto.setAncho(Double.parseDouble(txtAnchoCot.getText()));
             dto.setAlto(Double.parseDouble(txtAltoCot.getText()));
+            dto.setUsuario(usuarioActual);
 
-            dto.setServicios(obtenerServiciosCotizar());
+            dto.setServiciosAdicionales(
+                    obtenerServiciosCotizar()
+            );
 
             double costo = facade.cotizarEnvio(dto);
             lblResultado.setText("Costo estimado: $" + costo);
@@ -166,25 +150,39 @@ public class GestionEnviosController {
         }
     }
 
-    // ===============================
-    //  CREAR ENVÍO
-    // ===============================
+
+    @FXML
+    private void limpiarCotizacion() {
+        cbOrigenCotizar.setValue(null);
+        cbDestinoCotizar.setValue(null);
+        txtPeso.clear();
+        txtLargoCot.clear();
+        txtAnchoCot.clear();
+        txtAltoCot.clear();
+
+        chkSeguroCotizar.setSelected(false);
+        chkFragilCotizar.setSelected(false);
+        chkFirmaCotizar.setSelected(false);
+        chkPrioritarioCotizar.setSelected(false);
+
+        lblResultado.setText("");
+    }
+
+
     @FXML
     private void crearEnvio() {
         try {
-            EnvioDTO dto = new EnvioDTO();
-
+            EnvioUsuarioDTO dto = new EnvioUsuarioDTO();
+            dto.setUsuario(usuarioActual);
             dto.setOrigen(DireccionMapper.toDTO(cbOrigenCrear.getValue()));
             dto.setDestino(DireccionMapper.toDTO(cbDestinoCrear.getValue()));
-
             dto.setPeso(Double.parseDouble(txtPesoCrear.getText()));
             dto.setLargo(Double.parseDouble(txtLargoCrear.getText()));
             dto.setAncho(Double.parseDouble(txtAnchoCrear.getText()));
             dto.setAlto(Double.parseDouble(txtAltoCrear.getText()));
+            dto.setServiciosAdicionales(obtenerServiciosCrear());
 
-            dto.setServicios(obtenerServiciosCrear());
-
-            boolean ok = facade.crearEnvio(dto);
+            boolean ok = facade.crearEnvioUsuario(dto);
             mostrar(ok ? "Envío creado" : "No se pudo crear");
             cargarHistorial();
 
@@ -193,23 +191,22 @@ public class GestionEnviosController {
         }
     }
 
-    // ===============================
-    //  MODIFICAR Y CANCELAR
-    // ===============================
+
 
     @FXML
     private void modificarEnvio() {
         try {
-            EnvioDTO dto = new EnvioDTO();
-
+            EnvioUsuarioDTO dto = new EnvioUsuarioDTO();
             dto.setIdEnvio(txtIdEnvio.getText());
+            dto.setUsuario(usuarioActual);
             dto.setOrigen(DireccionMapper.toDTO(cbOrigenCrear.getValue()));
             dto.setDestino(DireccionMapper.toDTO(cbDestinoCrear.getValue()));
             dto.setPeso(Double.parseDouble(txtPesoCrear.getText()));
-
             dto.setLargo(Double.parseDouble(txtLargoCrear.getText()));
             dto.setAncho(Double.parseDouble(txtAnchoCrear.getText()));
             dto.setAlto(Double.parseDouble(txtAltoCrear.getText()));
+
+            dto.setServiciosAdicionales(obtenerServiciosCrear());
 
             boolean ok = facade.modificarEnvio(dto);
             mostrar(ok ? "Modificado" : "No se pudo modificar");
@@ -220,9 +217,11 @@ public class GestionEnviosController {
         }
     }
 
+
+
     @FXML
     private void cancelarEnvio() {
-        EnvioDTO dto = new EnvioDTO();
+        EnvioUsuarioDTO dto = new EnvioUsuarioDTO();
         dto.setIdEnvio(txtIdEnvio.getText());
 
         boolean ok = facade.cancelarEnvio(dto);
@@ -230,44 +229,29 @@ public class GestionEnviosController {
         cargarHistorial();
     }
 
-    // ===============================
-    //  HISTORIAL
-    // ===============================
-
     @FXML
     private void filtrarHistorial() {
-        String estado = cbEstado.getValue();
-        LocalDate ini = dpFechaInicio.getValue();
-        LocalDate fin = dpFechaFin.getValue();
-
         tablaEnvios.getItems().setAll(
-                facade.obtenerHistorial(null, ini, fin, estado)
+                facade.obtenerHistorial(
+                        usuarioActual,
+                        dpFechaInicio.getValue(),
+                        dpFechaFin.getValue(),
+                        cbEstado.getValue()
+                )
         );
     }
 
     private void cargarHistorial() {
         tablaEnvios.getItems().setAll(
-                facade.obtenerHistorial(null, null, null, "Todos")
+                facade.obtenerHistorial(usuarioActual, null, null, "Todos")
         );
     }
-
-    // ===============================
-    //  RASTREAR
-    // ===============================
 
     @FXML
     private void rastrearEnvio() {
-        EnvioDTO dto = facade.rastrearEnvio(txtIdRastreo.getText());
-        lblRastreoResultado.setText(
-                dto != null ?
-                        "Estado: " + dto.getEstado().name() :
-                        "No encontrado"
-        );
+        EnvioUsuarioDTO dto = facade.rastrearEnvio(txtIdRastreo.getText());
+        lblRastreoResultado.setText(dto != null ? "Estado: " + dto.getEstado().name() : "No encontrado");
     }
-
-    // ===============================
-    //  SELECCIÓN EN TABLA
-    // ===============================
 
     private void escucharSeleccionTabla() {
         tablaEnvios.getSelectionModel().selectedItemProperty().addListener((obs, old, sel) -> {
@@ -279,10 +263,6 @@ public class GestionEnviosController {
         });
     }
 
-    // ===============================
-    //  UTILS
-    // ===============================
-
     private void mostrar(String t) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText(t);
@@ -293,4 +273,20 @@ public class GestionEnviosController {
     private void volverAlMenu(javafx.event.ActionEvent e) {
         VentanaUtil.cambiarEscena(getClass(), Constantes.menuUsuarioPage, e);
     }
+
+    @FXML
+    private void descargarCSV(javafx.event.ActionEvent e) {
+        System.out.println("Descargar CSV");
+    }
+
+    @FXML
+    private void descargarPDF(javafx.event.ActionEvent e) {
+        System.out.println("Descargar PDF");
+    }
+
+    @FXML
+    private void pagarEnvio(javafx.event.ActionEvent e) {
+        System.out.println("Pagar Envio");
+    }
+
 }

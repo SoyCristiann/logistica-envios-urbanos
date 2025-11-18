@@ -96,7 +96,7 @@ public class EnviosAdminController {
     }
 
     /**
-     * Este métdodo se crea para que el botón editar sea visible en las filas
+     * Este metodo se crea para que el botón editar sea visible en las filas
      * */
     private void configurarBotonEditar() {
         colEditar.setCellFactory(new Callback<TableColumn<Envio, Void>, TableCell<Envio, Void>>() {

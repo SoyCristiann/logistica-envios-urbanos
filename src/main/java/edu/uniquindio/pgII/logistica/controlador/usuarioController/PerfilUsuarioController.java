@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
+package edu.uniquindio.pgII.logistica.controlador.usuarioController;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
@@ -88,7 +88,7 @@ public class PerfilUsuarioController {
         dto.setCorreo(txtCorreo.getText());
         dto.setTelefono(txtTelefono.getText());
         dto.setPassword(usuarioActual.getPassword());
-        dto.setRolUsuario(usuarioActual.getRolUsuario());
+        dto.setRolUsuario(usuarioActual.getRolUsuarioEnum());
         dto.setDireccionesFrecuentesDTO(direccionesUsuario);
 
         boolean ok = facade.actualizarPerfil(dto);

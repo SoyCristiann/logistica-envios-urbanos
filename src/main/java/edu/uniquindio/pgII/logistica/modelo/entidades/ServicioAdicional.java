@@ -7,16 +7,16 @@ public class ServicioAdicional {
     private String idService;
     private String nombreServicio;
     private ServicioCostoStrategy strategy;
-    private double costo;
+
 
     // CONSTRUCTOR
 
-    public ServicioAdicional(String idService, String nombreServicio, ServicioCostoStrategy strategy, double costo) {
+    public ServicioAdicional(String idService, String nombreServicio, ServicioCostoStrategy strategy) {
 
         this.idService = idService;
         this.nombreServicio = nombreServicio;
         this.strategy = strategy;
-        this.costo = costo;
+
     }
 
     // GETTERS AND SETTERS
@@ -44,15 +44,6 @@ public class ServicioAdicional {
     public void setStrategy(ServicioCostoStrategy strategy) {
         this.strategy = strategy;
     }
-
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
-
 
 
 }

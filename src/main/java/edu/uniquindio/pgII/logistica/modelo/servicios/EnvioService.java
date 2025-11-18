@@ -2,6 +2,8 @@ package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioAdminDTO;
 import edu.uniquindio.pgII.logistica.modelo.dto.EnvioDTO;
+import edu.uniquindio.pgII.logistica.modelo.entidades.Tarifa;
+import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.EnvioAdminMapper;
 import edu.uniquindio.pgII.logistica.modelo.util.mappers.RepartidorMapper;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
@@ -11,6 +13,7 @@ import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
 import edu.uniquindio.pgII.logistica.patrones.decorator.*;
+import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -38,9 +41,8 @@ public class EnvioService implements IEnvioService {
         return id;
     }
 
-    //  Crear envío
+    //  Crear envío para Usuario
     @Override
-
     public boolean crearEnvio(Envio envio) {
 
         if (envio != null) {
@@ -52,14 +54,9 @@ public class EnvioService implements IEnvioService {
             }
             envio.setEstado(EstadoEnvio.SOLICITADO);
 
-//            // Calcular tarifa base
-//            double costoBase = calcularCostoBase(envio);
-//            envio.setCosto(costoBase);
-
-            // Aplicar servicios adicionales si los tiene
-
-                double costoFinal = calcularCostoTotal(envio);
-                envio.setCosto(costoFinal);
+           // Calcular tarifa
+            double costo = calcularCosto(envio);
+            envio.setCosto(costo);
 
             envios.add(envio);
             for(Envio e: envios){
@@ -76,17 +73,39 @@ public class EnvioService implements IEnvioService {
     @Override
     public boolean modificarEnvio(Envio envio) {
         Envio envioExistente = buscarEnvioPorId(envio.getIdEnvio());
+
         if (envioExistente != null && envioExistente.getEstado() == EstadoEnvio.SOLICITADO) {
-            envioExistente.setDestino(envio.getDestino());
-            envioExistente.setPeso(envio.getPeso());
-            envioExistente.setAlto(envio.getAlto());
-            envioExistente.setLargo(envio.getLargo());
-            envioExistente.setAncho(envio.getAncho());
-            envioExistente.setFechaEntrega(envio.getFechaEntrega());
+
+            if (envio.getOrigen() != null)
+                envioExistente.setOrigen(envio.getOrigen());
+
+            if (envio.getDestino() != null)
+                envioExistente.setDestino(envio.getDestino());
+
+            if (envio.getPeso() > 0)
+                envioExistente.setPeso(envio.getPeso());
+
+            if (envio.getLargo() > 0)
+                envioExistente.setLargo(envio.getLargo());
+
+            if (envio.getAncho() > 0)
+                envioExistente.setAncho(envio.getAncho());
+
+            if (envio.getAlto() > 0)
+                envioExistente.setAlto(envio.getAlto());
+
+            if (envio.getServiciosAdicionales() != null)
+                envioExistente.setServiciosAdicionales(envio.getServiciosAdicionales());
+
+            // Recalcular costo
+            double nuevoCosto = calcularCosto(envioExistente);
+            envioExistente.setCosto(nuevoCosto);
+
             return true;
         }
         return false;
     }
+
 
     // este método es para actualizar el envío desde la vista administrador. Puede modificar el estado, agregar repartidor y recalcular el valor según medidas.
     public Envio actualizarEnvioAdmin(EnvioAdminDTO envio) {
@@ -96,7 +115,12 @@ public class EnvioService implements IEnvioService {
             envioExistente.setAlto(envio.getAlto());
             envioExistente.setLargo(envio.getLargo());
             envioExistente.setAncho(envio.getAncho());
-            envioExistente.setCosto(calcularCostoDecorado(EnvioAdminMapper.toEntity(envio)));
+
+            IServicioAdicionalService servicioAdicionalService = AdministradorSingleton.getInstance().getServiciosAdicionalesService();
+            List<ServicioAdicional> servicioAdicionales = listarServiciosAdicionales(envio.getServiciosAdicionales(),servicioAdicionalService );
+            Tarifa tarifa = tarifaService.calcularTarifa(envio.getPeso(), envio.getAlto(), envio.getAncho(), envio.getLargo(), servicioAdicionales);
+
+            envioExistente.setCosto(tarifa.getCostoBase());
             System.out.println("E nuevo costo es: " +  envioExistente.getCosto());
             envioExistente.setEstado(envio.getEstado());
             envioExistente.setFechaEntrega(envio.getFechaEntrega());
@@ -105,6 +129,25 @@ public class EnvioService implements IEnvioService {
             return envioExistente;
         }
         return null;
+    }
+
+    private static List<ServicioAdicional> listarServiciosAdicionales(List<String> nombresServicios, IServicioAdicionalService servicioAdicionalService)
+    {
+        if (nombresServicios == null) {
+            return new ArrayList<>();
+        }
+
+        List<ServicioAdicional> entidades = new ArrayList<>();
+
+        for (String id : nombresServicios) {
+            ServicioAdicional servicio = servicioAdicionalService.buscarServicioPorId(id);
+            if (servicio != null) {
+                entidades.add(servicio);
+            } else {
+                System.out.println("No se encoentró el servicio: " + id);
+            }
+        }
+        return entidades;
     }
 
     //  Cancelar envío
@@ -172,7 +215,8 @@ public class EnvioService implements IEnvioService {
     public boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().add(servicio);
-            double costoFinal = calcularCostoServicio(envio);
+            Tarifa tarifa = tarifaService.calcularTarifa(envio.getPeso(), envio.getAlto(), envio.getAncho(), envio.getLargo(), envio.getServiciosAdicionales());
+            double costoFinal = tarifa.getCostoBase();
             envio.setCosto(costoFinal);
             return true;
         }
@@ -185,7 +229,7 @@ public class EnvioService implements IEnvioService {
     public boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio) {
         if (envio != null && servicio != null) {
             envio.getServiciosAdicionales().remove(servicio);
-            double costoFinal = calcularCostoTotal(envio);
+            double costoFinal = calcularCosto(envio);
             envio.setCosto(Math.max(costoFinal, 0));
             return true;
         }
@@ -198,11 +242,10 @@ public class EnvioService implements IEnvioService {
     }
 
 
-    // estos métodos se usaban cuando se implementaba decorator, al usar builder para agregar un servicio Adicional cambia el proceso
 
     //  Calcular costo base (tarifa inicial)
     @Override
-    public double calcularCostoBase(Envio envio) {
+    public double calcularCosto(Envio envio) {
         double peso = envio.getPeso();
         double alto = envio.getAlto();
         double largo = envio.getLargo();
@@ -210,46 +253,10 @@ public class EnvioService implements IEnvioService {
 
 
 
-        var tarifa = tarifaService.calcularTarifa(peso, alto, ancho, largo, envio.getServiciosAdicionales());
+        Tarifa tarifa = tarifaService.calcularTarifa(peso, alto, ancho, largo, envio.getServiciosAdicionales());
         envio.setCosto(tarifa.getTotal());
         return tarifa.getTotal();
     }
-
-    //  Calcular costo total decorado
-    @Override
-    public double calcularCostoDecorado(Envio envio) {
-        // Si el costo base aun no ha sido calculado, lo hace
-        if (envio.getCosto() == 0) {
-            double base = calcularCostoBase(envio);
-            envio.setCosto(base);
-        }
-
-        EnvioComponente envioDecorado = new EnvioBase(envio.getCosto(), "Envío base");
-
-
-        for (ServicioAdicional servicio : envio.getServiciosAdicionales()) {
-            switch (servicio.getNombreServicio().toLowerCase()) {
-                case "seguro":
-                    envioDecorado = new EnvioConSeguro(envioDecorado);
-                    break;
-                case "firma requerida":
-                    envioDecorado = new EnvioConFirma(envioDecorado);
-                    break;
-                case "frágil":
-                case "fragil":
-                    envioDecorado = new EnvioFragil(envioDecorado);
-                    break;
-                case "prioritario":
-                    envioDecorado = new EnvioPrioritario(envioDecorado);
-                    break;
-            }
-        }
-
-        //  Retorna el costo final decorado
-        return envioDecorado.getCosto();
-
-    }
-
 
 
     //  Buscar envío por ID
@@ -268,23 +275,6 @@ public class EnvioService implements IEnvioService {
     public List<Envio> getEnvios() {
         return envios;
 
-    }
-
-    @Override
-    public double calcularCostoCotizacion(Envio envio) {
-
-        return 0;
-    }
-
-    public  double calcularCostoServicio(Envio envio) {
-
-        return 0;
-    }
-
-    @Override
-    public double calcularCostoTotal(Envio envio) {
-
-        return 0;
     }
 
     @Override

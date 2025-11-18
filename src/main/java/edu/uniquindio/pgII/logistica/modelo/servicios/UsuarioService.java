@@ -142,6 +142,7 @@ public class UsuarioService implements IUsuarioService {
                     u.setNombreCompleto(usuarioDTO.getNombreCompleto());
                     u.setCorreo(usuarioDTO.getCorreo());
                     u.setTelefono(usuarioDTO.getTelefono());
+                    u.setRolUsuario(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
                     return UsuarioMapper.toDTO(u);
                 }
             }

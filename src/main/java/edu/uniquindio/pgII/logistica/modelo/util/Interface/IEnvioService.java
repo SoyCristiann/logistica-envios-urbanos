@@ -9,7 +9,6 @@ import edu.uniquindio.pgII.logistica.patrones.builder.usuario.Usuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.EstadoEnvio;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 import java.util.List;
 import java.util.Map;
 
@@ -31,15 +30,10 @@ public interface IEnvioService {
     public abstract boolean agregarServicioAdicional(Envio envio, ServicioAdicional servicio);
     public abstract boolean eliminarServicioAdicional(Envio envio, ServicioAdicional servicio);
 
-    public abstract double calcularCostoBase(Envio envio);
-    public abstract double calcularCostoDecorado(Envio envio); // Decorator
-
+    public abstract double calcularCosto(Envio envio);
 
 
     public abstract ArrayList<Envio> listarEnvios();
-
-    public abstract double calcularCostoCotizacion(Envio envio);
-    public abstract double calcularCostoTotal(Envio envio);
 
     public abstract List<Envio> getEnvios();
     public abstract Envio actualizarEnvioAdmin(EnvioAdminDTO envio);

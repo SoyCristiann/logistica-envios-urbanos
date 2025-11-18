@@ -46,7 +46,6 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
         ServicioAdicional existente = buscarServicioPorId(servicioAdicionalActualizado.getIdService());
         if (existente != null) {
             existente.setNombreServicio(servicioAdicionalActualizado.getNombreServicio());
-            existente.setCosto(servicioAdicionalActualizado.getCosto());
             return true;
         }
 

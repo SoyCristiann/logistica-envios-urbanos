@@ -38,7 +38,6 @@ public class TarifaService implements ITarifaService {
                 if (s.getStrategy() != null) {
                     costoPorEste = s.getStrategy().calcularCosto(peso, alto, ancho, largo);
                 }
-                s.setCosto(costoPorEste);
                 costoServicios += costoPorEste;
             }
         }
@@ -68,7 +67,7 @@ public class TarifaService implements ITarifaService {
 
         if(t.getServiciosIncluidos() != null && !t.getServiciosIncluidos().isEmpty()) {
             for (ServicioAdicional s : t.getServiciosIncluidos()) {
-                serviciosTexto += "- " + s.getNombreServicio() + ": " + s.getCosto() + "\n";
+                serviciosTexto += "- " + s.getNombreServicio() + ": " + t.getTotal() + "\n";
             }
         } else {
             serviciosTexto = "No tiene servicios adicionales\n";
