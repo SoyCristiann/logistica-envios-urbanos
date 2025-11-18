@@ -15,6 +15,7 @@ import edu.uniquindio.pgII.logistica.patrones.Strategy.PrioridadStrategy;
 import edu.uniquindio.pgII.logistica.patrones.Strategy.SeguroStrategy;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,30 +108,30 @@ public class DatosDummy {
 
     // Crear envíos
     public void crearEnviosDummy(){
+
+        //Envios abiertos
+
         List<String> serviciosEnvio1 = new ArrayList<>();
         serviciosEnvio1.add("SEG");
         envioService.crearEnvio(new EnvioDTO(
                 "1025485798",
                 direccionService.buscarDireccionPorId("D001"),
                 direccionService.buscarDireccionPorId("D002"),
-                5,
-                10,
-                20,
-                40,
+                5, 10, 20, 40,
+                LocalDate.now().minusDays(10),
                 serviciosEnvio1
         ));
 
         List<String> serviciosEnvio2 = new ArrayList<>();
+        serviciosEnvio2.add("SEG");
         serviciosEnvio2.add("FRA");
         serviciosEnvio2.add("PRI");
         envioService.crearEnvio(new EnvioDTO(
                 "1032632323", // ID Usuario (Andrés)
                 direccionService.buscarDireccionPorId("D004"),
                 direccionService.buscarDireccionPorId("D001"),
-                25.0,
-                50.0,
-                50.0,
-                60.0,
+                25.0, 50.0, 50.0, 60.0,
+                LocalDate.now().minusDays(3),
                 serviciosEnvio2
         ));
 
@@ -141,12 +142,23 @@ public class DatosDummy {
                 "1024125478",
                 direccionService.buscarDireccionPorId("D006"),
                 direccionService.buscarDireccionPorId("D005"),
-                1.2,
-                15.0,
-                10.0,
-                5.0,
+                1.2, 15.0, 10.0, 5.0,
+                LocalDate.now().minusDays(1),
                 serviciosEnvio3
         ));
+
+        List<String> serviciosEnvio4 = new ArrayList<>();
+        serviciosEnvio4.add("SEG");
+        serviciosEnvio4.add("FIR");
+        envioService.crearEnvio(new EnvioDTO(
+                "1030625854",
+                direccionService.buscarDireccionPorId("D001"),
+                direccionService.buscarDireccionPorId("D002"),
+                20, 20, 20, 30,
+                LocalDate.now().minusDays(2),
+                serviciosEnvio4
+        ));
+
     }
 
 }
