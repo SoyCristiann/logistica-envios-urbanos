@@ -6,6 +6,7 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.patrones.builder.envios.Envio;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IEnvioService {
     public abstract boolean crearEnvio(EnvioDTO envioDTO);
@@ -13,4 +14,6 @@ public interface IEnvioService {
     public abstract List<Envio> getEnvios();
     public abstract Envio actualizarEnvioAdmin(EnvioAdminDTO envio);
     public abstract Envio buscarEnvioPorId(String Id);
+    public abstract Map<String, Integer> getServiciosAdicionalesMasUsados();
+    public abstract double getTiempoPromedioEntregaGlobal();
 }

@@ -1,6 +1,7 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class EnvioDTO {
@@ -11,12 +12,13 @@ public class EnvioDTO {
     private double alto;
     private double largo;
     private double ancho;
+    private LocalDate fechaCreacion;
 
     private List<String> serviciosAdicionales;
 
     public EnvioDTO() {}
 
-    public EnvioDTO(String idUsuario, DireccionDTO origen, DireccionDTO destino, double peso, double largo, double ancho, double alto, List<String> serviciosAdicionales) {
+    public EnvioDTO(String idUsuario, DireccionDTO origen, DireccionDTO destino, double peso, double largo, double ancho, double alto, LocalDate fechaCreacion, List<String> serviciosAdicionales) {
         this.idUsuario = idUsuario;
         this.origen = origen;
         this.destino = destino;
@@ -24,6 +26,7 @@ public class EnvioDTO {
         this.alto = alto;
         this.largo = largo;
         this.ancho = ancho;
+        this.fechaCreacion = fechaCreacion;
         this.serviciosAdicionales= serviciosAdicionales;
     }
 
@@ -87,6 +90,14 @@ public class EnvioDTO {
 
     public List<String> getServiciosAdicionales() {
         return serviciosAdicionales;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public void setServiciosAdicionales(List<String> serviciosAdicionales) {

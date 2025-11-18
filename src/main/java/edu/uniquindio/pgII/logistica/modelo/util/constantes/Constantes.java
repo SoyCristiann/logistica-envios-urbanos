@@ -20,6 +20,8 @@ public class Constantes {
     //Vistas de administrador
     public static final String administradorMainPage= "/fxml/adminViews/adminUsuariosView.fxml";
     public static final String editarEnviosAdminPage = "/fxml/adminViews/editarEnviosAdminView.fxml";
+    public static final String modalServiciosMasUsados= "/fxml/adminViews/serviciosUsadosModal.fxml";
+    public static final String modalTiemposPromedioEntrega= "/fxml/adminViews/tiemposEntregaModal.fxml";
 
 
     public static final double precioBase = 5000;

@@ -15,8 +15,11 @@ import edu.uniquindio.pgII.logistica.modelo.util.Interface.IEnvioService;
 import edu.uniquindio.pgII.logistica.patrones.decorator.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EnvioService implements IEnvioService {
 
@@ -43,7 +46,11 @@ public class EnvioService implements IEnvioService {
         Envio envio= EnvioMapper.toEntity(envioDTO);
         if (envio != null) {
             envio.setIdEnvio(generarId());
-            envio.setFechaCreacion(LocalDate.now());
+            if (envioDTO.getFechaCreacion() != null) {
+                envio.setFechaCreacion(envioDTO.getFechaCreacion());
+            } else {
+                envio.setFechaCreacion(LocalDate.now());
+            }
             envio.setEstado(EstadoEnvio.SOLICITADO);
 
             // Calcular tarifa base
@@ -244,4 +251,73 @@ public class EnvioService implements IEnvioService {
     public boolean registrarServicio(ServicioAdicional servicioAdicionalNuevo) {
         return false;
     }
+
+
+    //Métodos para los gráficos de las métricas:
+    /**
+     * Calcula la frecuencia de uso de cada servicio adicional en todos los envíos de la lista.
+     * @return Un mapa donde la clave es el nombre del servicio y el valor es la cantidad de veces que ha sido usado.
+     */
+    @Override
+    public Map<String, Integer> getServiciosAdicionalesMasUsados() {
+        //Se crea el mapa donde se a almacenar el conteo de los servicios.
+        Map<String, Integer> conteoServicios = new HashMap<>();
+        for (Envio envio : envios) {
+
+            //Guarda los servicios en una lista para validar que existan.
+            List<ServicioAdicional> servicios = envio.getServiciosAdicionales();
+
+            if (servicios != null) {
+                //Itera sobre los servicios de cada envío.
+                for (ServicioAdicional servicio : servicios) {
+                    if (servicio != null) {
+                        String idServicio = servicio.getIdService();
+
+                        // Si el nombre del servicio ya existe en el mapa, suma 1. Si no, inicializa en 1.
+                        conteoServicios.put(
+                                idServicio,
+                                conteoServicios.getOrDefault(idServicio, 0) + 1
+                        );
+                    }
+                }
+            }
+        }
+        return conteoServicios;
+    }
+
+    /**
+     * Calcula el tiempo promedio de entrega (en días) para todos los envíos completados.
+     *
+     * @return El promedio de días o 0.0 si no hay envíos entregados.
+     */
+    @Override
+    public double getTiempoPromedioEntregaGlobal() {
+        long totalDias = 0;
+        int enviosCompletados = 0;
+
+        for (Envio envio : envios) {
+            // Solo se consideran envíos que fueron entregados y tienen ambas fechas
+            if (envio.getEstado() == EstadoEnvio.ENTREGADO &&
+                    envio.getFechaEntrega() != null &&
+                    envio.getFechaCreacion() != null) {
+
+                // Calcula la diferencia en días entre la creación y la entrega
+                long diferenciaDias = ChronoUnit.DAYS.between(envio.getFechaCreacion(), envio.getFechaEntrega());
+
+                //Solo se suma si la diferencia no es un valor negativo.
+                if (diferenciaDias >= 0) {
+                    totalDias += diferenciaDias;
+                    enviosCompletados++;
+                }
+            }
+        }
+
+        if (enviosCompletados == 0) {
+            return 0.0;
+        }
+
+        // Retorna el promedio
+        return (double) totalDias / enviosCompletados;
+    }
+
 }

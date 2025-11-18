@@ -1,5 +1,6 @@
 package edu.uniquindio.pgII.logistica.controlador.adminController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +10,19 @@ import java.util.ResourceBundle;
 import edu.uniquindio.pgII.logistica.modelo.dto.UsuarioDTO;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IUsuarioService;
+import edu.uniquindio.pgII.logistica.modelo.util.constantes.Constantes;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 import edu.uniquindio.pgII.logistica.patrones.singleton.SesionManagerSingleton;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import static edu.uniquindio.pgII.logistica.modelo.util.VentanaUtil.setTextLabel;
 
@@ -334,5 +341,42 @@ public class UsuariosAdminController {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    private void cerrarSesion(Event event) {
+        Tab tab = (Tab) event.getSource();
+
+        if (tab.isSelected()) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmar Cierre de Sesión");
+            alert.setHeaderText("Está a punto de cerrar su sesión.");
+            alert.setContentText("¿Está seguro de que desea cerrar la sesión actual?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                SesionManagerSingleton.getInstance().cerrarSesion();
+                Stage currentStage = (Stage) tab.getTabPane().getScene().getWindow();
+                currentStage.close();
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(Constantes.inicioSesionPage));
+                    Parent root = loader.load();
+
+                    Stage loginStage = new Stage();
+                    loginStage.setTitle("Logística Urbana - Login");
+                    loginStage.setScene(new Scene(root));
+                    loginStage.show();
+
+
+                } catch (IOException e) {
+                    System.err.println("Error al cargar la vista de Login.");
+                    e.printStackTrace();
+                }
+            } else {
+                //Si el usuario presiona cancelar, se devuelve al primer tab
+                tab.getTabPane().getSelectionModel().select(0);
+            }
+        }
     }
 }
