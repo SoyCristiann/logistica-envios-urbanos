@@ -1,7 +1,9 @@
 package edu.uniquindio.pgII.logistica.modelo.servicios;
 
 import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
+
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.IServicioAdicionalService;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +45,7 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
 
         ServicioAdicional existente = buscarServicioPorId(servicioAdicionalActualizado.getIdService());
         if (existente != null) {
-            existente.setNombre(servicioAdicionalActualizado.getNombre());
-            existente.setDescripcion(servicioAdicionalActualizado.getDescripcion());
-            existente.setCosto(servicioAdicionalActualizado.getCosto());
+            existente.setNombreServicio(servicioAdicionalActualizado.getNombreServicio());
             return true;
         }
 
@@ -68,7 +68,9 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
     }
 
     @Override
+
     public ServicioAdicional buscarServicioPorId(String idService) {
+
         for (ServicioAdicional s : serviciosAdicionales) {
             if (s.getIdService().equals(idService)) {
                 return s;
@@ -78,19 +80,23 @@ public class ServicioAdicionalService implements IServicioAdicionalService {
     }
 
     @Override
+
     public List<ServicioAdicional> listarServicios() {
+
         return new ArrayList<>(serviciosAdicionales);
     }
 
     @Override
     public ServicioAdicional buscarPorNombre(String nombre) {
         for (ServicioAdicional s : serviciosAdicionales) {
-            if (s.getNombre().equalsIgnoreCase(nombre)) {
+            if (s.getNombreServicio().equalsIgnoreCase(nombre)) {
                 return s;
             }
         }
         return null;
     }
+
+
 
     //
 //    public double calcularCostoConExtras(EnvioDTO envioDTO) {

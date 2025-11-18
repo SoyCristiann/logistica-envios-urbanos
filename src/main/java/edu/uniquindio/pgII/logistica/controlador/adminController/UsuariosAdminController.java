@@ -305,7 +305,7 @@ public class UsuariosAdminController {
         inputNombreUser.setText(usuarioDTO.getNombreCompleto());
         inputEmailUser.setText(usuarioDTO.getCorreo());
         inputTelefonoUser.setText(usuarioDTO.getTelefono());
-        comboRolUser.getSelectionModel().select(RolUsuario.valueOf(usuarioDTO.getRolUsuario()));
+        comboRolUser.getSelectionModel().select(RolUsuario.valueOf(usuarioDTO.getRolUsuario().toString()));
         if (usuarioDTO.getIdUsuario().equals(sesionManager.getUsuarioActivo().getIdUsuario())){
             comboRolUser.setDisable(true);
         }else  {

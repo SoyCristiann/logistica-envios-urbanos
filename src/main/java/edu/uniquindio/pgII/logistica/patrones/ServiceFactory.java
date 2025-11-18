@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.patrones.factory;
+package edu.uniquindio.pgII.logistica.patrones;
 
 import edu.uniquindio.pgII.logistica.modelo.servicios.*;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
@@ -8,8 +8,6 @@ public class ServiceFactory {
     public IUsuarioService crearUsuarioService(){
         return new UsuarioService();
     }
-
-    public IRepartidorService crearRepartidorService(){return new RepartidorService();}
 
     public IDireccionService crearDireccionService(){
         return new DireccionService();
@@ -23,9 +21,7 @@ public class ServiceFactory {
         return new EnvioService();
     }
 
-    public IServicioAdicionalService crearServiciosAdicionalesService(){
+    public IServicioAdicionalService crearServicioAdicionalService(){
         return new ServicioAdicionalService();
     }
-
-    public ITarifaService crearTarifaService(){return new TarifaService();}
 }

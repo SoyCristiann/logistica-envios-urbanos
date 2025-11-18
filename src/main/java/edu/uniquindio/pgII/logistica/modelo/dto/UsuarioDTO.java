@@ -1,3 +1,4 @@
+
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.MetodoPago;
@@ -86,6 +87,11 @@ public class UsuarioDTO {
     public String getRolUsuario() {
         return rolUsuario.toString();
     }
+
+    public RolUsuario getRolUsuarioEnum() {
+        return rolUsuario;
+    }
+
     public void setRolUsuario(RolUsuario rolUsuario) {
         this.rolUsuario = rolUsuario;
     }

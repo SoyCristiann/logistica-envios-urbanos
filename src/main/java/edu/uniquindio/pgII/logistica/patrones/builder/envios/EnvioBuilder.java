@@ -82,12 +82,6 @@ public class EnvioBuilder implements IEnvioBuilder{
 
     @Override
     public Envio build(){
-        idEnvio=null;
-        costo=0;
-        estado=null;
-        fechaCreacion=null;
-        fechaEstimada=null;
-        repartidor=null;
         return new Envio(this);
     }
 }

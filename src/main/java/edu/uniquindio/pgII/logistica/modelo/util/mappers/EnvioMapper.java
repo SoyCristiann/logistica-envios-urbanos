@@ -53,7 +53,7 @@ public class EnvioMapper {
 
         if (envio.getServiciosAdicionales() != null) {
             for (ServicioAdicional servicio : envio.getServiciosAdicionales()) {
-                serviciosAdicionalesNombres.add(servicio.getNombre());
+                serviciosAdicionalesNombres.add(servicio.getNombreServicio());
             }
         }
 

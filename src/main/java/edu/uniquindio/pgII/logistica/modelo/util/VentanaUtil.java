@@ -57,7 +57,7 @@ public class VentanaUtil {
 
             if (sesionManager.getUsuarioActivo() != null) {
                 String usuarioLogueado = sesionManager.getUsuarioActivo().getNombreCompleto();
-                String rolUsuario = sesionManager.getUsuarioActivo().getRolUsuario();
+                String rolUsuario = sesionManager.getUsuarioActivo().getRolUsuario().toString();
                 label.setText("Bienvenido " + usuarioLogueado + " - Rol: " + rolUsuario);
                 label.setVisible(true);
             }

@@ -76,7 +76,7 @@ public class EnvioAdminMapper {
         List<String> serviciosNombres = new ArrayList<>();
         if (envio.getServiciosAdicionales() != null) {
             serviciosNombres = envio.getServiciosAdicionales().stream()
-                    .map(ServicioAdicional::getNombre)
+                    .map(ServicioAdicional::getNombreServicio)
                     .collect(Collectors.toList());
         }
 

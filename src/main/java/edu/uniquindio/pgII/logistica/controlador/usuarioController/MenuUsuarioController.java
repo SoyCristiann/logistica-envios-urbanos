@@ -1,4 +1,4 @@
-package edu.uniquindio.pgII.logistica.controlador.UsuarioController;
+package edu.uniquindio.pgII.logistica.controlador.usuarioController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -29,93 +29,34 @@ public class MenuUsuarioController {
     private URL location;
 
     @FXML
-    private Button btnRastreo;
-
-    @FXML
-    private Button btnServicios;
-
-    @FXML
-    private Button btnCrearEnvio;
-
-    @FXML
-    private Button btnCerrarSesion;
+    private Button btnGestionEnvios;
 
     @FXML
     private Button btnPerfil;
 
     @FXML
-    private Button btnHistorial;
-
-    @FXML
-    private Button btnMisEnvios;
+    private Button btnCerrarSesion;
 
     @FXML
     private Label lblUsuario;
 
-    @FXML
-    private Button btnPago;
-
-    @FXML
-    private Button btnCotizar;
-
-    @FXML
-    private Button btnReportes;
-
     private final SesionManagerSingleton sesionManager = SesionManagerSingleton.getInstance();
 
-    // EVENTOS
+
     @FXML
     void abrirPerfil(ActionEvent event) {
         VentanaUtil.cambiarEscena(getClass(), Constantes.perfilUsuarioPage, event);
     }
 
     @FXML
-    void abrirCotizarEnvio(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.cotizadorEnvioPage, event);
+    void abrirGestionEnvios(ActionEvent event) {
+        VentanaUtil.cambiarEscena(getClass(), Constantes.gestionEnviosPage, event);
     }
 
-    @FXML
-    void abrirCrearEnvio(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.crearEnvioPage, event);
-    }
-
-    @FXML
-    void abrirMisEnvios(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.misEnviosPage, event);
-    }
-
-    @FXML
-    void abrirPagos(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.pagoEnvioPage, event);
-    }
-
-    @FXML
-    void abrirRastreo(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.rastreoEnvioPage, event);
-    }
-
-    @FXML
-    void abrirServicios(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.serviciosAdicionalesPage, event);
-    }
-
-    @FXML
-    void abrirHistorial(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.historialEnviosPage, event);
-    }
-
-    @FXML
-    void abrirReportes(ActionEvent event) {
-        VentanaUtil.cambiarEscena(getClass(), Constantes.reportesPage, event);
-    }
-
-
-    // ------------------ INICIALIZACIÓN ------------------
     @FXML
     void initialize() {
         VentanaUtil.setUsuarioLogueado(lblUsuario);
     }
-
 
 
     @FXML

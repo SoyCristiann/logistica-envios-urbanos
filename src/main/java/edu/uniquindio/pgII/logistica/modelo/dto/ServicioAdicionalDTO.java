@@ -1,19 +1,22 @@
 package edu.uniquindio.pgII.logistica.modelo.dto;
 
+import edu.uniquindio.pgII.logistica.patrones.Strategy.ServicioCostoStrategy;
+
 public class ServicioAdicionalDTO {
 
     private String idService;
     private String nombre;
-    private String descripcion;
-    private double costo;
+    private ServicioCostoStrategy strategy;
+
+
 
     public ServicioAdicionalDTO() {}
 
-    public ServicioAdicionalDTO(String idService, String nombre, String descripcion, double costo) {
+    public ServicioAdicionalDTO(String idService, String nombre, ServicioCostoStrategy strategy ) {
         this.idService = idService;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.costo = costo;
+        this.strategy = strategy;
+
     }
 
     // GETTERS Y SETTERS
@@ -34,19 +37,20 @@ public class ServicioAdicionalDTO {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+//
+//    public double getCosto() {
+//        return costo;
+//    }
+//
+//    public void setCosto(double costo) {
+//        this.costo = costo;
+//    }
 
-    public double getCosto() {
-        return costo;
+    public ServicioCostoStrategy getStrategy() {
+        return strategy;
     }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
+    public void setStrategy(ServicioCostoStrategy strategy) {
+        this.strategy = strategy;
     }
 }

@@ -1,3 +1,4 @@
+
 package edu.uniquindio.pgII.logistica.datos;
 
 import edu.uniquindio.pgII.logistica.modelo.dto.DireccionDTO;
@@ -8,6 +9,10 @@ import edu.uniquindio.pgII.logistica.modelo.entidades.ServicioAdicional;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.DisponibilidadRepartidor;
 import edu.uniquindio.pgII.logistica.modelo.util.Enum.RolUsuario;
 import edu.uniquindio.pgII.logistica.modelo.util.Interface.*;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FirmaRequeridaStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.FragilStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.PrioridadStrategy;
+import edu.uniquindio.pgII.logistica.patrones.Strategy.SeguroStrategy;
 import edu.uniquindio.pgII.logistica.patrones.singleton.AdministradorSingleton;
 
 import java.time.LocalDate;
@@ -45,17 +50,7 @@ public class DatosDummy {
         UsuarioDTO usuario4= usuarioService.registrarUsuario(new UsuarioDTO("1024512458","Mateo Cruz","mateo@mail.com","3051112233","pass4"));
         UsuarioDTO usuario5= usuarioService.registrarUsuario(new UsuarioDTO("1024125478","Valentina Rojas","vale@mail.com","3016667788","pass5"));
         UsuarioDTO usuario6= usuarioService.registrarUsuario(new UsuarioDTO("1030625854","Alejandro Gómez","alejandro@mail.com","3001234567","pass6"));
-        /*
-        usuarioService.registrarUsuario(new UsuarioDTO("user03","Valentina López","vale@mail.com","3109876543","pass7"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user04","Daniel Restrepo","daniel.r@mail.com","3216549870","pass8"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user05","Camila Vargas","camilav@mail.com","3182223344","pass9"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user06","Juan Pablo Soto","juanp@mail.com","3015556677","pass10"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user07","Isabella Cruz","isabelac@mail.com","3054445566","pass11"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user08","Sebastián Mora","sebastianm@mail.com","3137778800","pass12"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user09","Mariana Ríos","marianar@mail.com","3203332211","pass13"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user10","Felipe Torres","felipe.t@mail.com","3161110099","pass14"));
-        usuarioService.registrarUsuario(new UsuarioDTO("user11","Andrea Pérez","andrea@mail.com","3049991122","pass15"));
-        */
+
     }
 
     public void crearRepartidoresDummy(){
@@ -103,19 +98,12 @@ public class DatosDummy {
         );
     }
 
-    // Servicios base por defecto - No entiendo cuál es la función de esto en envio
-    /*public void crearServiciosAdicionalDummy(){
-        envioService.registrarServicio(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
-        envioService.registrarServicio(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
-        envioService.registrarServicio(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
-        envioService.registrarServicio(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
-    }*/
 
     public void crearServiciosDummy(){
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", "Protege el valor del envío", 3000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", "Manejo cuidadoso", 1500));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", "Entrega solo con firma", 2000));
-        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", "Entrega más rápida", 2500));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("SEG", "Seguro", new FragilStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FRA", "Frágil", new FirmaRequeridaStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("FIR", "Firma Requerida", new PrioridadStrategy()));
+        serviciosService.registrarServicioAdicional(new ServicioAdicional("PRI", "Prioritario", new SeguroStrategy()));
     }
 
     // Crear envíos

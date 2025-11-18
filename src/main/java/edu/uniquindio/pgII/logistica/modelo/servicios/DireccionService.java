@@ -36,6 +36,15 @@ public class DireccionService implements IDireccionService {
     }
 
 
+    @Override
+    public boolean registrarDireccion(Usuario usuarioExistente, Direccion direccionNueva) {
+        if (usuarioExistente != null && direccionNueva != null) {
+            usuarioExistente.agregarDireccion(direccionNueva);
+            direcciones.add(direccionNueva);
+            return true;
+        }
+        return false;
+    }
 
     public boolean actualizarDireccion(Direccion direccionActualizada) {
         if (direccionActualizada == null) return false;

@@ -1,20 +1,22 @@
 package edu.uniquindio.pgII.logistica.modelo.entidades;
 
+import edu.uniquindio.pgII.logistica.patrones.Strategy.ServicioCostoStrategy;
+
 public class ServicioAdicional {
 
-    public String idService;
-    public String nombre;
-    public String descripcion;
-    public double costo;
+    private String idService;
+    private String nombreServicio;
+    private ServicioCostoStrategy strategy;
+
 
     // CONSTRUCTOR
 
-    public ServicioAdicional(String idService, String nombre, String descripcion, double costo) {
+    public ServicioAdicional(String idService, String nombreServicio, ServicioCostoStrategy strategy) {
 
         this.idService = idService;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.costo = costo;
+        this.nombreServicio = nombreServicio;
+        this.strategy = strategy;
+
     }
 
     // GETTERS AND SETTERS
@@ -28,27 +30,20 @@ public class ServicioAdicional {
         this.idService = idService;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreServicio() {
+        return nombreServicio;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreServicio(String nombreServicio) {
+        this.nombreServicio = nombreServicio;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public ServicioCostoStrategy getStrategy() {
+        return strategy;
+    }
+    public void setStrategy(ServicioCostoStrategy strategy) {
+        this.strategy = strategy;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
-    public double getCosto() {
-        return costo;
-    }
-
-    public void setCosto(double costo) {
-        this.costo = costo;
-    }
 }
